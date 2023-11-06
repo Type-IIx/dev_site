@@ -20,6 +20,27 @@
 @import url("jquery.fancybox.min.css");
 @import url("jquery.mCustomScrollbar.min.css");
 
+.tox .tox-mbtn {
+  align-items: center !important;
+  background: #9ed3f3 !important;
+  border: 0 !important;
+  border-radius: 0px !important;
+  box-shadow: none !important;
+  color: #222f3e !important;
+  display: flex !important;
+  flex: 0 0 auto !important;
+  font-size: 11px !important;
+  height: auto !important;
+  justify-content: center !important;
+  margin: 0px 2px 0px 0 !important;
+  outline: 0 !important;
+  overflow: hidden !important;
+  padding: 5px !important;
+  text-transform: capitalize !important;
+  width: auto !important;
+  cursor: pointer !important;
+}
+
 /*** 
 
 ====================================================================
@@ -1957,12 +1978,13 @@
 .mentor-block .inner-box .image {
   position: relative;
   overflow: hidden;
-  background-color: var(--main-color);
+  background-color: #eaf4fb;
 }
 
 .mentor-block .inner-box .image img {
   position: relative;
-  width: 100%;
+  width: auto;
+  padding: 20px;
   display: block;
 }
 
@@ -4424,6 +4446,18 @@
 }
 
 /* Contact Form */
+
+.login-banner-section {
+  position: relative;
+  padding: 20px 0px 40px;
+  background-color: #daf1e4;
+}
+
+.login-form-section {
+  position: relative;
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
 
 .contact-form {
   position: relative;

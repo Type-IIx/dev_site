@@ -1,1 +1,11 @@
-{"/_app":"pages/_app.js","/_error":"pages/_error.js","/_document":"pages/_document.js","/articles":"pages/articles.html","/authors":"pages/authors.html","/coaching":"pages/coaching.html","/api/rates":"pages/api/rates.js","/consultancy":"pages/consultancy.html","/books":"pages/books.html","/":"pages/index.html","/404":"pages/404.html"}
+{
+  "/_app": "pages/_app.js",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/authors": "pages/authors.js",
+  "/books": "pages/books.js",
+  "/": "pages/index.js",
+  "/api/rates": "pages/api/rates.js",
+  "/coaching": "pages/coaching.js",
+  "/consultancy": "pages/consultancy.js"
+}

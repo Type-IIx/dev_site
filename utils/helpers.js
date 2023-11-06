@@ -41,3 +41,7 @@ export const formatAndShowErrors = (toast, errors) => {
     toast.error(`${err.path[0]} : ${err.message}`);
   }
 };
+
+export const formatMBTC = (amount) => {
+  return amount * 1000;
+};

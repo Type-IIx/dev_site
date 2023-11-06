@@ -19,6 +19,7 @@ function MyApp({ Component, pageProps }) {
         theme="light"
       />
       <Head></Head>
+
       <Component {...pageProps} />
     </>
   );
