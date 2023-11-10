@@ -2,51 +2,6 @@ export default function Menu() {
   return (
     <>
       <header className="main-header header-style-two">
-        {/* <div className="header-top">
-          <div className="auto-container">
-            <div className="inner-container clearfix">
-              <div className="top-left clearfix">
-                <div className="text">
-                  <span>Working time:</span> Monday to Friday 9 AM - 5 PM
-                </div>
-              </div>
-
-              <div className="top-right pull-right clearfix">
-                <ul className="social-box">
-                  <li>
-                    <a
-                      href="https://www.facebook.com/"
-                      className="fa fa-facebook-f"
-                    ></a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://www.twitter.com/"
-                      className="fa fa-twitter"
-                    ></a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://www.linkedin.com/"
-                      className="fa fa-linkedin"
-                    ></a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://youtube.com/"
-                      className="fa fa-youtube-play"
-                    ></a>
-                  </li>
-                </ul>
-                <div className="text">
-                  Call for free consultation:{" "}
-                  <a href="tel:+0056-693-55-20">0056 693 55 20</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
-
         <div className="header-top">
           <div className="auto-container clearfix">
             <div className="pull-left logo-box">

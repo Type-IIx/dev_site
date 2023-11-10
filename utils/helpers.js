@@ -1,4 +1,5 @@
 import axios from "axios";
+import bcrypt from "bcryptjs";
 
 const LOCAL_API = "/api/";
 
@@ -44,4 +45,10 @@ export const formatAndShowErrors = (toast, errors) => {
 
 export const formatMBTC = (amount) => {
   return amount * 1000;
+};
+
+export const encryptPassword = (pass) => {
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(pass, salt);
+  return hash;
 };

@@ -4,6 +4,7 @@ import Footer from "../../components/AdminComps/adminfooter";
 import React, { useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import AdminWrapper from "../../components/AdminComps/AdminWrapper";
+import axios from "axios";
 
 export default function Addblog() {
   const editorRef = useRef(null);
@@ -11,6 +12,11 @@ export default function Addblog() {
     if (editorRef.current) {
       console.log(editorRef.current.getContent());
     }
+  };
+  const test = async (e) => {
+    e.preventDefault();
+    const res = await axios.get("/api/bloghandler");
+    console.log(res);
   };
   return (
     <>
@@ -25,6 +31,13 @@ export default function Addblog() {
                 <div className="sec-title-two my-5 text-center">
                   <div className="title color-three">Add new Blog</div>
                 </div>
+              </div>
+            </div>
+            <div className="row clearfix mb-3">
+              <div className="col-md-12">
+                <button onClick={test} className="btn btn-primary float-right">
+                  Import Blog
+                </button>
               </div>
             </div>
             <div className="contact-form">
@@ -70,6 +83,10 @@ export default function Addblog() {
                         "removeformat",
                     }}
                   />
+                </div>
+                <div className="form-group">
+                  <label>Featured Image</label>
+                  <input type="file" className="form-control" />
                 </div>
                 <button type="submit" className="btn btn-primary float-right">
                   Submit
