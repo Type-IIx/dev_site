@@ -26,11 +26,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/admpanel/addblog.js"
-    ],
-    "/admpanel/login": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/admpanel/login.js"
     ]
   },
   "ampFirstPages": []

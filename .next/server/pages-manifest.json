@@ -2,8 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/admpanel/login": "pages/admpanel/login.js",
-  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
-  "/admpanel/addblog": "pages/admpanel/addblog.js"
+  "/admpanel/addblog": "pages/admpanel/addblog.js",
+  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js"
 }
