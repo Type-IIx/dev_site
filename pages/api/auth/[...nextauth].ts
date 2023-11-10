@@ -1,4 +1,4 @@
-import NextAuth, { Profile, type NextAuthOptions } from "next-auth";
+import NextAuth, { Profile, type NextAuthOptions, Session } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -9,9 +9,14 @@ import {encryptPassword} from "../../../utils/helpers"
 import {  User } from "@prisma/client";
 import bcrypt from "bcryptjs"
 import { prisma } from "../../../utils/prismahandler";
+import axios from "axios";
+import { BASE_URL } from "../../../constants/apiInfo";
+import { UserResp } from "../../../constants/types";
 
 
-
+interface SessionWithJWT extends Session {
+  token : string
+}
 
 
 export const authOptions: NextAuthOptions = {
@@ -19,21 +24,27 @@ export const authOptions: NextAuthOptions = {
     callbacks: {
       session({ session, user,token }) {
         const newtoken = token;
+        /* console.log("token here")
+        console.log(token)
   
         console.log("session callback")
         console.log(session)
-        console.log(token)
+        console.log(token) */
         if (session.user) {
-          (session.user as User).email  = newtoken.email;       
+          (session.user as UserResp).email  = newtoken.email;       
+          (session.user as UserResp).token  = newtoken.token as string;       
         }
+
         return session;
       },
       jwt({ token, account, user , profile }) {
         if (account) {
+          console.log("Received token",user)
           token.accessToken = account.access_token
           token.id = user.id
           token.email = user.email
-          token.joined = (user as User).joined
+          token.joined = (user as UserResp).joined
+          token.token = (user as UserResp).token
         }
         return token
       }
@@ -70,7 +81,7 @@ export const authOptions: NextAuthOptions = {
           }
           //console.log(encryptPassword(password))
           // Add logic here to look up the user from the credentials supplied
-          let user = await prisma.user.findUnique({
+          /* let user = await prisma.user.findUnique({
             where : {
               email : email
             }
@@ -104,6 +115,15 @@ export const authOptions: NextAuthOptions = {
             throw Error("Email or Password incorrect")
     
             // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
+          } */
+          const resp = await axios.post(BASE_URL+"login",{email,password});
+          if (resp.status === 200){
+            const data = await resp.data;
+            console.log("Found data ")
+            console.log(data)
+            return data
+          }else{
+            throw Error("Email or Password incorrect")
           }
         }
       })

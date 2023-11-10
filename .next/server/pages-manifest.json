@@ -2,5 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/api/bloghandler": "pages/api/bloghandler.js"
+  "/": "pages/index.js",
+  "/admpanel/login": "pages/admpanel/login.js",
+  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
+  "/admpanel/addblog": "pages/admpanel/addblog.js"
 }

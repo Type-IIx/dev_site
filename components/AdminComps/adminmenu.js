@@ -1,3 +1,5 @@
+import { signOut } from "next-auth/react"
+
 export default function Menu() {
   return (
     <>
@@ -46,7 +48,9 @@ export default function Menu() {
                       <a href="/settings">Settings</a>
                     </li>
                     <li>
-                      <a href="/login">Logout</a>
+                      <a onClick={() => {
+                        signOut()
+                      }}>Logout</a>
                     </li>
                   </ul>
                 </div>
