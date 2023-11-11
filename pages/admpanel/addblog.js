@@ -5,8 +5,8 @@ import React, { useRef } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import AdminWrapper from "../../components/AdminComps/AdminWrapper";
 import axios from "axios";
-import { BASE_URL } from "../../constants/apiInfo"
-import { axiosInstance } from "../../utils/apiHandler"
+import { BASE_URL } from "../../constants/apiInfo";
+import { axiosInstance } from "../../utils/apiHandler";
 import AdminChecker from "../../components/AdminComps/AdminChecker";
 
 export default function Addblog() {
@@ -21,6 +21,9 @@ export default function Addblog() {
     const res = await axiosInstance.get(BASE_URL + "blog/test");
     console.log(res);
   };
+
+  const submitBlog = async () => {};
+
   return (
     <>
       <Head>
@@ -39,7 +42,10 @@ export default function Addblog() {
               </div>
               <div className="row clearfix mb-3">
                 <div className="col-md-12">
-                  <button onClick={test} className="btn btn-primary float-right">
+                  <button
+                    onClick={test}
+                    className="btn btn-primary float-right"
+                  >
                     Import Blog
                   </button>
                 </div>
@@ -99,9 +105,7 @@ export default function Addblog() {
               </div>
             </div>
           </section>
-
         </AdminChecker>
-
       </AdminWrapper>
     </>
   );
