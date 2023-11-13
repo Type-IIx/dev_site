@@ -8,21 +8,44 @@ import axios from "axios";
 import { BASE_URL } from "../../constants/apiInfo";
 import { axiosInstance } from "../../utils/apiHandler";
 import AdminChecker from "../../components/AdminComps/AdminChecker";
+import { toast } from "react-toastify";
+import Link from "next/link";
 
 export default function Addblog() {
   const editorRef = useRef(null);
-  const log = () => {
-    if (editorRef.current) {
-      console.log(editorRef.current.getContent());
+  const imageRef = useRef(null);
+  const titleRef = useRef(null);
+
+  const uploadHandler = async (body, image) => {
+    let form_data = new FormData();
+    if (image) {
+      form_data.append("image", image, image.name);
+      const keys = Object.keys(body);
+      for (let key of keys) {
+        form_data.append(key, body[key]);
+      }
+      const url = BASE_URL + "blog/create";
+      const res = await axiosInstance.post(url, form_data);
+      if (res.status === 201) {
+        toast.success("Created");
+      } else {
+        toast.error("Failed");
+      }
+    } else {
+      toast.warning("Please upload image");
     }
   };
-  const test = async (e) => {
-    e.preventDefault();
-    const res = await axiosInstance.get(BASE_URL + "blog/test");
-    console.log(res);
-  };
 
-  const submitBlog = async () => {};
+  const submitBlog = async (e) => {
+    e.preventDefault();
+    const body = {
+      title: titleRef.current.value,
+      content: editorRef.current.getContent(),
+    };
+    const image =
+      imageRef.current.files.length > 0 ? imageRef.current.files[0] : null;
+    uploadHandler(body, image);
+  };
 
   return (
     <>
@@ -42,18 +65,18 @@ export default function Addblog() {
               </div>
               <div className="row clearfix mb-3">
                 <div className="col-md-12">
-                  <button
-                    onClick={test}
-                    className="btn btn-primary float-right"
-                  >
-                    Import Blog
-                  </button>
+                  <Link href="/admpanel/import">
+                    <button className="btn btn-primary float-right">
+                      Import Blog
+                    </button>
+                  </Link>
                 </div>
               </div>
               <div className="contact-form">
                 <form>
                   <div className="form-group">
                     <input
+                      ref={titleRef}
                       type="text"
                       className="form-control"
                       placeholder="Title"
@@ -96,9 +119,16 @@ export default function Addblog() {
                   </div>
                   <div className="form-group">
                     <label>Featured Image</label>
-                    <input type="file" className="form-control" />
+                    <input
+                      ref={imageRef}
+                      type="file"
+                      className="form-control"
+                    />
                   </div>
-                  <button type="submit" className="btn btn-primary float-right">
+                  <button
+                    onClick={submitBlog}
+                    className="btn btn-primary float-right"
+                  >
                     Submit
                   </button>
                 </form>

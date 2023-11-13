@@ -2,7 +2,7 @@ import multer, { MulterError } from "multer"
 import path from 'path';
 
 
-const FILE_SIZE = 20_000_000;
+const FILE_SIZE = 50_000_000;
 const DESTINATION = path.resolve("uploads")
 
 
@@ -23,13 +23,26 @@ export const upload = multer({
         fileSize: FILE_SIZE
     },
     fileFilter(req, file, cb) {
-        console.log("called before error")
-        console.log(file.size)
-        console.log(path.resolve("uploads"))
         if (!file.originalname.toLowerCase().match(/\.(jpg|jpeg|png|gif|webp)$/)) {
             return cb(new MulterError("LIMIT_UNEXPECTED_FILE"))
         }
         cb(null, true)
     },
 
+})
+
+
+
+const memoryStorage = multer.memoryStorage()
+export const memoryUpload = multer({
+    storage : memoryStorage,
+    limits : {
+        fileSize : FILE_SIZE
+    },
+    fileFilter(req, file, cb) {
+        if (!file.originalname.toLowerCase().match(/\.(wiki|txt)$/)) {
+            return cb(new MulterError("LIMIT_UNEXPECTED_FILE"))
+        }
+        cb(null, true)
+    },
 })

@@ -2,7 +2,7 @@ import { Router } from "express";
 import { getToken } from "next-auth/jwt";
 import { authenticateToken } from "../middleware/verifier";
 import { CustomRequest } from "../types";
-import { upload } from "../configs/multerConfig";
+import { memoryUpload, upload } from "../configs/multerConfig";
 import { prisma } from "../helper";
 
 
@@ -19,6 +19,7 @@ BlogController.post("/create",upload.single("image"),async (req,res,next) => {
     try{
         const myreq = req as CustomRequest;
         authenticateToken(req as CustomRequest ,res,next);
+
         const body : BodyDataT = req.body;
         const file = req.file as Express.Multer.File
         if (file){
@@ -33,13 +34,30 @@ BlogController.post("/create",upload.single("image"),async (req,res,next) => {
             const p = await prisma.post.create({
                 data : dbData
             })
-            return res.status(201).json(p)
+            res.status(201).json({success : true})
         }else{
-            return res.status(500).json({error : true,message : "image not found"})
+            res.status(500).json({error : true,message : "image not found"})
         }
 
-    }catch{
-        return res.status(500)
+    }catch (e){
+        console.log("error here")
+        console.log(e)
+        res.status(500)
+    }
+})
+
+
+BlogController.post("/import",memoryUpload.single("file"),upload.single("image"),async (req,res,next) => {
+    try{
+        console.log("here")
+        authenticateToken(req as CustomRequest ,res,next);
+        const files = req.file as Express.Multer.File
+        console.log(files)
+        res.status(200)
+    }catch (e){
+        console.log("error here")
+        console.log(e)
+        res.status(500)
     }
 })
 

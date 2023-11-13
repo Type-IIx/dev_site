@@ -2,6 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/admpanel/login": "pages/admpanel/login.js",
-  "/admpanel/addblog": "pages/admpanel/addblog.js"
+  "/admpanel/addblog": "pages/admpanel/addblog.js",
+  "/": "pages/index.js"
 }
