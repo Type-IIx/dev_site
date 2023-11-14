@@ -4,6 +4,7 @@ import cors from "cors"
 import dotenv from "dotenv"
 import { BlogController } from "../controllers/Blog.controller";
 import { UserController } from "../controllers/User.controller";
+import { SettingController } from "../controllers/Setting.controller";
 
 dotenv.config();
 
@@ -17,7 +18,10 @@ app.use(express.json())
 app.use(cors())
 
 app.use("/api/blog",BlogController);
+app.use("/api/settings",SettingController)
 app.use("/api",UserController)
+
+app.use("/images", express.static("uploads"))
 
 
 app.listen(3030, () => {

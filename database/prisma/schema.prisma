@@ -19,10 +19,16 @@ model User {
 
 model Post {
   id           Int      @id @default(autoincrement())
-  title        String
-  content      String
-  filename     String
-  physicalPath String
-  fileUrl      String
+  title        String   @default("")
+  content      String   @default("")
+  filename     String   @default("")
+  physicalPath String   @default("")
+  fileUrl      String   @default("")
   created      DateTime @default(now())
+}
+
+model Socials {
+  id   Int    @id @default(autoincrement())
+  name String
+  url  String
 }

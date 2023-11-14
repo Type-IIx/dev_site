@@ -52,3 +52,47 @@ export const encryptPassword = (pass) => {
   const hash = bcrypt.hashSync(pass, salt);
   return hash;
 };
+
+export function formatDate(inputDate) {
+  const date = new Date(inputDate);
+
+  const day = date.getDate();
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const month = monthNames[date.getMonth()];
+  const year = date.getFullYear();
+
+  const suffix = getNumberSuffix(day);
+
+  return `${day}${suffix} ${month} ${year}`;
+}
+
+// Function to get the suffix for a number (e.g., 1st, 2nd, 3rd)
+function getNumberSuffix(day) {
+  if (day >= 11 && day <= 13) {
+    return "th";
+  }
+  const lastDigit = day % 10;
+  switch (lastDigit) {
+    case 1:
+      return "st";
+    case 2:
+      return "nd";
+    case 3:
+      return "rd";
+    default:
+      return "th";
+  }
+}

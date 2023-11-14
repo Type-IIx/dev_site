@@ -49,6 +49,17 @@
 
 ***/
 
+.place-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height:30px !important;
+  aspect-ratio: 1/1;
+  padding:5px !important;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
 .main-slider {
   position: relative;
   overflow: hidden;

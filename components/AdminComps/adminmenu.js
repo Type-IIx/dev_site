@@ -1,4 +1,5 @@
-import { signOut } from "next-auth/react"
+import { signOut } from "next-auth/react";
+import Link from "next/link";
 
 export default function Menu() {
   return (
@@ -42,15 +43,22 @@ export default function Menu() {
                 >
                   <ul className="navigation clearfix">
                     <li>
-                      <a href="/blog">Blog</a>
+                      <Link href="/articles">Blog</Link>
                     </li>
                     <li>
-                      <a href="/settings">Settings</a>
+                      <Link href="/admpanel/addblog">Add Blog</Link>
                     </li>
                     <li>
-                      <a onClick={() => {
-                        signOut()
-                      }}>Logout</a>
+                      <Link href="/admpanel/settings">Settings</Link>
+                    </li>
+                    <li>
+                      <a
+                        onClick={() => {
+                          signOut();
+                        }}
+                      >
+                        Logout
+                      </a>
                     </li>
                   </ul>
                 </div>
