@@ -5,6 +5,7 @@ import dotenv from "dotenv"
 import { BlogController } from "../controllers/Blog.controller";
 import { UserController } from "../controllers/User.controller";
 import { SettingController } from "../controllers/Setting.controller";
+import { BookController } from "../controllers/Book.controller";
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(cors())
 
 app.use("/api/blog",BlogController);
 app.use("/api/settings",SettingController)
+app.use("/api/book",BookController)
 app.use("/api",UserController)
 
 app.use("/images", express.static("uploads"))

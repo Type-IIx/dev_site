@@ -97,9 +97,13 @@ BlogController.post("/import",memoryUpload.single("file"),async (req,res,next) =
         if (authRes){
             const file = req.file as Express.Multer.File
         const data = file.buffer.toString('utf8');
-        console.log(data)
-        const converted = await convertToHtml(data);
-        console.log(converted)
+        const splited = file.originalname.split(".")
+        const ext = splited[splited.length - 1]
+        console.log("File extension is " + ext)
+        let converted = data
+        if (["wiki","txt"].includes(ext)){
+            converted = await convertToHtml(data);
+        }
         const p = await prisma.post.create({
             data : {
                 content : converted

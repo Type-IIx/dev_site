@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = "postgresql://testuser:testpassword@database:5432/Custom"
 }
 
 model User {
@@ -31,4 +31,17 @@ model Socials {
   id   Int    @id @default(autoincrement())
   name String
   url  String
+}
+
+model Book {
+  id                Int      @id @default(autoincrement())
+  title             String   @default("")
+  price             Float    @default(0)
+  ImageFilename     String   @default("")
+  ImagephysicalPath String   @default("")
+  ImageUrl          String   @default("")
+  BookFilename      String   @default("")
+  BookphysicalPath  String   @default("")
+  BookUrl           String   @default("")
+  created           DateTime @default(now())
 }

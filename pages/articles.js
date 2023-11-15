@@ -86,12 +86,14 @@ export default function Articles() {
         <div className="sidebar-page-container">
           <div className="auto-container">
             <div className="row clearfix">
-              <div className="content-side col-lg-8 col-md-12 col-sm-12">
+              <div className="content-side col-md-12">
                 <div className="blog-classic">
-                  {splited[active] &&
-                    splited[active].map((e, i) => {
-                      return <ArticleComp article={e} key={`article-${i}`} />;
-                    })}
+                  <div className="row clearfix">
+                    {splited[active] &&
+                      splited[active].map((e, i) => {
+                        return <ArticleComp article={e} key={`article-${i}`} />;
+                      })}
+                  </div>
 
                   <ul className="styled-pagination text-center">
                     <li className="prev">
@@ -125,7 +127,7 @@ export default function Articles() {
                 </div>
               </div>
 
-              <div className="sidebar-side col-lg-4 col-md-12 col-sm-12">
+              {/* <div className="sidebar-side col-lg-4 col-md-12 col-sm-12">
                 <aside className="sidebar sticky-top">
                   <div className="sidebar-widget-two about-widget">
                     <div className="widget-content">
@@ -134,7 +136,7 @@ export default function Articles() {
                       </div>
                       {/*  <div className="image">
                         <img src="images/resource/about-widget.jpg" alt="" />
-                      </div> */}
+                      </div> 
                       <div className="lower-content">
                         <h6>Rosalina D. Willaimson</h6>
                         <div className="text">
@@ -201,7 +203,7 @@ export default function Articles() {
                         </form>
                       </div>
                     </div>
-                  </div> */}
+                  </div> 
                   <div className="sidebar-widget-two popular-posts">
                     <div className="widget-content">
                       <div className="sidebar-title-two">
@@ -253,9 +255,9 @@ export default function Articles() {
                         </li>
                       </ul>
                     </div>
-                  </div> */}
+                  </div> 
                 </aside>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

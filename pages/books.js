@@ -1,7 +1,29 @@
 import Head from "next/head";
 import Wrapper from "../components/Wrapper";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { BASE_URL } from "../constants/apiInfo";
+import BookCard from "../components/BookCard";
 
 export default function Books() {
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchBooks = async () => {
+    setLoading(true);
+    const url = BASE_URL + "book/books";
+    const res = await axios.get(url);
+    if (res.status === 200) {
+      const data = await res.data;
+      setBooks(data);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchBooks();
+  }, []);
+
   return (
     <>
       <Head>
@@ -28,157 +50,11 @@ export default function Books() {
         <section className="price-page-section">
           <div className="auto-container">
             <div className="row clearfix">
-              <div className="course-block col-lg-3 col-md-6 col-sm-12">
-                <div
-                  className="inner-box wow fadeInLeft animated"
-                  data-wow-delay="0ms"
-                  data-wow-duration="1500ms"
-                  style={{
-                    visibility: "visible",
-                    animationDuration: "1500ms",
-                    animationDelay: "0ms",
-                    animationName: "fadeInLeft",
-                  }}
-                >
-                  <div className="image">
-                    <a href="#">
-                      <img
-                        className="transition-500ms"
-                        src="img/book.jpg"
-                        alt=""
-                      />
-                    </a>
-                  </div>
-                  <div className="lower-content">
-                    <h5>
-                      <a href="#">How to success through market segmentation</a>
-                    </h5>
-                    <h4 className="price text-blue mb-3">$29.00</h4>
-                    <div className="btn-group post-info">
-                      <button type="button" className="btn btn-link btn-sm">
-                        Download
-                      </button>
-                      <button type="button" className="btn btn-link btn-sm">
-                        Order
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="course-block col-lg-3 col-md-6 col-sm-12">
-                <div
-                  className="inner-box wow fadeInLeft animated"
-                  data-wow-delay="150ms"
-                  data-wow-duration="1500ms"
-                  style={{
-                    visibility: "visible",
-                    animationDuration: "1500ms",
-                    animationDelay: "150ms",
-                    animationName: "fadeInLeft",
-                  }}
-                >
-                  <div className="image">
-                    <a href="#">
-                      <img
-                        className="transition-500ms"
-                        src="img/book2.jpg"
-                        alt=""
-                      />
-                    </a>
-                  </div>
-                  <div className="lower-content">
-                    <h5>
-                      <a href="#">How to success through market segmentation</a>
-                    </h5>
-                    <h4 className="price text-blue mb-3">$29.00</h4>
-                    <div className="btn-group post-info">
-                      <button type="button" className="btn btn-link btn-sm">
-                        Download
-                      </button>
-                      <button type="button" className="btn btn-link btn-sm">
-                        Order
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="course-block col-lg-3 col-md-6 col-sm-12">
-                <div
-                  className="inner-box wow fadeInLeft animated"
-                  data-wow-delay="300ms"
-                  data-wow-duration="1500ms"
-                  style={{
-                    visibility: "visible",
-                    animationDuration: "1500ms",
-                    animationDelay: "300ms",
-                    animationName: "fadeInLeft",
-                  }}
-                >
-                  <div className="image">
-                    <a href="#">
-                      <img
-                        className="transition-500ms"
-                        src="img/book3.jpg"
-                        alt=""
-                      />
-                    </a>
-                  </div>
-                  <div className="lower-content">
-                    <h5>
-                      <a href="#">How to success through market segmentation</a>
-                    </h5>
-                    <h4 className="price text-blue mb-3">$29.00</h4>
-                    <div className="btn-group post-info">
-                      <button type="button" className="btn btn-link btn-sm">
-                        Download
-                      </button>
-                      <button type="button" className="btn btn-link btn-sm">
-                        Order
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="course-block col-lg-3 col-md-6 col-sm-12">
-                <div
-                  className="inner-box wow fadeInLeft animated"
-                  data-wow-delay="450ms"
-                  data-wow-duration="1500ms"
-                  style={{
-                    visibility: "visible",
-                    animationDuration: "1500ms",
-                    animationDelay: "450ms",
-                    animationName: "fadeInLeft",
-                  }}
-                >
-                  <div className="image">
-                    <a href="#">
-                      <img
-                        className="transition-500ms"
-                        src="img/book4.jpg"
-                        alt=""
-                      />
-                    </a>
-                  </div>
-                  <div className="lower-content">
-                    <h5>
-                      <a href="#">How to success through market segmentation</a>
-                    </h5>
-                    <h4 className="price text-blue mb-3">$29.00</h4>
-                    <div className="btn-group post-info">
-                      <button type="button" className="btn btn-link btn-sm">
-                        Download
-                      </button>
-                      <button type="button" className="btn btn-link btn-sm">
-                        Order
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {books &&
+                !loading &&
+                books.map((e, i) => {
+                  return <BookCard key={`book-${i}`} book={e} />;
+                })}
             </div>
           </div>
         </section>

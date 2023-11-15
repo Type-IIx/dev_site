@@ -161,3 +161,8 @@ cython_debug/
 
 
 node_modules
+
+server/books/*
+server/uploads/*
+
+.next
