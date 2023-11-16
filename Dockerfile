@@ -16,10 +16,12 @@ RUN npm install  prisma
 RUN npm install -g typescript
 
 
-WORKDIR /app/server/database
-RUN npx prisma generate
+#WORKDIR /app/server/database
+#RUN npx prisma generate
 
-WORKDIR  /app
+
+#WORKDIR  /app
+RUN rm -rf server
 
 RUN npm run build
 
