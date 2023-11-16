@@ -14,4 +14,4 @@ RUN ln -s /etc/nginx/sites-available/relayer /etc/nginx/sites-enabled
 
 EXPOSE 80 443
 
-CMD bash -c "service nginx start"
+CMD ["nginx", "-g", "daemon off;"]

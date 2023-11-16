@@ -1,33 +1,37 @@
-
-
 services:
- 
-    backend:
-      image : backend:alpha
-      ports:
-       - "3030:3030"
-      links:
-       - "postgress:database"
-    frontend:
-      image : frontend:alpha
-      ports:
-       - "3000:3000"
-    
-    relayer:
-     image : relayer:alpha
-     ports :
+
+  backend:
+    image: backend:alpha
+    ports:
+      - "3030:3030"
+    environment:
+      TOKEN_SECRET: tokensecret
+    links:
+      - "postgress:database"
+  frontend:
+    image: frontend:alpha
+    environment:
+      NEXTAUTH_SECRET: tokensecret
+    ports:
+      - "3000:3000"
+    links:
+      - "backend:backend"
+
+  relayer:
+    image: relayer:alpha
+    ports:
       - "80:80"
-     links:
+    links:
       - "frontend:frontend"
       - "backend:backend"
-    postgress:
-      image: postgres
-      restart: always
-      environment:
-        POSTGRES_USER: testuser
-        POSTGRES_PASSWORD: testpassword
-        POSTGRES_DB: Custom
-      ports:
-        - "5432:5432"
-      volumes:
-        - ./data:/postgresstempdata/
+  postgress:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpassword
+      POSTGRES_DB: Custom
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data:/home/vintex/work2/postgressdemo

@@ -12,12 +12,14 @@ COPY . .
 
 RUN npm install
 RUN npm install -g dotenv
-RUN npm install -g prisma
+RUN npm install  prisma
+RUN npm install -g typescript
 
-WORKDIR /usr/src/app/database
+
+WORKDIR /app/server/database
 RUN npx prisma generate
 
-WORKDIR  /usr/src/app
+WORKDIR  /app
 
 RUN npm run build
 
