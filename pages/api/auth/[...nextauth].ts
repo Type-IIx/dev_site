@@ -1,16 +1,8 @@
 import NextAuth, { Profile, type NextAuthOptions, Session } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
 
 import CredentialsProvider from "next-auth/providers/credentials";
 
-import { JWT } from "next-auth/jwt/types.js";
-import { Account } from "next-auth";
-import { encryptPassword } from "../../../utils/helpers"
-import { User } from "@prisma/client";
-import bcrypt from "bcryptjs"
-import { prisma } from "../../../utils/prismahandler";
 import axios from "axios";
-import { BASE_URL } from "../../../constants/apiInfo";
 import { UserResp } from "../../../constants/types";
 
 
