@@ -9,7 +9,7 @@ export default function FooterComp() {
               Hear out what my clients <br /> say about me.
             </h2>
           </div>
-          <div className="testimonial-carousel owl-carousel owl-theme">
+          <div className="testimonial-carousel  owl-theme">
             <div className="testimonial-block">
               <div className="inner-box">
                 <div className="upper-box">

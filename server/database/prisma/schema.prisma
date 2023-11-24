@@ -5,9 +5,14 @@ generator client {
   provider = "prisma-client-js"
 }
 
+//datasource db {
+//  provider = "postgresql"
+//  url      = "postgresql://testuser:testpassword@database:5432/Custom"
+//}
+
 datasource db {
-  provider = "postgresql"
-  url      = "postgresql://testuser:testpassword@database:5432/Custom"
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model User {
@@ -37,6 +42,7 @@ model Book {
   id                Int      @id @default(autoincrement())
   title             String   @default("")
   price             Float    @default(0)
+  description       String   @default("")
   ImageFilename     String   @default("")
   ImagephysicalPath String   @default("")
   ImageUrl          String   @default("")

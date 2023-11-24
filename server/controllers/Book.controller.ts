@@ -14,6 +14,7 @@ const BookController = Router();
 interface BodyDataT {
     title : string;
     price : number;
+    description : string;
 }
 
 
@@ -118,6 +119,26 @@ BookController.post("/create",uploadBook.single("book"),async (req,res,next) => 
 })
 
 
+BookController.delete("/delete/:id", async (req,res,next) => {
+    try{
+        const authRes = authenticateToken(req as unknown as CustomRequest ,res,next);
+        if (authRes){
+        }else{
+            res.status(401).json({authorized : false})
+        }   
+        }catch (e){
+            console.log("error here")
+            console.log(e)
+            const file = req.file as Express.Multer.File;
+            if (file){
+                deleteFile("/uploads/"+file.filename)
+            }
+            
+            res.status(500)
+        }
+})
+
+
 BookController.post("/edit/:id",upload.single("image"),async (req,res,next) => {
     try{
         const myreq = req as CustomRequest;
@@ -142,6 +163,10 @@ BookController.post("/edit/:id",upload.single("image"),async (req,res,next) => {
                 body.price = book.price;
             }else {
                 body.price = Number(body.price)
+            }
+
+            if (!body.description || body.description.length === 0) {
+                body.description = book.description;
             }
 
             if (file){

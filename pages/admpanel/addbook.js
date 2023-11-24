@@ -6,136 +6,81 @@ import { useRef } from "react";
 import { BASE_URL } from "../../constants/apiInfo";
 import { axiosInstance } from "../../utils/apiHandler";
 import { toast } from "react-toastify";
+import { Editor } from "@tinymce/tinymce-react";
+import Link from "next/link";
 
-function Addbook() {
-  const imageRef = useRef(null);
-  const titleRef = useRef(null);
-  const priceRef = useRef(null);
-  const bookRef = useRef(null);
+function BookList() {
 
-  const handleImport = async () => {
-    let form_data = new FormData();
-    const file =
-      bookRef.current.files.length > 0 ? bookRef.current.files[0] : null;
-    if (file) {
-      form_data.append("book", file, file.name);
-      form_data.append("title", titleRef.current.value);
-      form_data.append("price", priceRef.current.value);
-      const url = BASE_URL + "book/create";
-      const res = await axiosInstance.post(url, form_data);
-      if (res.status === 201) {
-        const resp_json = await res.data;
-        console.log(`Received data ${resp_json}`);
-        return resp_json;
-      } else {
-        return false;
-      }
-    } else {
-      toast.warning("Please select a file");
-    }
-  };
 
-  const handleEdit = async (id_) => {
-    let form_data = new FormData();
-    const image =
-      imageRef.current.files.length > 0 ? imageRef.current.files[0] : null;
-    if (image) {
-      form_data.append("image", image, image.name);
 
-      const url = BASE_URL + `book/edit/${id_}`;
-      const res = await axiosInstance.post(url, form_data);
-      if (res.status === 200) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      toast.warning("Please select an image");
-    }
-  };
-
-  const submitData = async (e) => {
-    e.preventDefault();
-    const file =
-      bookRef.current.files.length > 0 ? bookRef.current.files[0] : null;
-    const image =
-      imageRef.current.files.length > 0 ? imageRef.current.files[0] : null;
-    if (!file) {
-      toast.warning("Please select a file");
-    } else if (!image) {
-      toast.warning("Please select an image");
-    } else {
-      const res = await handleImport();
-      if (res) {
-        const res2 = await handleEdit(res.id);
-        if (res2) {
-          toast.success("Success");
-        } else {
-          toast.error("Failed Import");
-        }
-      } else {
-        toast.error("Failed Import");
-      }
-    }
-  };
 
   return (
     <>
       <Head>
-        <title>Add New Blog</title>
+        <title>Book Lists</title>
       </Head>
       <AdminWrapper>
         <AdminChecker>
           <section className="price-page-section">
             <div className="auto-container">
-              <div className="row clearfix">
-                <div className="col-md-12">
-                  <div className="sec-title-two my-5 text-center">
-                    <div className="title color-three">Add new Book</div>
+              <div className="row clearfix my-3">
+                <div class="col-md-6">
+                  <div className="sec-title-two">
+                    <div className="title color-three">List of Books</div>
                   </div>
                 </div>
-              </div>
-
-              <div className="contact-form">
-                <form>
-                  <div className="form-group">
-                    <input
-                      ref={titleRef}
-                      type="text"
-                      className="form-control"
-                      placeholder="Title"
-                    />
+                <div class="col-md-6">
+                  <div className="float-right">
+                    <Link className="theme-btn btn-style-two" href="/admpanel/addbook">
+                      <span className="txt">Add New Book</span>
+                    </Link>
                   </div>
+                </div>
 
-                  <div className="form-group">
-                    <input
-                      ref={priceRef}
-                      type="text"
-                      className="form-control"
-                      placeholder="Price"
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label>Featured Image</label>
-                    <input
-                      ref={imageRef}
-                      type="file"
-                      className="form-control"
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label>Book (PDF)</label>
-                    <input ref={bookRef} type="file" className="form-control" />
-                  </div>
-                  <button
-                    onClick={submitData}
-                    className="btn btn-primary float-right"
-                  >
-                    Submit
-                  </button>
-                </form>
+                <table className="table">
+                  <tbody>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>
+                        <h4>How to success through market segmentation</h4>
+                        <a className="btn btn-sm btn-dark text-white m-2">Edit</a>
+                        <a className="btn btn-sm btn-danger text-white">Delete</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">2</th>
+                      <td>
+                        <h4>How to success through market segmentation</h4>
+                        <a className="btn btn-sm btn-dark text-white m-2">Edit</a>
+                        <a className="btn btn-sm btn-danger text-white">Delete</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">3</th>
+                      <td>
+                        <h4>How to success through market segmentation</h4>
+                        <a className="btn btn-sm btn-dark text-white m-2">Edit</a>
+                        <a className="btn btn-sm btn-danger text-white">Delete</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">4</th>
+                      <td>
+                        <h4>How to success through market segmentation</h4>
+                        <a className="btn btn-sm btn-dark text-white m-2">Edit</a>
+                        <a className="btn btn-sm btn-danger text-white">Delete</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">5</th>
+                      <td>
+                        <h4>How to success through market segmentation</h4>
+                        <a className="btn btn-sm btn-dark text-white m-2">Edit</a>
+                        <a className="btn btn-sm btn-danger text-white">Delete</a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </section>
@@ -145,4 +90,4 @@ function Addbook() {
   );
 }
 
-export default Addbook;
+export default BookList;

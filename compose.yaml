@@ -32,6 +32,9 @@ services:
       POSTGRES_PASSWORD: testpassword
       POSTGRES_DB: Custom
     ports:
-      - "5432:5432"
+      - "5430:5432"
     volumes:
-      - ./data:/var/www/ampouletude.com/html/source/postgressdemo
+      - ./data:/Users/mac/Documents/work2/dockertask/postgressdemo
+
+
+#/var/www/ampouletude.com/html/source/postgressdemo
