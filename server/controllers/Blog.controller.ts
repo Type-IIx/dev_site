@@ -54,6 +54,37 @@ BlogController.get("/:id", async (req, res, next) => {
     }
 })
 
+BlogController.delete("/delete/:id", async (req, res, next) => {
+    try {
+        const authRes = authenticateToken(req as unknown as CustomRequest, res, next);
+        if (authRes) {
+            const articleId = req.params.id;
+            if (articleId) {
+                const book = await prisma.post.delete({
+                    where: {
+                        id: Number(articleId)
+                    }
+                })
+                res.status(200).json(book)
+            } else {
+                res.status(500).json({
+                    failed: true,
+                    message: "Id not correct"
+                })
+            }
+
+        } else {
+            res.status(401).json({ authorized: false })
+        }
+    } catch (e) {
+        console.log("error here")
+        console.log(e)
+
+
+        res.status(500)
+    }
+})
+
 BlogController.post("/create", upload.single("image"), async (req, res, next) => {
     try {
         const myreq = req as CustomRequest;

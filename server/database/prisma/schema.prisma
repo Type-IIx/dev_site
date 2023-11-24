@@ -51,3 +51,14 @@ model Book {
   BookUrl           String   @default("")
   created           DateTime @default(now())
 }
+
+model FormDataCoaching {
+  id         String  @id @default(cuid())
+  fee_string String
+  email      String
+  duration   Int
+  forum      String
+  username   String
+  referal    String?
+  agreement  String?
+}

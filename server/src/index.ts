@@ -6,6 +6,7 @@ import { BlogController } from "../controllers/Blog.controller";
 import { UserController } from "../controllers/User.controller";
 import { SettingController } from "../controllers/Setting.controller";
 import { BookController } from "../controllers/Book.controller";
+import { SubmissionController } from "../controllers/Submission.controller";
 
 dotenv.config();
 
@@ -18,14 +19,15 @@ app.use(express.json())
 
 app.use(cors())
 
-app.use("/api/blog",BlogController);
-app.use("/api/settings",SettingController)
-app.use("/api/book",BookController)
-app.use("/api",UserController)
+app.use("/api/blog", BlogController);
+app.use("/api/settings", SettingController)
+app.use("/api/book", BookController)
+app.use("/api", UserController)
+app.use("/api/submissions", SubmissionController)
 
 app.use("/images", express.static("uploads"))
 
 
 app.listen(3030, () => {
-    console.log(`Server running on http://localhost:3030`);
-  });
+  console.log(`Server running on http://localhost:3030`);
+});

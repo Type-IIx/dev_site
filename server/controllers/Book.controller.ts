@@ -144,10 +144,7 @@ BookController.delete("/delete/:id", async (req, res, next) => {
     } catch (e) {
         console.log("error here")
         console.log(e)
-        const file = req.file as Express.Multer.File;
-        if (file) {
-            deleteFile("/uploads/" + file.filename)
-        }
+
 
         res.status(500)
     }

@@ -46,7 +46,10 @@ export default function Menu() {
                       <Link href="/articles">Blog</Link>
                     </li>
                     <li>
-                      <Link href="/admpanel/addblog">Add Blog</Link>
+                      <Link href="/admpanel/coachings">Formdata</Link>
+                    </li>
+                    <li>
+                      <Link href="/admpanel/bloglist">Posts</Link>
                     </li>
                     <li>
                       <Link href="/admpanel/booklist">Books</Link>
