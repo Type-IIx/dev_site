@@ -1,12 +1,15 @@
 import Head from "next/head";
-import React from "react";
-import AdminWrapper from "../../components/AdminComps/AdminWrapper";
-import AdminChecker from "../../components/AdminComps/AdminChecker";
+import React, { useEffect, useState } from "react";
 import { useRef } from "react";
-import { BASE_URL } from "../../constants/apiInfo";
-import { axiosInstance } from "../../utils/apiHandler";
+
 import { toast } from "react-toastify";
 import { Editor } from "@tinymce/tinymce-react";
+import { useRouter } from "next/router";
+import AdminWrapper from "../../../components/AdminComps/AdminWrapper";
+import AdminChecker from "../../../components/AdminComps/AdminChecker";
+import { axiosInstance } from "../../../utils/apiHandler";
+import { BASE_URL } from "../../../constants/apiInfo";
+import axios from "axios";
 
 
 function Addbook() {
@@ -15,88 +18,89 @@ function Addbook() {
   const priceRef = useRef(null);
   const bookRef = useRef(null);
   const editorRef = useRef(null);
+  const [bookId, setBookId] = useState(-1);
+  const [book, setBook] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  
 
 
-  const handleImport = async () => {
-    let form_data = new FormData();
-    const file =
-      bookRef.current.files.length > 0 ? bookRef.current.files[0] : null;
-    if (file) {
-      form_data.append("book", file, file.name);
-      form_data.append("title", titleRef.current.value);
-      form_data.append("price", priceRef.current.value);
-      form_data.append("description",editorRef.current.getContent())
-      const url = BASE_URL + "book/create";
-      const res = await axiosInstance.post(url, form_data);
-      if (res.status === 201) {
-        const resp_json = await res.data;
-        console.log(`Received data ${resp_json}`);
-        return resp_json;
-      } else {
-        return false;
+  const fethBook = async () => {
+    setLoading(true);
+    if (bookId !== -1) {
+      console.log(`Fetching Article ${bookId}`);
+      const url = BASE_URL + `book/${bookId}`;
+      const res = await axios.get(url);
+      if (res.status === 200) {
+        const data = await res.data;
+        setBook(data);
       }
-    } else {
-      toast.warning("Please select a file");
     }
+    setLoading(false);
   };
+
+  useEffect(() => {
+    if (router.isReady) {
+      setBookId(router.query.id);
+    }
+  }, [router.isReady]);
+
+  useEffect(() => {
+    fethBook();
+  }, [bookId]);
+
+  
 
   const handleEdit = async (id_) => {
     let form_data = new FormData();
     const image =
       imageRef.current.files.length > 0 ? imageRef.current.files[0] : null;
+
+    form_data.append("title", titleRef.current.value);
+    form_data.append("price", priceRef.current.value);
+    form_data.append("description",editorRef.current.getContent())
     if (image) {
       form_data.append("image", image, image.name);
 
-      const url = BASE_URL + `book/edit/${id_}`;
+      
+    } 
+    const url = BASE_URL + `book/edit/${id_}`;
       const res = await axiosInstance.post(url, form_data);
       if (res.status === 200) {
         return true;
       } else {
         return false;
       }
-    } else {
-      toast.warning("Please select an image");
-    }
   };
 
   const submitData = async (e) => {
     e.preventDefault();
-    const file =
-      bookRef.current.files.length > 0 ? bookRef.current.files[0] : null;
-    const image =
-      imageRef.current.files.length > 0 ? imageRef.current.files[0] : null;
-    if (!file) {
-      toast.warning("Please select a file");
-    } else if (!image) {
-      toast.warning("Please select an image");
+    
+    const res2 = await handleEdit(bookId);
+    if (res2) {
+       toast.success("Success");
     } else {
-      const res = await handleImport();
-      if (res) {
-        const res2 = await handleEdit(res.id);
-        if (res2) {
-          toast.success("Success");
-        } else {
-          toast.error("Failed Import");
-        }
-      } else {
-        toast.error("Failed Import");
-      }
+        toast.error("Failed Edit");
     }
-  };
+      
+    }
+
 
   return (
     <>
       <Head>
-        <title>Add New Book</title>
+        <title>Edit book</title>
       </Head>
       <AdminWrapper>
         <AdminChecker>
-          <section className="price-page-section">
+        {!loading && book && (
+            <>
+            <section className="price-page-section">
             <div className="auto-container">
               <div className="row clearfix">
                 <div className="col-md-12">
                   <div className="sec-title-two my-5 text-center">
-                    <div className="title color-three">Add new Book</div>
+                    <div className="title color-three">Edit Book</div>
                   </div>
                 </div>
               </div>
@@ -108,6 +112,7 @@ function Addbook() {
                       ref={titleRef}
                       type="text"
                       className="form-control"
+                      defaultValue={book.title}
                       placeholder="Title"
                     />
                   </div>
@@ -117,6 +122,7 @@ function Addbook() {
                       ref={priceRef}
                       type="text"
                       className="form-control"
+                      defaultValue={book.price}
                       placeholder="Price"
                     />
                   </div>
@@ -125,6 +131,7 @@ function Addbook() {
                     <Editor
                       apiKey="and0waidxlwtdyuu0jigei07tkx7coltmyqldar2ji3i9azr"
                       onInit={(evt, editor) => (editorRef.current = editor)}
+                      initialValue={book.description}
                       init={{
                         height: 500,
                         menubar: true,
@@ -166,10 +173,10 @@ function Addbook() {
                     />
                   </div>
 
-                  <div className="form-group">
+                  {/* <div className="form-group">
                     <label>Book (PDF)</label>
                     <input ref={bookRef} type="file" className="form-control" />
-                  </div>
+                  </div> */}
                   <button
                     onClick={submitData}
                     className="btn btn-primary float-right"
@@ -180,6 +187,10 @@ function Addbook() {
               </div>
             </div>
           </section>
+
+            </>
+        )}
+          
         </AdminChecker>
       </AdminWrapper>
     </>

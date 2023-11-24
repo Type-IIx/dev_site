@@ -49,7 +49,7 @@ export default function Menu() {
                       <Link href="/admpanel/addblog">Add Blog</Link>
                     </li>
                     <li>
-                      <Link href="/admpanel/addbook">Add Book</Link>
+                      <Link href="/admpanel/booklist">Books</Link>
                     </li>
                     <li>
                       <Link href="/admpanel/settings">Settings</Link>
