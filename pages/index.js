@@ -1,7 +1,47 @@
 import Head from "next/head";
 import Wrapper from "../components/Wrapper";
+import { use, useEffect, useState } from "react";
+import { BASE_DOMAIN, BASE_URL } from "../constants/apiInfo";
+import axios from "axios";
+import BookCard from "../components/BookCard";
+import { formatDate } from "../utils/helpers";
 
 export default function Home() {
+
+  const [articles,setArticles] = useState([])
+  const [books,setBooks] = useState([])
+  const [loading,setLoading] = useState(true)
+
+  const fetchArticles = async () => {
+    const url = BASE_URL + "blog/blogs";
+    const res = await axios.get(url);
+    if (res.status === 200) {
+      const data = await res.data;
+      setArticles(data);
+    }
+  }
+
+  const fetchBooks = async () => {
+    const url = BASE_URL + "book/books";
+    const res = await axios.get(url);
+    if (res.status === 200) {
+      const data = await res.data;
+      setBooks(data);
+    }
+  }
+
+  const fetchData = async () => {
+    setLoading(true);
+    fetchArticles();
+    fetchBooks();
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    fetchData();
+  },[])
+
+
   return (
     <>
       <Head>
@@ -134,7 +174,12 @@ export default function Home() {
               <h2>Popular Books</h2>
             </div>
             <div className="row clearfix">
-              <div className="course-block col-lg-3 col-md-6 col-sm-12">
+              {books.map((e,i) => {
+                if (i < 4) {
+                  return <BookCard book={e} key={`home-book-${i}`} />
+                }
+              })}
+              {/* <div className="course-block col-lg-3 col-md-6 col-sm-12">
                 <div
                   className="inner-box wow fadeInLeft animated"
                   data-wow-delay="0ms"
@@ -246,9 +291,9 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
-              <div className="course-block col-lg-3 col-md-6 col-sm-12">
+              {/* <div className="course-block col-lg-3 col-md-6 col-sm-12">
                 <div
                   className="inner-box wow fadeInLeft animated"
                   data-wow-delay="450ms"
@@ -284,7 +329,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </section>
@@ -296,7 +341,41 @@ export default function Home() {
               <h2>News Feeds</h2>
             </div>
             <div className="row clearfix">
-              <div className="news-block-four col-lg-4 col-md-6 col-sm-12">
+              {
+                articles.map((e,i) => {
+                  if (i < 3) {
+                    return <div className="news-block-four col-lg-4 col-md-6 col-sm-12">
+                    <div className="inner-box">
+                      <div className="image">
+                        <a>
+                          <img
+                            className="transition-500ms"
+                            src={BASE_DOMAIN + e.fileUrl}
+                            alt=""
+                          />
+                        </a>
+                        <a className="arrow flaticon-right-arrow-1"></a>
+                        <a className="read-more">read more</a>
+                      </div>
+                      <div className="lower-content">
+                        <ul className="post-info">
+                          <li>{formatDate(e.created)}</li>
+                          {/* <li>
+                            <a>Consult</a>
+                          </li> */}
+                        </ul>
+                        <h4>
+                          <a>{e.title}</a>
+                        </h4>
+                      </div>
+                    </div>
+                  </div>
+                  }
+                })
+              }
+              
+
+              {/* <div className="news-block-four col-lg-4 col-md-6 col-sm-12">
                 <div className="inner-box">
                   <div className="image">
                     <a>
@@ -348,34 +427,7 @@ export default function Home() {
                     </h4>
                   </div>
                 </div>
-              </div>
-
-              <div className="news-block-four col-lg-4 col-md-6 col-sm-12">
-                <div className="inner-box">
-                  <div className="image">
-                    <a>
-                      <img
-                        className="transition-500ms"
-                        src="img/blog.jpg"
-                        alt=""
-                      />
-                    </a>
-                    <a className="arrow flaticon-right-arrow-1"></a>
-                    <a className="read-more">read more</a>
-                  </div>
-                  <div className="lower-content">
-                    <ul className="post-info">
-                      <li>January 21, 2022</li>
-                      <li>
-                        <a>Consult</a>
-                      </li>
-                    </ul>
-                    <h4>
-                      <a>To carry out put into action performto implement.</a>
-                    </h4>
-                  </div>
-                </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </section>

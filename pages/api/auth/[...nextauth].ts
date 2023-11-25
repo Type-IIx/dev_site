@@ -10,8 +10,8 @@ interface SessionWithJWT extends Session {
   token: string
 }
 
-//const AUTH_BACKEND = "http://backend:3030/api/"
-const AUTH_BACKEND = "http://localhost:3030/api/"
+const AUTH_BACKEND = "http://backend:3030/api/"
+//const AUTH_BACKEND = "http://localhost:3030/api/"
 
 
 export const authOptions: NextAuthOptions = {

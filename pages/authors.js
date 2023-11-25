@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   convertFromUSD,
   formatAndShowErrors,
@@ -12,6 +12,8 @@ import { AUTHORSHIP, SYMBOLS } from "../constants/prices";
 import { AuthorForm } from "../parsers/schema";
 import { toast } from "react-toastify";
 import Wrapper from "../components/Wrapper";
+import axios from "axios";
+import { BASE_URL } from "../constants/apiInfo";
 
 export default function Authors() {
   const [rates, setRates] = useState(false);
@@ -29,6 +31,13 @@ export default function Authors() {
     website: "",
     subject: "",
   });
+
+  const MarketingRef = useRef();
+  const EducationRef = useRef();
+  const ResearchRef = useRef();
+  const OpinionRef = useRef();
+  const OthersRef = useRef();
+  const agreementRef = useRef();
 
   // handlers here
 
@@ -83,7 +92,7 @@ export default function Authors() {
     setFormData(temp);
   };
 
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     try {
       e.preventDefault();
       if (checked) {
@@ -93,7 +102,42 @@ export default function Authors() {
           console.log(errors);
           formatAndShowErrors(toast, errors);
         } else {
-          toast.success("Sending Email now");
+          let temp = []
+          console.log(MarketingRef.current)
+          console.log(EducationRef.current)
+          console.log(ResearchRef.current)
+          console.log(OpinionRef.current)
+          console.log(OthersRef.current)
+          if (MarketingRef.current.checked) {
+            temp.push("Marketing")
+          }
+          if (EducationRef.current.checked) {
+            temp.push("Education")
+          }
+          if (ResearchRef.current.checked) {
+            temp.push("Research")
+          }
+          if (OpinionRef.current.checked) {
+            temp.push("Opinion")
+          }
+          if (OthersRef.current.checked) {
+            temp.push("Others")
+          }
+
+          const body = {...formData,
+            agreement : agreementRef.current.value,
+            authorships,
+            fee_string : `${SYMBOLS[selectedCurrency]} ${prices.total}`,
+            intent : temp.join(",")
+            }
+            console.log(body)
+            const url = BASE_URL + "submissions/authors/create"
+            const res = await axios.post(url,body);
+            if (res){
+              toast.success("Sending Email now");
+            }else{
+              toast.error("Failed Saving submission")
+            }
         }
       } else {
         toast.error("Agree to terms");
@@ -239,6 +283,7 @@ export default function Authors() {
                               <input
                                 type="checkbox"
                                 className="form-check-input"
+                                ref={MarketingRef}
                               />
                               <label className="form-check-label">
                                 Marketing
@@ -248,6 +293,7 @@ export default function Authors() {
                               <input
                                 type="checkbox"
                                 className="form-check-input"
+                                ref={EducationRef}
                               />
                               <label className="form-check-label">
                                 Education
@@ -257,6 +303,7 @@ export default function Authors() {
                               <input
                                 type="checkbox"
                                 className="form-check-input"
+                                ref={ResearchRef}
                               />
                               <label className="form-check-label">
                                 Research
@@ -266,6 +313,7 @@ export default function Authors() {
                               <input
                                 type="checkbox"
                                 className="form-check-input"
+                                ref={OpinionRef}
                               />
                               <label className="form-check-label">
                                 Opinon/Editorial
@@ -275,6 +323,7 @@ export default function Authors() {
                               <input
                                 type="checkbox"
                                 className="form-check-input"
+                                ref={OthersRef}
                               />
                               <label className="form-check-label">Others</label>
                             </div>
@@ -286,13 +335,15 @@ export default function Authors() {
                                 name="subject"
                                 value={formData.subject}
                                 onChange={formHandler}
+                              
                               />
                             </div>
                             <p className="mb-2">
                               Clickwrap agreement &amp; waiver
                             </p>
                             <div className="form-group">
-                              <textarea name="message" defaultValue={""} />
+                              <textarea name="message" defaultValue={""} ref={agreementRef} />
+
                             </div>
                             <div className="form-group form-check mt-3">
                               <input

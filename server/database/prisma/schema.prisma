@@ -5,15 +5,15 @@ generator client {
   provider = "prisma-client-js"
 }
 
-//datasource db {
-//  provider = "postgresql"
-//  url      = "postgresql://testuser:testpassword@database:5432/Custom"
-//}
-
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = "postgresql://testuser:testpassword@database:5432/Custom"
 }
+
+//datasource db {
+//provider = "sqlite"
+//url      = "file:./dev.db"
+//}
 
 model User {
   id       String   @id @default(cuid())
@@ -61,4 +61,26 @@ model FormDataCoaching {
   username   String
   referal    String?
   agreement  String?
+}
+
+model FormDataConsultancy {
+  id         String  @id @default(cuid())
+  fee_string String
+  email      String
+  duration   Int
+  forum      String
+  username   String
+  referal    String?
+  agreement  String?
+}
+
+model FormDataAuthors {
+  id          String  @id @default(cuid())
+  fee_string  String
+  email       String
+  authorships Int
+  website     String
+  intent      String
+  subject     String?
+  agreement   String?
 }

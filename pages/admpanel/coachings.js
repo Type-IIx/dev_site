@@ -2,8 +2,28 @@ import Head from "next/head";
 import AdminWrapper from "../../components/AdminComps/AdminWrapper";
 import AdminChecker from "../../components/AdminComps/AdminChecker";
 import SubmissionSideBar from "../../components/AdminComps/SubmissionSideBar";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { BASE_URL } from "../../constants/apiInfo";
 
 export default function Formdatacoaching() {
+
+  const [coachings,setCoachings] = useState([])
+  const [loading,setLoading] = useState(true);
+
+  const fetchCoachings = async () => {
+    setLoading(true)
+    const res = await axios.get(BASE_URL + "submissions/coaching/all")
+    if (res.status === 200){
+      const data = await res.data;
+      setCoachings(data)
+    }
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    fetchCoachings();
+  },[])
 
   return (
     <>
@@ -12,7 +32,9 @@ export default function Formdatacoaching() {
       </Head>
       <AdminWrapper>
         <AdminChecker>
-        <div className="sidebar-page-container">
+          {
+            !loading && <>
+            <div className="sidebar-page-container">
         <div className="auto-container">
           <div className="row clearfix">
             <div className="col-md-12">
@@ -42,22 +64,24 @@ export default function Formdatacoaching() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>$250</td>
-                        <td>Otto@email.com</td>
-                        <td>3 months</td>
-                        <td>T-Nation.com</td>
-                        <td>@mdo</td>
-                        <td>OTTOP098</td>
-                        <td>
-                          In publishing and graphic design, Lorem ipsum is a
-                          placeholder text commonly used to demonstrate the
-                          visual form of a document or a typeface without
-                          relying on meaningful content. Lorem ipsum may be used
-                          as a placeholder before final copy is available
-                        </td>
-                      </tr>
+                        {
+                          coachings.map((e,i) => {
+                            return <tr key={`coaching-row-${i}`}>
+                            <th scope="row">{e.id}</th>
+                            <td>{e.fee_string}</td>
+                            <td>{e.email}</td>
+                            <td>{e.duration} months</td>
+                            <td>{e.forum}</td>
+                            <td>{e.username}</td>
+                            <td>{e.referal}</td>
+                            <td>
+                              {e.agreement}
+                            </td>
+                          </tr>
+
+                          })
+                        }
+                      
                     </tbody>
                   </table>
                 </div>
@@ -66,6 +90,9 @@ export default function Formdatacoaching() {
           </div>
         </div>
       </div>
+            </>
+          }
+        
 
         </AdminChecker>
 

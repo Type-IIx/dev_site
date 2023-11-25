@@ -1,5 +1,6 @@
 import React from "react";
 import { BASE_DOMAIN, BASE_URL } from "../constants/apiInfo";
+import Link from "next/link";
 
 function BookCard({ book }) {
   return (
@@ -16,20 +17,20 @@ function BookCard({ book }) {
         }}
       >
         <div className="image">
-          <a href="#">
+          <Link href={`/bookdetails/${book.id}`}>
             <img
               className="transition-500ms"
               src={BASE_DOMAIN + book.ImageUrl}
               alt=""
             />
-          </a>
+          </Link>
         </div>
         <div className="lower-content">
           <h5>
             <a href="#">{book.title}</a>
           </h5>
           <h4 className="price text-blue mb-3">${book.price}</h4>
-          <div className="btn-group post-info">
+          {/* <div className="btn-group post-info">
             <a
               href={BASE_URL + `book/download/${book.id}`}
               target="_blank"
@@ -41,7 +42,7 @@ function BookCard({ book }) {
             <button type="button" className="btn btn-link btn-sm">
               Order
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

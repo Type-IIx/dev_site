@@ -2,8 +2,30 @@ import Head from "next/head";
 import AdminWrapper from "../../components/AdminComps/AdminWrapper";
 import AdminChecker from "../../components/AdminComps/AdminChecker";
 import SubmissionSideBar from "../../components/AdminComps/SubmissionSideBar";
+import axios from "axios";
+import { BASE_URL } from "../../constants/apiInfo";
+import { useEffect, useState } from "react";
 
 export default function Formdataauthors() {
+
+  const [authors,setAuthors] = useState([])
+  const [loading,setLoading] = useState(true);
+
+  const fetchAuthors = async () => {
+    setLoading(true)
+    const res = await axios.get(BASE_URL + "submissions/authors/all")
+    if (res.status === 200){
+      const data = await res.data;
+      setAuthors(data)
+    }
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    fetchAuthors();
+  },[])
+
+
   return (
     <>
       <Head>
@@ -11,7 +33,9 @@ export default function Formdataauthors() {
       </Head>
       <AdminWrapper>
         <AdminChecker>
-        <div className="sidebar-page-container">
+          {
+            !loading && <>
+            <div className="sidebar-page-container">
         <div className="auto-container">
           <div className="row clearfix">
             <div className="col-md-12">
@@ -41,27 +65,27 @@ export default function Formdataauthors() {
                       </tr>
                     </thead>
                     <tbody>
+                    {
+                          authors.map((e,i) => {
+                            return <tr key={`coaching-row-${i}`}>
+                            <th scope="row">{e.id}</th>
+                        <td>{e.fee_string}</td>
+                        <td>{e.email}</td>
+                        <td>{e.website}</td>
+                        <td>{e.authorships}</td>
+                        <td>{e.intent}</td>
+                        <td>
+                          {e.subject}
+                        </td>
+                        <td>
+                          {e.agreement}
+                        </td>
+                          </tr>
+
+                          })
+                        }
                       <tr>
-                        <th scope="row">1</th>
-                        <td>$300</td>
-                        <td>Otto@email.com</td>
-                        <td>Loreipsum</td>
-                        <td>2</td>
-                        <td>Education, Research, Marketing</td>
-                        <td>
-                          In publishing and graphic design, Lorem ipsum is a
-                          placeholder text commonly used to demonstrate the
-                          visual form of a document or a typeface without
-                          relying on meaningful content. Lorem ipsum may be used
-                          as a placeholder before final copy is available
-                        </td>
-                        <td>
-                          In publishing and graphic design, Lorem ipsum is a
-                          placeholder text commonly used to demonstrate the
-                          visual form of a document or a typeface without
-                          relying on meaningful content. Lorem ipsum may be used
-                          as a placeholder before final copy is available
-                        </td>
+                        
                       </tr>
                     </tbody>
                   </table>
@@ -71,6 +95,9 @@ export default function Formdataauthors() {
           </div>
         </div>
       </div>
+            </>
+          }
+        
 
 
         </AdminChecker>

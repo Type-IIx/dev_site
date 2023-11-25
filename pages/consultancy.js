@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   convertFromUSD,
   formatAndShowErrors,
@@ -11,6 +11,8 @@ import { CONSULTANCY, SYMBOLS } from "../constants/prices";
 import { CoachingForm } from "../parsers/schema";
 import { toast } from "react-toastify";
 import Wrapper from "../components/Wrapper";
+import { BASE_URL } from "../constants/apiInfo";
+import axios from "axios";
 
 export default function Consultancy() {
   const [rates, setRates] = useState(false);
@@ -28,6 +30,9 @@ export default function Consultancy() {
     username: "",
     referal: "",
   });
+
+  const agreementRef = useRef();
+  const forumRef = useRef();
 
   // handlers here
 
@@ -82,7 +87,7 @@ export default function Consultancy() {
     setFormData(temp);
   };
 
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     try {
       e.preventDefault();
       if (checked) {
@@ -92,7 +97,20 @@ export default function Consultancy() {
           console.log(errors);
           formatAndShowErrors(toast, errors);
         } else {
-          toast.success("Sending Email now");
+          const body = {...formData,
+            agreement : agreementRef.current.value,
+            forum : forumRef.current.value,
+            duration : months,
+            fee_string : `${SYMBOLS[selectedCurrency]} ${prices.total}`
+            }
+            console.log(body)
+            const url = BASE_URL + "submissions/consultancy/create"
+            const res = await axios.post(url,body);
+            if (res){
+              toast.success("Sending Email now");
+            }else{
+              toast.error("Failed Saving submission")
+            }
         }
       } else {
         toast.error("Agree to terms");
@@ -243,6 +261,7 @@ export default function Consultancy() {
                             <select
                               name="currency"
                               className="custom-select-box"
+                              ref={forumRef}
                             >
                               <option>Bodybuilding.com</option>
                               <option>T-Nation.com</option>
@@ -271,7 +290,7 @@ export default function Consultancy() {
 
                           <p className="mb-2">Clickwrap agreement & waiver</p>
                           <div className="form-group">
-                            <textarea name="message"></textarea>
+                            <textarea name="message" ref={agreementRef}></textarea>
                           </div>
                           <small className="form-text text-muted">
                             Agreement to Transmit Bitcoin (BTC): Coach will

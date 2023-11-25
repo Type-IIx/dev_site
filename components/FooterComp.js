@@ -1,4 +1,11 @@
+import { toast } from "react-toastify";
+
 export default function FooterComp() {
+
+  const handleContact = () => {
+    toast.info("processing")
+  }
+
   return (
     <>
       <section className="testimonial-section">
@@ -178,6 +185,7 @@ export default function FooterComp() {
                           className="theme-btn btn-style-eight"
                           type="submit"
                           name="submit-form"
+                          onClick={handleContact}
                         >
                           <span className="txt">Contact Us</span>
                         </button>
