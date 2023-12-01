@@ -2353,7 +2353,7 @@
   text-align: center;
   width: 100%;
   display: block;
-  padding: 90px 0px;
+  padding: 90px 0px 0px;
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -2522,6 +2522,17 @@
 }
 
 .video-intro-widget .lower-content .buttons-box .wishlist-btn {
+  position: relative;
+  width: 100%;
+  text-align: center;
+  padding: 18px 15px;
+  font-weight: 700;
+  font-size: var(--font-16);
+  color: var(--white-color);
+  background-color: var(--main-color);
+}
+
+.checkout-btn {
   position: relative;
   width: 100%;
   text-align: center;
@@ -4798,6 +4809,11 @@
 .cat-list-two li a:hover {
   color: var(--white-color);
   background-color: var(--main-color);
+}
+
+.cat-list-two li a:active {
+  color: var(--white-color);
+  background-color: var(--main-color) !important;
 }
 
 .cat-list-two li a span {
@@ -7280,4 +7296,13 @@
 .services-page-section {
   position: relative;
   padding: 130px 0px 70px;
+}
+
+.list-group-item {
+  border: 2px solid #f0f0f0;
+}
+
+.list-group-item:first-child {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }

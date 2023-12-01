@@ -46,7 +46,7 @@ export default function Coaching() {
       if (Number(e.target.value) >= 1 && Number(e.target.value) <= 12) {
         setMonths(Number(e.target.value));
       }
-    } catch {}
+    } catch { }
   };
 
   async function updateRates() {
@@ -89,7 +89,7 @@ export default function Coaching() {
     setFormData(temp);
   };
 
-  const submitForm = async  (e) => {
+  const submitForm = async (e) => {
     try {
       e.preventDefault();
       if (checked) {
@@ -99,21 +99,22 @@ export default function Coaching() {
           console.log(errors);
           formatAndShowErrors(toast, errors);
         } else {
-          const body = {...formData,
-          agreement : agreementRef.current.value,
-          forum : forumRef.current.value,
-          duration : months,
-          fee_string : `${SYMBOLS[selectedCurrency]} ${prices.total}`
+          const body = {
+            ...formData,
+            agreement: agreementRef.current.value,
+            forum: forumRef.current.value,
+            duration: months,
+            fee_string: `${SYMBOLS[selectedCurrency]} ${prices.total}`
           }
           console.log(body)
           const url = BASE_URL + "submissions/coaching/create"
-          const res = await axios.post(url,body);
-          if (res){
-            toast.success("Sending Email now");
-          }else{
+          const res = await axios.post(url, body);
+          if (res) {
+            toast.success("Success");
+          } else {
             toast.error("Failed Saving submission")
           }
-          
+
         }
       } else {
         toast.error("Agree to terms");

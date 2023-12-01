@@ -50,7 +50,7 @@ export default function Authors() {
       if (Number(e.target.value) >= 1 && Number(e.target.value) <= 5) {
         setAuthorShips(Number(e.target.value));
       }
-    } catch {}
+    } catch { }
   };
 
   async function updateRates() {
@@ -124,20 +124,21 @@ export default function Authors() {
             temp.push("Others")
           }
 
-          const body = {...formData,
-            agreement : agreementRef.current.value,
+          const body = {
+            ...formData,
+            agreement: agreementRef.current.value,
             authorships,
-            fee_string : `${SYMBOLS[selectedCurrency]} ${prices.total}`,
-            intent : temp.join(",")
-            }
-            console.log(body)
-            const url = BASE_URL + "submissions/authors/create"
-            const res = await axios.post(url,body);
-            if (res){
-              toast.success("Sending Email now");
-            }else{
-              toast.error("Failed Saving submission")
-            }
+            fee_string: `${SYMBOLS[selectedCurrency]} ${prices.total}`,
+            intent: temp.join(",")
+          }
+          console.log(body)
+          const url = BASE_URL + "submissions/authors/create"
+          const res = await axios.post(url, body);
+          if (res) {
+            toast.success("Success");
+          } else {
+            toast.error("Failed Saving submission")
+          }
         }
       } else {
         toast.error("Agree to terms");
@@ -335,7 +336,7 @@ export default function Authors() {
                                 name="subject"
                                 value={formData.subject}
                                 onChange={formHandler}
-                              
+
                               />
                             </div>
                             <p className="mb-2">

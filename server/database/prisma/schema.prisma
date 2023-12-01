@@ -11,8 +11,8 @@ datasource db {
 }
 
 //datasource db {
-//provider = "sqlite"
-//url      = "file:./dev.db"
+//  provider = "sqlite"
+//  url      = "file:./dev.db"
 //}
 
 model User {
@@ -83,4 +83,17 @@ model FormDataAuthors {
   intent      String
   subject     String?
   agreement   String?
+}
+
+model FormDataCheckout {
+  id      String @id @default(cuid())
+  title   String
+  price   Float  @default(0)
+  name    String
+  surname String
+  email   String
+  address String
+  country String
+  state   String
+  zip     String
 }

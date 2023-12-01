@@ -1,10 +1,34 @@
+import axios from "axios";
+import { useState } from "react";
 import { toast } from "react-toastify";
+import { BASE_URL } from "../constants/apiInfo";
 
 export default function FooterComp() {
 
-  const handleContact = () => {
-    toast.info("processing")
+  const [support, setSupport] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: ""
+  })
+
+  const handleContact = async (e) => {
+    e.preventDefault();
+
+    const resp = await axios.post(BASE_URL + "submissions/support", support)
+    if (resp.status === 200) {
+      const data = await resp.data;
+      toast.success("Success")
+    } else {
+      toast.error("Failed saving checkout form")
+    }
   }
+
+  const handleChange = (e) => {
+    let temp = { ...support };
+    temp[e.target.name] = e.target.value;
+    setSupport(temp);
+  };
 
   return (
     <>
@@ -145,7 +169,9 @@ export default function FooterComp() {
                         <span className="icon flaticon-user-4"></span>
                         <input
                           type="text"
-                          name="username"
+                          name="name"
+                          value={support.name}
+                          onChange={handleChange}
                           placeholder="Enter Name"
                           required
                         />
@@ -156,6 +182,8 @@ export default function FooterComp() {
                         <input
                           type="email"
                           name="email"
+                          value={support.email}
+                          onChange={handleChange}
                           placeholder="E-Mail Address"
                           required
                         />
@@ -163,12 +191,13 @@ export default function FooterComp() {
 
                       <div className="form-group col-lg-12 col-md-12 col-sm-12">
                         <span className="icon flaticon-notebook"></span>
-                        <select name="country" className="custom-select-box">
+                        <select className="custom-select-box"
+                          name="subject"
+                          value={support.subject}
+                          onChange={handleChange}
+                        >
                           <option>Select Subject</option>
-                          <option>Subject 01</option>
-                          <option>Subject 02</option>
-                          <option>Subject 03</option>
-                          <option>Subject 04</option>
+                          <option value="Support">Support</option>
                         </select>
                       </div>
 
@@ -176,6 +205,8 @@ export default function FooterComp() {
                         <span className="icon flaticon-pen"></span>
                         <textarea
                           name="message"
+                          value={support.message}
+                          onChange={handleChange}
                           placeholder="Message"
                         ></textarea>
                       </div>

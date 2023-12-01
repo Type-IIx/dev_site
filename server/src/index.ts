@@ -7,6 +7,7 @@ import { UserController } from "../controllers/User.controller";
 import { SettingController } from "../controllers/Setting.controller";
 import { BookController } from "../controllers/Book.controller";
 import { SubmissionController } from "../controllers/Submission.controller";
+import { CheckoutController } from "../controllers/Checkout.controller";
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.use("/api/settings", SettingController)
 app.use("/api/book", BookController)
 app.use("/api", UserController)
 app.use("/api/submissions", SubmissionController)
+app.use("/api/checkout",CheckoutController)
 
 app.use("/images", express.static("uploads"))
 
