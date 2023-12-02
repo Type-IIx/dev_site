@@ -15,7 +15,7 @@ function AdminChecker(props) {
           router.push("/");
         }
       } else {
-        toast.success("login trigger");
+
         if (props.isLogin) {
           router.push("/admpanel/addblog");
         }

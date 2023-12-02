@@ -86,6 +86,17 @@ export default function Consultancy() {
     temp[k] = v;
     setFormData(temp);
   };
+  const clearForm = () => {
+    setFormData({
+      email: "",
+      username: "",
+      referal: "",
+    });
+    setSelectedCurrency(Currencies.USD);
+    setMonths(1);
+    agreementRef.current.value = "";
+    forumRef.current.value = "";
+  }
 
   const submitForm = async (e) => {
     try {
@@ -109,6 +120,7 @@ export default function Consultancy() {
           const res = await axios.post(url, body);
           if (res) {
             toast.success("Success");
+            clearForm();
           } else {
             toast.error("Failed Saving submission")
           }

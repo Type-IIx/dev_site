@@ -68,7 +68,7 @@ export default function FooterComp() {
                 <div className="lower-box">
                   <div className="box-inner">
                     <div className="author-image">
-                      <img src="img/brazil.png" alt="" />
+                      <img src="/img/brazil.png" alt="" />
                     </div>
                     <h5>Alaxis D. Dowson</h5>
                     <div className="designation">During Coaching</div>
@@ -99,7 +99,7 @@ export default function FooterComp() {
                 <div className="lower-box">
                   <div className="box-inner">
                     <div className="author-image">
-                      <img src="img/usa.png" alt="" />
+                      <img src="/img/usa.png" alt="" />
                     </div>
                     <h5>SmallOnGear</h5>
                     <div className="designation">During Coaching</div>
@@ -129,7 +129,7 @@ export default function FooterComp() {
                 <div className="lower-box">
                   <div className="box-inner">
                     <div className="author-image">
-                      <img src="img/germany.png" alt="" />
+                      <img src="/img/germany.png" alt="" />
                     </div>
                     <h5>SonOfThor</h5>
                     <div className="designation">During Consultancy</div>
@@ -147,10 +147,10 @@ export default function FooterComp() {
             <div className="image-column col-lg-6 col-md-12 col-sm-12">
               <div className="inner-column">
                 <div className="image">
-                  <img src="img/contact-1.jpg" alt="" />
+                  <img src="/img/contact-1.jpg" alt="" />
                 </div>
                 <div className="image-two">
-                  <img src="img/contact-2.jpg" alt="" />
+                  <img src="/img/contact-2.jpg" alt="" />
                 </div>
               </div>
             </div>

@@ -25,6 +25,7 @@ export default function Coaching() {
     total: INTRODUCTORY,
     bitcoinTotal: 0,
   });
+  const [show, setShow] = useState(true);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -89,6 +90,18 @@ export default function Coaching() {
     setFormData(temp);
   };
 
+  const clearForm = () => {
+    setFormData({
+      email: "",
+      username: "",
+      referal: "",
+    });
+    setSelectedCurrency(Currencies.USD);
+    setMonths(1);
+    agreementRef.current.value = "";
+    forumRef.current.value = "";
+  }
+
   const submitForm = async (e) => {
     try {
       e.preventDefault();
@@ -111,6 +124,8 @@ export default function Coaching() {
           const res = await axios.post(url, body);
           if (res) {
             toast.success("Success");
+            clearForm();
+
           } else {
             toast.error("Failed Saving submission")
           }
@@ -220,148 +235,151 @@ export default function Coaching() {
                   <div className="price-block col-lg-6 col-md-6 col-sm-12">
                     <div className="inner-box">
                       <div className="contact-form">
-                        <form method="post" action="#">
-                          <p className="mb-2">
-                            Fee Structure (in various currencies)
-                          </p>
-                          <div className="form-group">
-                            <select
-                              name="currency"
-                              className="custom-select-box"
-                              required
-                              value={selectedCurrency}
-                              onChange={handleCurrencyChange}
-                            >
-                              <option value={Currencies.USD}>
-                                US Dollar ($)
-                              </option>
-                              <option value={Currencies.CAD}>
-                                Canadian Dollar (C$)
-                              </option>
-                              <option value={Currencies.EUR}>Euro (€)</option>
-                              <option value={Currencies.GBP}>
-                                Great British Sterling Pound (£)
-                              </option>
-                            </select>
-                          </div>
+                        {
+                          show && <form method="post" action="#">
+                            <p className="mb-2">
+                              Fee Structure (in various currencies)
+                            </p>
+                            <div className="form-group">
+                              <select
+                                name="currency"
+                                className="custom-select-box"
+                                required
+                                value={selectedCurrency}
+                                onChange={handleCurrencyChange}
+                              >
+                                <option value={Currencies.USD}>
+                                  US Dollar ($)
+                                </option>
+                                <option value={Currencies.CAD}>
+                                  Canadian Dollar (C$)
+                                </option>
+                                <option value={Currencies.EUR}>Euro (€)</option>
+                                <option value={Currencies.GBP}>
+                                  Great British Sterling Pound (£)
+                                </option>
+                              </select>
+                            </div>
 
-                          <p className="mb-2">
-                            To sign up for Coaching, enter your email
-                          </p>
-                          <div className="form-group">
-                            <input
-                              type="text"
-                              name="email"
-                              value={formData.email}
-                              onChange={formHandler}
-                              required
-                            />
-                          </div>
+                            <p className="mb-2">
+                              To sign up for Coaching, enter your email
+                            </p>
+                            <div className="form-group">
+                              <input
+                                type="text"
+                                name="email"
+                                value={formData.email}
+                                onChange={formHandler}
+                                required
+                              />
+                            </div>
 
-                          <p className="mb-2">Duration (in months)</p>
-                          <div className="form-group">
-                            <select
-                              name="currency"
-                              className="custom-select-box"
-                              required
-                              value={months}
-                              onChange={handleMonthsChange}
-                            >
-                              <option value={1}>1</option>
-                              <option value={2}>2</option>
-                              <option value={3}>3</option>
-                              <option value={4}>4</option>
-                              <option value={5}>5</option>
-                              <option value={6}>6</option>
-                              <option value={7}>7</option>
-                              <option value={8}>8</option>
-                              <option value={9}>9</option>
-                              <option value={10}>10</option>
-                              <option value={11}>11</option>
-                              <option value={12}>12</option>
-                            </select>
-                          </div>
+                            <p className="mb-2">Duration (in months)</p>
+                            <div className="form-group">
+                              <select
+                                name="currency"
+                                className="custom-select-box"
+                                required
+                                value={months}
+                                onChange={handleMonthsChange}
+                              >
+                                <option value={1}>1</option>
+                                <option value={2}>2</option>
+                                <option value={3}>3</option>
+                                <option value={4}>4</option>
+                                <option value={5}>5</option>
+                                <option value={6}>6</option>
+                                <option value={7}>7</option>
+                                <option value={8}>8</option>
+                                <option value={9}>9</option>
+                                <option value={10}>10</option>
+                                <option value={11}>11</option>
+                                <option value={12}>12</option>
+                              </select>
+                            </div>
 
-                          <small className="form-text text-muted">
-                            Planning proceeds in blocks ('mesocycles') of 3 or 4
-                            months, so it is suggested that you commit to no
-                            less than 3 months at a time to achieve your
-                            objective (e.g., bulking, cutting, recomping)
-                          </small>
+                            <small className="form-text text-muted">
+                              Planning proceeds in blocks ('mesocycles') of 3 or 4
+                              months, so it is suggested that you commit to no
+                              less than 3 months at a time to achieve your
+                              objective (e.g., bulking, cutting, recomping)
+                            </small>
 
-                          <p className="mb-2">From Forum</p>
-                          <div className="form-group">
-                            <select
-                              name="currency"
-                              className="custom-select-box"
-                              ref={forumRef}
-                            >
-                              <option>Bodybuilding.com</option>
-                              <option>T-Nation.com</option>
-                            </select>
-                          </div>
+                            <p className="mb-2">From Forum</p>
+                            <div className="form-group">
+                              <select
+                                name="currency"
+                                className="custom-select-box"
+                                ref={forumRef}
+                              >
+                                <option>Bodybuilding.com</option>
+                                <option>T-Nation.com</option>
+                              </select>
+                            </div>
 
-                          <p className="mb-2">Board Username</p>
-                          <div className="form-group">
-                            <input
-                              type="text"
-                              name="username"
-                              value={formData.username}
-                              onChange={formHandler}
-                            />
-                          </div>
+                            <p className="mb-2">Board Username</p>
+                            <div className="form-group">
+                              <input
+                                type="text"
+                                name="username"
+                                value={formData.username}
+                                onChange={formHandler}
+                              />
+                            </div>
 
-                          <p className="mb-2">Referal Code</p>
-                          <div className="form-group">
-                            <input
-                              type="text"
-                              name="referal"
-                              value={formData.referal}
-                              onChange={formHandler}
-                            />
-                          </div>
+                            <p className="mb-2">Referal Code</p>
+                            <div className="form-group">
+                              <input
+                                type="text"
+                                name="referal"
+                                value={formData.referal}
+                                onChange={formHandler}
+                              />
+                            </div>
 
-                          <p className="mb-2">Clickwrap agreement & waiver</p>
-                          <div className="form-group">
-                            <textarea name="message" ref={agreementRef}></textarea>
-                          </div>
-                          <small className="form-text text-muted">
-                            Agreement to Transmit Bitcoin (BTC): Coach will
-                            e-mail, to your provided e-mail address ([user's
-                            email]), the BTC address for payment, after you have
-                            read and agreed to the following terms
-                          </small>
+                            <p className="mb-2">Clickwrap agreement & waiver</p>
+                            <div className="form-group">
+                              <textarea name="message" ref={agreementRef}></textarea>
+                            </div>
+                            <small className="form-text text-muted">
+                              Agreement to Transmit Bitcoin (BTC): Coach will
+                              e-mail, to your provided e-mail address ([user's
+                              email]), the BTC address for payment, after you have
+                              read and agreed to the following terms
+                            </small>
 
-                          <div className="form-group form-check mt-3">
-                            <input
-                              type="checkbox"
-                              className="form-check-input"
-                              checked={checked}
-                              onChange={(e) => setChecked(e.target.checked)}
-                            />
-                            <label className="form-check-label">
-                              BY CLICKING THIS BUTTON, I AGREE TO TERMS &amp;
-                              WILL TRANSMIT PAYMENT WITHIN 12 HOURS OF RECEIPT
-                              OF EMAIL CONTAINING PAYMENT ADDRESS in the amount
-                              of:{" "}
-                              <strong>
-                                {`${SYMBOLS[selectedCurrency]} ${prices.total}`}{" "}
-                                or {`${prices.bitcoinTotal}`}BTC (
-                                {formatMBTC(prices.bitcoinTotal)} mBTC)
-                              </strong>
-                            </label>
-                          </div>
+                            <div className="form-group form-check mt-3">
+                              <input
+                                type="checkbox"
+                                className="form-check-input"
+                                checked={checked}
+                                onChange={(e) => setChecked(e.target.checked)}
+                              />
+                              <label className="form-check-label">
+                                BY CLICKING THIS BUTTON, I AGREE TO TERMS &amp;
+                                WILL TRANSMIT PAYMENT WITHIN 12 HOURS OF RECEIPT
+                                OF EMAIL CONTAINING PAYMENT ADDRESS in the amount
+                                of:{" "}
+                                <strong>
+                                  {`${SYMBOLS[selectedCurrency]} ${prices.total}`}{" "}
+                                  or {`${prices.bitcoinTotal}`}BTC (
+                                  {formatMBTC(prices.bitcoinTotal)} mBTC)
+                                </strong>
+                              </label>
+                            </div>
 
-                          <div className="form-group col-lg-12 col-md-12 col-sm-12">
-                            <button
-                              className="theme-btn btn-style-three"
-                              name="submit-form"
-                              onClick={submitForm}
-                            >
-                              <span className="txt">Submit</span>
-                            </button>
-                          </div>
-                        </form>
+                            <div className="form-group col-lg-12 col-md-12 col-sm-12">
+                              <button
+                                className="theme-btn btn-style-three"
+                                name="submit-form"
+                                onClick={submitForm}
+                              >
+                                <span className="txt">Submit</span>
+                              </button>
+                            </div>
+                          </form>
+                        }
+
                       </div>
                     </div>
                   </div>

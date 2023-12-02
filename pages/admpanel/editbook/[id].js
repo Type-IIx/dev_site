@@ -22,7 +22,7 @@ function Addbook() {
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  
+
 
 
   const fethBook = async () => {
@@ -49,7 +49,7 @@ function Addbook() {
     fethBook();
   }, [bookId]);
 
-  
+
 
   const handleEdit = async (id_) => {
     let form_data = new FormData();
@@ -58,32 +58,33 @@ function Addbook() {
 
     form_data.append("title", titleRef.current.value);
     form_data.append("price", priceRef.current.value);
-    form_data.append("description",editorRef.current.getContent())
+    form_data.append("description", editorRef.current.getContent())
     if (image) {
       form_data.append("image", image, image.name);
 
-      
-    } 
+
+    }
     const url = BASE_URL + `book/edit/${id_}`;
-      const res = await axiosInstance.post(url, form_data);
-      if (res.status === 200) {
-        return true;
-      } else {
-        return false;
-      }
+    const res = await axiosInstance.post(url, form_data);
+    if (res.status === 200) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   const submitData = async (e) => {
     e.preventDefault();
-    
+
     const res2 = await handleEdit(bookId);
     if (res2) {
-       toast.success("Success");
+      toast.success("Success");
+      router.push("/admpanel/booklist")
     } else {
-        toast.error("Failed Edit");
+      toast.error("Failed Edit");
     }
-      
-    }
+
+  }
 
 
   return (
@@ -93,104 +94,104 @@ function Addbook() {
       </Head>
       <AdminWrapper>
         <AdminChecker>
-        {!loading && book && (
+          {!loading && book && (
             <>
-            <section className="price-page-section">
-            <div className="auto-container">
-              <div className="row clearfix">
-                <div className="col-md-12">
-                  <div className="sec-title-two my-5 text-center">
-                    <div className="title color-three">Edit Book</div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="contact-form">
-                <form>
-                  <div className="form-group">
-                    <input
-                      ref={titleRef}
-                      type="text"
-                      className="form-control"
-                      defaultValue={book.title}
-                      placeholder="Title"
-                    />
+              <section className="price-page-section">
+                <div className="auto-container">
+                  <div className="row clearfix">
+                    <div className="col-md-12">
+                      <div className="sec-title-two my-5 text-center">
+                        <div className="title color-three">Edit Book</div>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="form-group">
-                    <input
-                      ref={priceRef}
-                      type="text"
-                      className="form-control"
-                      defaultValue={book.price}
-                      placeholder="Price"
-                    />
-                  </div>
+                  <div className="contact-form">
+                    <form>
+                      <div className="form-group">
+                        <input
+                          ref={titleRef}
+                          type="text"
+                          className="form-control"
+                          defaultValue={book.title}
+                          placeholder="Title"
+                        />
+                      </div>
 
-                  <div className="form-group">
-                    <Editor
-                      apiKey="and0waidxlwtdyuu0jigei07tkx7coltmyqldar2ji3i9azr"
-                      onInit={(evt, editor) => (editorRef.current = editor)}
-                      initialValue={book.description}
-                      init={{
-                        height: 500,
-                        menubar: true,
-                        plugins: [
-                          "advlist",
-                          "autolink",
-                          "lists",
-                          "link",
-                          "image",
-                          "charmap",
-                          "preview",
-                          "anchor",
-                          "searchreplace",
-                          "visualblocks",
-                          "code",
-                          "fullscreen",
-                          "insertdatetime",
-                          "media",
-                          "table",
-                          "code",
-                          "help",
-                          "wordcount",
-                        ],
-                        toolbar:
-                          "undo redo | blocks | " +
-                          "bold italic forecolor | alignleft aligncenter " +
-                          "alignright alignjustify | bullist numlist outdent indent | " +
-                          "removeformat",
-                      }}
-                    />
-                  </div>
+                      <div className="form-group">
+                        <input
+                          ref={priceRef}
+                          type="text"
+                          className="form-control"
+                          defaultValue={book.price}
+                          placeholder="Price"
+                        />
+                      </div>
 
-                  <div className="form-group">
-                    <label>Featured Image</label>
-                    <input
-                      ref={imageRef}
-                      type="file"
-                      className="form-control"
-                    />
-                  </div>
+                      <div className="form-group">
+                        <Editor
+                          apiKey="and0waidxlwtdyuu0jigei07tkx7coltmyqldar2ji3i9azr"
+                          onInit={(evt, editor) => (editorRef.current = editor)}
+                          initialValue={book.description}
+                          init={{
+                            height: 500,
+                            menubar: true,
+                            plugins: [
+                              "advlist",
+                              "autolink",
+                              "lists",
+                              "link",
+                              "image",
+                              "charmap",
+                              "preview",
+                              "anchor",
+                              "searchreplace",
+                              "visualblocks",
+                              "code",
+                              "fullscreen",
+                              "insertdatetime",
+                              "media",
+                              "table",
+                              "code",
+                              "help",
+                              "wordcount",
+                            ],
+                            toolbar:
+                              "undo redo | blocks | " +
+                              "bold italic forecolor | alignleft aligncenter " +
+                              "alignright alignjustify | bullist numlist outdent indent | " +
+                              "removeformat",
+                          }}
+                        />
+                      </div>
 
-                  {/* <div className="form-group">
+                      <div className="form-group">
+                        <label>Book Image</label>
+                        <input
+                          ref={imageRef}
+                          type="file"
+                          className="form-control"
+                        />
+                      </div>
+
+                      {/* <div className="form-group">
                     <label>Book (PDF)</label>
                     <input ref={bookRef} type="file" className="form-control" />
                   </div> */}
-                  <button
-                    onClick={submitData}
-                    className="btn btn-primary float-right"
-                  >
-                    Submit
-                  </button>
-                </form>
-              </div>
-            </div>
-          </section>
+                      <button
+                        onClick={submitData}
+                        className="btn btn-primary float-right"
+                      >
+                        Submit
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </section>
 
             </>
-        )}
-          
+          )}
+
         </AdminChecker>
       </AdminWrapper>
     </>

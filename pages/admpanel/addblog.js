@@ -10,11 +10,13 @@ import { axiosInstance } from "../../utils/apiHandler";
 import AdminChecker from "../../components/AdminComps/AdminChecker";
 import { toast } from "react-toastify";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function Addblog() {
   const editorRef = useRef(null);
   const imageRef = useRef(null);
   const titleRef = useRef(null);
+  const router = useRouter();
 
   const uploadHandler = async (body, image) => {
     let form_data = new FormData();
@@ -28,6 +30,7 @@ export default function Addblog() {
       const res = await axiosInstance.post(url, form_data);
       if (res.status === 201) {
         toast.success("Created");
+        router.push("/admpanel/bloglist")
       } else {
         toast.error("Failed");
       }

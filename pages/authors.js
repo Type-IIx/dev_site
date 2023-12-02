@@ -92,6 +92,23 @@ export default function Authors() {
     setFormData(temp);
   };
 
+  const clearForm = () => {
+    setFormData({
+      email: "",
+      website: "",
+      subject: "",
+    });
+    setSelectedCurrency(Currencies.USD);
+    setAuthorShips(1);
+    MarketingRef.current.checked = false;
+    EducationRef.current.checked = false;
+    ResearchRef.current.checked = false;
+    OpinionRef.current.checked = false;
+    OthersRef.current.checked = false;
+    agreementRef.current.value = "";
+    forumRef.current.value = "";
+  }
+
   const submitForm = async (e) => {
     try {
       e.preventDefault();
@@ -136,6 +153,7 @@ export default function Authors() {
           const res = await axios.post(url, body);
           if (res) {
             toast.success("Success");
+            clearForm();
           } else {
             toast.error("Failed Saving submission")
           }

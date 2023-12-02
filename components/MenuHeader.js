@@ -83,7 +83,7 @@ export default function MenuHeader() {
             <div className="pull-left logo-box">
               <div className="logo">
                 <a href="/">
-                  <img src="img/logo.png" alt="" title="" />
+                  <img src="/img/logo.png" alt="" title="" />
                 </a>
               </div>
             </div>
@@ -149,7 +149,7 @@ export default function MenuHeader() {
           <nav className="menu-box">
             <div className="nav-logo">
               <a href="/">
-                <img src="img/logo-small.png" alt="" title="" />
+                <img src="/img/logo-small.png" alt="" title="" />
               </a>
             </div>
             <div className="menu-outer"></div>

@@ -59,6 +59,7 @@ export default function EditBlog() {
     if (res.status === 200) {
       toast.success("Updated");
       await fetchArticle();
+      router.push("/admpanel/bloglist")
     } else {
       toast.error("Failed");
     }

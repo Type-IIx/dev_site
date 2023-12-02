@@ -7,6 +7,7 @@ import { BASE_URL } from "../../constants/apiInfo";
 import { axiosInstance } from "../../utils/apiHandler";
 import { toast } from "react-toastify";
 import { Editor } from "@tinymce/tinymce-react";
+import { useRouter } from "next/router";
 
 
 function Addbook() {
@@ -15,6 +16,7 @@ function Addbook() {
   const priceRef = useRef(null);
   const bookRef = useRef(null);
   const editorRef = useRef(null);
+  const router = useRouter();
 
 
   const handleImport = async () => {
@@ -25,7 +27,7 @@ function Addbook() {
       form_data.append("book", file, file.name);
       form_data.append("title", titleRef.current.value);
       form_data.append("price", priceRef.current.value);
-      form_data.append("description",editorRef.current.getContent())
+      form_data.append("description", editorRef.current.getContent())
       const url = BASE_URL + "book/create";
       const res = await axiosInstance.post(url, form_data);
       if (res.status === 201) {
@@ -75,6 +77,7 @@ function Addbook() {
         const res2 = await handleEdit(res.id);
         if (res2) {
           toast.success("Success");
+          router.push("/admpanel/booklist")
         } else {
           toast.error("Failed Import");
         }

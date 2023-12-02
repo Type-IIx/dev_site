@@ -35,63 +35,57 @@ export default function Formdataorders() {
 				<AdminChecker>
 					{
 						!loading && <>
+
+
 							<div className="sidebar-page-container">
 								<div className="auto-container">
 									<div className="row clearfix">
 										<div className="col-md-12">
 											<div className="sec-title-two my-5 text-center">
-												<div className="title color-three">Form Data Authors</div>
+												<div className="title color-three">Orders</div>
 											</div>
 										</div>
 									</div>
 									<div className="row clearfix">
-										<div className="sidebar-side col-lg-3 col-md-12 col-sm-12">
-											<SubmissionSideBar title={"orders"} />
-										</div>
-										<div className="content-side col-lg-9 col-md-12 col-sm-12">
-											<div className="blog-detail">
-												<div className="inner-box">
-													<table class="table">
-														<thead>
-															<tr>
-																<th scope="col">#</th>
-																<th scope="col">Full Name</th>
-																<th scope="col">Email</th>
-																<th scope="col">title</th>
-																<th scope="col">address</th>
-																<th scope="col">country</th>
-																<th scope="col">state</th>
-																<th scope="col">zip</th>
-																<th scope="col">total</th>
-															</tr>
-														</thead>
-														<tbody>
-															{
-																authors.map((e, i) => {
-																	return <tr key={`coaching-row-${i}`}>
-																		<th scope="row">{e.id}</th>
-																		<td>{e.name + " " + e.surname}</td>
-																		<td>{e.email}</td>
-																		<td>{e.title}</td>
-																		<td>{e.address}</td>
-																		<td>{e.country}</td>
-																		<td>
-																			{e.state}
-																		</td>
-																		<td>
-																			{e.zip}
-																		</td>
-																		<td>{e.price}</td>
-																	</tr>
+										<div className="content-side col-lg-12 col-md-12 col-sm-12">
+											<div className="inner-box">
+												<table class="table">
+													<thead>
+														<tr>
+															<th scope="col">Order ID</th>
+															<th scope="col">Book Name</th>
+															<th scope="col">Name</th>
+															<th scope="col">Email</th>
+															<th scope="col">Address</th>
+															<th scope="col">Country</th>
+															<th scope="col">State</th>
+															<th scope="col">Zip</th>
+															<th scope="col">Price</th>
+														</tr>
+													</thead>
+													<tbody>
+														{
+															authors.map((e, i) => {
+																return <tr key={`coaching-row-${i}`}>
+																	<th scope="row">{e.id}</th>
+																	<td>{e.name + " " + e.surname}</td>
+																	<td>{e.email}</td>
+																	<td>{e.title}</td>
+																	<td>{e.address}</td>
+																	<td>{e.country}</td>
+																	<td>
+																		{e.state}
+																	</td>
+																	<td>
+																		{e.zip}
+																	</td>
+																	<td>{e.price}</td>
+																</tr>
 
-																})
-															}
-															<tr>
-
-															</tr>
-														</tbody>
-													</table>
-												</div>
+															})
+														}
+													</tbody>
+												</table>
 											</div>
 										</div>
 									</div>
