@@ -8,9 +8,9 @@ import { formatDate } from "../utils/helpers";
 
 export default function Home() {
 
-  const [articles,setArticles] = useState([])
-  const [books,setBooks] = useState([])
-  const [loading,setLoading] = useState(true)
+  const [articles, setArticles] = useState([])
+  const [books, setBooks] = useState([])
+  const [loading, setLoading] = useState(true)
 
   const fetchArticles = async () => {
     const url = BASE_URL + "blog/blogs";
@@ -39,7 +39,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchData();
-  },[])
+  }, [])
 
 
   return (
@@ -174,7 +174,7 @@ export default function Home() {
               <h2>Popular Books</h2>
             </div>
             <div className="row clearfix">
-              {books.map((e,i) => {
+              {books.map((e, i) => {
                 if (i < 4) {
                   return <BookCard book={e} key={`home-book-${i}`} />
                 }
@@ -342,38 +342,38 @@ export default function Home() {
             </div>
             <div className="row clearfix">
               {
-                articles.map((e,i) => {
+                articles.map((e, i) => {
                   if (i < 3) {
                     return <div className="news-block-four col-lg-4 col-md-6 col-sm-12">
-                    <div className="inner-box">
-                      <div className="image">
-                        <a>
-                          <img
-                            className="transition-500ms"
-                            src={BASE_DOMAIN + e.fileUrl}
-                            alt=""
-                          />
-                        </a>
-                        <a className="arrow flaticon-right-arrow-1"></a>
-                        <a className="read-more">read more</a>
-                      </div>
-                      <div className="lower-content">
-                        <ul className="post-info">
-                          <li>{formatDate(e.created)}</li>
-                          {/* <li>
+                      <div className="inner-box">
+                        <div className="image">
+                          <a>
+                            <img
+                              className="transition-500ms"
+                              src={BASE_DOMAIN + e.fileUrl}
+                              alt=""
+                            />
+                          </a>
+                          <a className="arrow flaticon-right-arrow-1"></a>
+                          <Link href={`/article/${e.id}`} className="read-more">read more</Link>
+                        </div>
+                        <div className="lower-content">
+                          <ul className="post-info">
+                            <li>{formatDate(e.created)}</li>
+                            {/* <li>
                             <a>Consult</a>
                           </li> */}
-                        </ul>
-                        <h4>
-                          <a>{e.title}</a>
-                        </h4>
+                          </ul>
+                          <h4>
+                            <a>{e.title}</a>
+                          </h4>
+                        </div>
                       </div>
                     </div>
-                  </div>
                   }
                 })
               }
-              
+
 
               {/* <div className="news-block-four col-lg-4 col-md-6 col-sm-12">
                 <div className="inner-box">

@@ -8,6 +8,9 @@ services:
       TOKEN_SECRET: tokensecret
     links:
       - "postgress:database"
+    volumes:
+      - ./data:/var/www/ampouletude.com/html/source/books
+      - ./uploads:/var/www/ampouletude.com/html/source/uploads
   frontend:
     image: frontend:alpha
     environment:
@@ -34,6 +37,6 @@ services:
     ports:
       - "5430:5432"
     volumes:
-      - ./data:/Users/mac/Documents/work2/dockertask/postgressdemo
+      - ./data:/var/www/ampouletude.com/html/source/postgressdemo
 
 #/var/www/ampouletude.com/html/source/postgressdemo

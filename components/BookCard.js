@@ -27,7 +27,7 @@ function BookCard({ book }) {
         </div>
         <div className="lower-content">
           <h5>
-            <a href="#">{book.title}</a>
+            <Link href={`/bookdetails/${book.id}`}>{book.title}</Link>
           </h5>
           <h4 className="price text-blue mb-3">${book.price}</h4>
           {/* <div className="btn-group post-info">
