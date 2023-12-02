@@ -32,14 +32,15 @@ CheckoutController.post("/confirm",async (req,res,next) => {
 		}
 		const url = EMAIL_URL+"email/checkout"
 		console.log("Email url is ",url)
-		const resp = await axios.post(url,newBody)
+		/* const resp = await axios.post(url,newBody)
 		if (resp.status === 200){
 			res.status(200).json(newBody);
 		}else{
 			res.status(500).json({
 				failed : true
 			})
-		}
+		} */
+		res.status(200).json(newBody);
 	}catch (e){
 		console.log("error")
 		console.log(e)

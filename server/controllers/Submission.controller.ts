@@ -37,14 +37,15 @@ SubmissionController.post("/coaching/create", async (req, res, next) => {
             subId : coaching.id,
             ...body
         }
-		const resp = await axios.post(url,newBody)
+		/* const resp = await axios.post(url,newBody)
 		if (resp.status === 200){
 			res.status(200).json(coaching)
 		}else{
 			res.status(500).json({
 				failed : true
 			})
-		}     
+		}   */ 
+        res.status(200).json(coaching)  
     } catch (e) {
         console.log(e)
         res.status(500).json({ success: false })
@@ -74,14 +75,15 @@ SubmissionController.post("/consultancy/create", async (req, res, next) => {
             subId : consultancy.id,
             ...body
         }
-		const resp = await axios.post(url,newBody)
+		/* const resp = await axios.post(url,newBody)
 		if (resp.status === 200){
 			res.status(200).json(consultancy)
 		}else{
 			res.status(500).json({
 				failed : true
 			})
-		} 
+		}  */
+        res.status(200).json(consultancy)
     } catch (e) {
         console.log(e)
         res.status(500).json({ success: false })
@@ -110,14 +112,15 @@ SubmissionController.post("/authors/create", async (req, res, next) => {
             subId : authors.id,
             ...body
         }
-		const resp = await axios.post(url,newBody)
+		/* const resp = await axios.post(url,newBody)
 		if (resp.status === 200){
 			res.status(200).json(authors)
 		}else{
 			res.status(500).json({
 				failed : true
 			})
-		}
+		} */
+        res.status(200).json(authors)
     } catch (e) {
         console.log(e)
         res.status(500).json({ success: false })
@@ -129,14 +132,15 @@ SubmissionController.post("/support", async (req, res, next) => {
         const body = req.body as SupportBodyT;
         const url = EMAIL_URL+"email/support"
 		console.log("Email url is ",url)
-		const resp = await axios.post(url,body)
+		/* const resp = await axios.post(url,body)
 		if (resp.status === 200){
 			res.status(200).json(body)
 		}else{
 			res.status(500).json({
 				failed : true
 			})
-		}
+		} */
+        res.status(200).json(body)
     } catch (e) {
         console.log(e)
         res.status(500).json({ success: false })
