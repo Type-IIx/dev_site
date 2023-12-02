@@ -5,6 +5,7 @@ import { BASE_DOMAIN, BASE_URL } from "../constants/apiInfo";
 import axios from "axios";
 import BookCard from "../components/BookCard";
 import { formatDate } from "../utils/helpers";
+import Link from "next/link";
 
 export default function Home() {
 
