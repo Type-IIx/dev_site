@@ -161,7 +161,7 @@ function Addbook() {
                   </div>
 
                   <div className="form-group">
-                    <label>Featured Image</label>
+                    <label>Book Image</label>
                     <input
                       ref={imageRef}
                       type="file"

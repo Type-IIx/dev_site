@@ -17,7 +17,7 @@ function AdminChecker(props) {
       } else {
 
         if (props.isLogin) {
-          router.push("/admpanel/addblog");
+          router.push("/admpanel/orders");
         }
       }
     }

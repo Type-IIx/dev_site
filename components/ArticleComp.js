@@ -23,7 +23,7 @@ function ArticleComp({ article }) {
                 </a>
               </div>
               <div className="lower-content">
-                {session.status === "authenticated" && (
+                {session.status === "authenticated" && false && (
                   <div className="author-box place-center">
                     {/* <div className="box-inner"> */}
                     <Link href={`/admpanel/editblog/${article.id}`}>

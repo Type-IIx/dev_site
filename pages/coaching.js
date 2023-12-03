@@ -147,6 +147,9 @@ export default function Coaching() {
 
   return (
     <>
+      <Head>
+        <title>Coachings</title>
+      </Head>
       <Wrapper>
         {rates && (
           <>
