@@ -22,6 +22,7 @@ export default function Bookdetail() {
 		country: "",
 		state: "",
 		zip: "",
+		copy: "",
 	});
 	//const options = useMemo(() => countryList.getData(), []);
 	const { countries } = useCountries();
@@ -135,7 +136,7 @@ export default function Bookdetail() {
 														</h4>
 														<form action="">
 															<div className="row">
-																<div className="col-md-6 mb-3">
+																<div className="col-md-4 mb-3">
 																	<label for="firstName">First name</label>
 																	<input
 																		type="text"
@@ -151,7 +152,7 @@ export default function Bookdetail() {
 																		Valid first name is required.
 																	</div>
 																</div>
-																<div className="col-md-6 mb-3">
+																<div className="col-md-4 mb-3">
 																	<label for="lastName">Last name</label>
 																	<input
 																		type="text"
@@ -165,6 +166,31 @@ export default function Bookdetail() {
 																	/>
 																	<div className="invalid-feedback">
 																		Valid last name is required.
+																	</div>
+																</div>
+																<div className="col-md-4 mb-3">
+																	<label for="country">Copy Type</label>
+																	<select
+																		className="custom-select d-block w-100"
+																		id="copy"
+																		required
+																		name={"copy"}
+																		value={formData.copy}
+																		onChange={handleChange}
+																	>
+																		{[{
+																			name: "digital"
+																		}, {
+																			name: "physical"
+																		}
+																		].map((e, i) => {
+																			return (
+																				<option value={e.name}>{e.name}</option>
+																			);
+																		})}
+																	</select>
+																	<div className="invalid-feedback">
+																		Please select a valid country.
 																	</div>
 																</div>
 															</div>

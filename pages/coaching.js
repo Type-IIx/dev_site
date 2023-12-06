@@ -12,7 +12,7 @@ import { CoachingForm } from "../parsers/schema";
 import { toast } from "react-toastify";
 import Wrapper from "../components/Wrapper";
 import axios from "axios";
-import { BASE_URL } from "../constants/apiInfo";
+import { BASE_URL, path_ } from "../constants/apiInfo";
 
 export default function Coaching() {
   const [rates, setRates] = useState(false);
@@ -36,6 +36,31 @@ export default function Coaching() {
   const agreementRef = useRef();
   const forumRef = useRef();
 
+  const [others, setOthers] = useState({
+    call: "",
+    coaching: "",
+    authors: "",
+    consultancy: ""
+  });
+  const [forums, setForums] = useState([]);
+
+  const fetchOthers = async () => {
+    const resp = await axios.get(BASE_URL + path_ + "other");
+
+    if (resp.status === 200) {
+      const result = await resp.data;
+      setOthers(result);
+    }
+  }
+
+  const fetchForums = async () => {
+    const resp = await axios.get(BASE_URL + path_ + "forum");
+    if (resp.status === 200) {
+      const result = await resp.data;
+      setForums(result);
+    }
+  };
+
   // handlers here
 
   const handleCurrencyChange = (e) => {
@@ -56,6 +81,10 @@ export default function Coaching() {
   }
 
   // effects here
+  useEffect(() => {
+    fetchForums();
+    fetchOthers();
+  }, [])
 
   useEffect(() => {
     updateRates();
@@ -315,8 +344,12 @@ export default function Coaching() {
                                 className="custom-select-box"
                                 ref={forumRef}
                               >
-                                <option>Bodybuilding.com</option>
-                                <option>T-Nation.com</option>
+                                {
+                                  forums.map((e, i) => {
+                                    return <option value={e.name} key={`forum-${i}`}>{e.name}</option>
+                                  })
+                                }
+
                               </select>
                             </div>
 
@@ -342,7 +375,7 @@ export default function Coaching() {
 
                             <p className="mb-2">Clickwrap agreement & waiver</p>
                             <div className="form-group">
-                              <textarea name="message" ref={agreementRef}></textarea>
+                              <textarea name="message" defaultValue={others.coaching} ref={agreementRef}></textarea>
                             </div>
                             <small className="form-text text-muted">
                               Agreement to Transmit Bitcoin (BTC): Coach will

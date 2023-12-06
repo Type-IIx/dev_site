@@ -58,6 +58,9 @@ export default function Menu() {
                       <Link href="/admpanel/settings">Settings</Link>
                     </li>
                     <li>
+                      <Link href="/admpanel/others">Others</Link>
+                    </li>
+                    <li>
                       <a
                         onClick={() => {
                           signOut();

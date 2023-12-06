@@ -101,12 +101,12 @@ export default function Bookdetail() {
                           ${book.price} {/* <span className="crossed-price">$900</span> */}
                         </div>
                         <div className="buttons-box">
-                          <a href={BASE_URL + `book/download/${book.id}`}
+                          {/* <a href={BASE_URL + `book/download/${book.id}`}
                             target="_blank" className="enroll-btn theme-btn" download>
                             Download E-Book
-                          </a>
+                          </a> */}
                           <a onClick={orderBook} className="wishlist-btn theme-btn">
-                            Order Physical Book
+                            Order Book
                             <span className="icon fa fa-long-arrow-right"></span>
                           </a>
                         </div>

@@ -65,7 +65,7 @@ export default function Home() {
               <div className="image-column col-lg-6 col-md-12 col-sm-12">
                 <div className="inner-column">
                   <div className="image" data-tilt data-tilt-max="3">
-                    <img src="img/banner.jpg" alt="Banner" />
+                    <img src="/img/banner.jpg" alt="Banner" />
                   </div>
                 </div>
               </div>
@@ -79,7 +79,7 @@ export default function Home() {
               <div className="image-column col-lg-6 col-md-12 col-sm-12">
                 <div className="inner-column">
                   <div className="image" data-tilt data-tilt-max="3">
-                    <img src="img/coaching-2.jpg" alt="" />
+                    <img src="/img/coaching-2.jpg" alt="" />
                   </div>
                 </div>
               </div>
@@ -149,7 +149,7 @@ export default function Home() {
                     className="pattern-layer"
                     style={{
                       backgroundImage:
-                        "url(" + "images/background/pattern-1.png" + ")",
+                        "url(" + "/images/background/pattern-1.png" + ")",
                     }}
                   ></div>
 
@@ -161,6 +161,104 @@ export default function Home() {
                         alt="Consultancy"
                       />
                     </figure>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="course-section">
+          <div className="auto-container">
+            <div className="row clearfix">
+              <div className="title-column col-lg-6 col-md-12 col-sm-12">
+                <div className="inner-column">
+                  <div className="sec-title-two">
+                    <div className="title">Coaching Workflow</div>
+                    <h2>Lorem Ipsum is simply dummy text</h2>
+                    <div className="text">
+                      I am glad that you have made it here to send a distress
+                      signal, and inform the Senate that all on board were killed.
+                      Dantooine. I’m not going to Alderaan. I really got to go.
+                      But that to me.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="video-column col-lg-6 col-md-12 col-sm-12">
+                <div
+                  className="inner-column wow fadeInRight"
+                  data-wow-delay="0ms"
+                  data-wow-duration="1500ms"
+                >
+                  <img
+                    src="/img/workflow.png"
+                    alt="Coaching Workflow"
+                    className="img-fluid"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="price-page-section">
+          <div class="auto-container">
+            <div class="sec-title-two centered">
+              <h2>Services</h2>
+            </div>
+            <div class="row clearfix">
+              <div class="price-block col-lg-4 col-md-6 col-sm-12">
+                <div class="inner-box">
+                  <div class="title">Consulting</div>
+                  <div class="date"></div>
+                  <ul class="price-options">
+                    <li>Individualized protocol</li>
+                    <li>Objective oriented (bulking vs cutting vs recomp)</li>
+                    <li>Bloodwork monitoring</li>
+                  </ul>
+                  <div class="button-box text-center">
+                    <a href="/consultancy" class="purchase-btn theme-btn">
+                      $100/Month
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="price-block col-lg-4 col-md-6 col-sm-12">
+                <div class="inner-box">
+                  <div class="title">Writing</div>
+                  <div class="date"></div>
+                  <ul class="price-options">
+                    <li>Unlimited projects</li>
+                    <li>Unlimited revision</li>
+                    <li>Flexible timeline</li>
+                    <li>Private consultation</li>
+                    <li>Attentive & crafted solutions</li>
+                  </ul>
+                  <div class="button-box text-center">
+                    <a href="/authors" class="purchase-btn theme-btn">
+                      $300/Month
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="price-block col-lg-4 col-md-6 col-sm-12">
+                <div class="inner-box">
+                  <div class="title">Coaching</div>
+                  <div class="date"></div>
+                  <ul class="price-options">
+                    <li>Training program design</li>
+                    <li>Individualized protocol</li>
+                    <li>Nutrition planning</li>
+                    <li>Body composition monitoring</li>
+                    <li>Bloodwork management</li>
+                  </ul>
+                  <div class="button-box text-center">
+                    <a href="/coaching" class="purchase-btn theme-btn">
+                      $250 1st Month & $350/Month Thereafter
+                    </a>
                   </div>
                 </div>
               </div>

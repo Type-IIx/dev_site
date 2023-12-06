@@ -11,7 +11,7 @@ import { CONSULTANCY, SYMBOLS } from "../constants/prices";
 import { CoachingForm } from "../parsers/schema";
 import { toast } from "react-toastify";
 import Wrapper from "../components/Wrapper";
-import { BASE_URL } from "../constants/apiInfo";
+import { BASE_URL, path_ } from "../constants/apiInfo";
 import axios from "axios";
 
 export default function Consultancy() {
@@ -34,6 +34,31 @@ export default function Consultancy() {
   const agreementRef = useRef();
   const forumRef = useRef();
 
+  const [others, setOthers] = useState({
+    call: "",
+    coaching: "",
+    authors: "",
+    consultancy: ""
+  });
+  const [forums, setForums] = useState([]);
+
+  const fetchOthers = async () => {
+    const resp = await axios.get(BASE_URL + path_ + "other");
+
+    if (resp.status === 200) {
+      const result = await resp.data;
+      setOthers(result);
+    }
+  }
+
+  const fetchForums = async () => {
+    const resp = await axios.get(BASE_URL + path_ + "forum");
+    if (resp.status === 200) {
+      const result = await resp.data;
+      setForums(result);
+    }
+  };
+
   // handlers here
 
   const handleCurrencyChange = (e) => {
@@ -54,6 +79,11 @@ export default function Consultancy() {
   }
 
   // effects here
+
+  useEffect(() => {
+    fetchForums();
+    fetchOthers();
+  }, [])
 
   useEffect(() => {
     updateRates();
@@ -276,8 +306,11 @@ export default function Consultancy() {
                               className="custom-select-box"
                               ref={forumRef}
                             >
-                              <option>Bodybuilding.com</option>
-                              <option>T-Nation.com</option>
+                              {
+                                forums.map((e, i) => {
+                                  return <option value={e.name} key={`forum-${i}`}>{e.name}</option>
+                                })
+                              }
                             </select>
                           </div>
 
@@ -303,7 +336,7 @@ export default function Consultancy() {
 
                           <p className="mb-2">Clickwrap agreement & waiver</p>
                           <div className="form-group">
-                            <textarea name="message" ref={agreementRef}></textarea>
+                            <textarea name="message" defaultValue={others.consultancy} ref={agreementRef}></textarea>
                           </div>
                           <small className="form-text text-muted">
                             Agreement to Transmit Bitcoin (BTC): Coach will

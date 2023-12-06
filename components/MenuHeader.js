@@ -4,10 +4,26 @@ import { SiXmpp } from "react-icons/si";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { axiosInstance } from "../utils/apiHandler";
-import { BASE_URL } from "../constants/apiInfo";
+import { BASE_URL, path_ } from "../constants/apiInfo";
+import axios from "axios";
 
 export default function MenuHeader() {
   const [socials, setSocials] = useState(null);
+  const [others, setOthers] = useState({
+    call: "",
+    coaching: "",
+    authors: "",
+    consultancy: ""
+  });
+
+  const fetchOthers = async () => {
+    const resp = await axios.get(BASE_URL + path_ + "other");
+
+    if (resp.status === 200) {
+      const result = await resp.data;
+      setOthers(result);
+    }
+  }
 
   const fetchURLs = async () => {
     const resp = await axiosInstance.get(BASE_URL + "settings");
@@ -26,6 +42,7 @@ export default function MenuHeader() {
   useEffect(() => {
     console.log("fetching urls");
     fetchURLs();
+    fetchOthers();
   }, []);
 
   return (
@@ -71,7 +88,7 @@ export default function MenuHeader() {
 
                 <div className="text">
                   Call for free consultation:{" "}
-                  <a href="tel:+0056-693-55-20">0056 693 55 20</a>
+                  <a href={`tel:${others.call}`}>{others.call}</a>
                 </div>
               </div>
             </div>

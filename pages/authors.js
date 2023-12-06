@@ -13,7 +13,7 @@ import { AuthorForm } from "../parsers/schema";
 import { toast } from "react-toastify";
 import Wrapper from "../components/Wrapper";
 import axios from "axios";
-import { BASE_URL } from "../constants/apiInfo";
+import { BASE_URL, path_ } from "../constants/apiInfo";
 
 export default function Authors() {
   const [rates, setRates] = useState(false);
@@ -39,6 +39,22 @@ export default function Authors() {
   const OthersRef = useRef();
   const agreementRef = useRef();
 
+  const [others, setOthers] = useState({
+    call: "",
+    coaching: "",
+    authors: "",
+    consultancy: ""
+  });
+
+  const fetchOthers = async () => {
+    const resp = await axios.get(BASE_URL + path_ + "other");
+
+    if (resp.status === 200) {
+      const result = await resp.data;
+      setOthers(result);
+    }
+  }
+
   // handlers here
 
   const handleCurrencyChange = (e) => {
@@ -59,6 +75,10 @@ export default function Authors() {
   }
 
   // effects here
+
+  useEffect(() => {
+    fetchOthers();
+  }, [])
 
   useEffect(() => {
     updateRates();
@@ -361,7 +381,7 @@ export default function Authors() {
                               Clickwrap agreement &amp; waiver
                             </p>
                             <div className="form-group">
-                              <textarea name="message" defaultValue={""} ref={agreementRef} />
+                              <textarea name="message" defaultValue={others.authors} ref={agreementRef} />
 
                             </div>
                             <div className="form-group form-check mt-3">

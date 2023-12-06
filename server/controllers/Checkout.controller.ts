@@ -17,6 +17,7 @@ interface CheckoutDataT {
 	zip: string;
 	title : string;
 	price : number;
+	copy : string;
 }
 CheckoutController.post("/confirm",async (req,res,next) => {
 	try{

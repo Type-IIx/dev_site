@@ -5,15 +5,15 @@ generator client {
   provider = "prisma-client-js"
 }
 
-//datasource db {
-//  provider = "postgresql"
-//  url      = "postgresql://testuser:testpassword@database:5432/Custom"
-//}
-
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = "postgresql://testuser:testpassword@database:5432/Custom"
 }
+
+//datasource db {
+//provider = "sqlite"
+//url      = "file:./dev.db"
+//}
 
 model User {
   id       String   @id @default(cuid())
@@ -96,4 +96,18 @@ model FormDataCheckout {
   country String
   state   String
   zip     String
+  copy    String @default("physical")
+}
+
+model Forum {
+  id   Int    @id @default(autoincrement())
+  name String
+}
+
+model OtherSettings {
+  id          Int    @id @default(autoincrement())
+  call        String
+  coaching    String @default("")
+  authors     String @default("")
+  consultancy String @default("")
 }

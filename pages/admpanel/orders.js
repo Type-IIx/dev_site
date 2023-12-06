@@ -54,6 +54,7 @@ export default function Formdataorders() {
 														<tr>
 															<th scope="col">Order ID</th>
 															<th scope="col">Book Name</th>
+															<th scope="col">Book Type</th>
 															<th scope="col">Name</th>
 															<th scope="col">Email</th>
 															<th scope="col">Address</th>
@@ -68,9 +69,11 @@ export default function Formdataorders() {
 															authors.map((e, i) => {
 																return <tr key={`coaching-row-${i}`}>
 																	<th scope="row">{e.id}</th>
+
+																	<td>{e.title}</td>
+																	<td>{e.copy}</td>
 																	<td>{e.name + " " + e.surname}</td>
 																	<td>{e.email}</td>
-																	<td>{e.title}</td>
 																	<td>{e.address}</td>
 																	<td>{e.country}</td>
 																	<td>
