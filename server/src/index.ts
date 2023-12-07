@@ -9,6 +9,7 @@ import { BookController } from "../controllers/Book.controller";
 import { SubmissionController } from "../controllers/Submission.controller";
 import { CheckoutController } from "../controllers/Checkout.controller";
 import { OthersController } from "../controllers/Others.controller";
+import { TestimonialController } from "../controllers/Testimonial.controller";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use("/api/blog", BlogController);
 app.use("/api/settings", SettingController)
 app.use("/api/othersettings", OthersController)
 app.use("/api/book", BookController)
+app.use("/api/testimonials", TestimonialController)
 app.use("/api", UserController)
 app.use("/api/submissions", SubmissionController)
 app.use("/api/checkout",CheckoutController)

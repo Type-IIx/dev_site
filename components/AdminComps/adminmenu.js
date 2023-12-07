@@ -55,6 +55,9 @@ export default function Menu() {
                       <Link href="/admpanel/booklist">Books</Link>
                     </li>
                     <li>
+                      <Link href="/admpanel/testimonials">Testimonials</Link>
+                    </li>
+                    <li>
                       <Link href="/admpanel/settings">Settings</Link>
                     </li>
                     <li>

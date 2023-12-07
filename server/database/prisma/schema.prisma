@@ -11,8 +11,8 @@ datasource db {
 }
 
 //datasource db {
-//provider = "sqlite"
-//url      = "file:./dev.db"
+//  provider = "sqlite"
+//  url      = "file:./dev.db"
 //}
 
 model User {
@@ -110,4 +110,12 @@ model OtherSettings {
   coaching    String @default("")
   authors     String @default("")
   consultancy String @default("")
+}
+
+model Testimonials {
+  id      Int      @id @default(autoincrement())
+  name    String
+  content String
+  rating  Int
+  date    DateTime @default(now())
 }

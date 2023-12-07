@@ -1,7 +1,8 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { BASE_URL } from "../constants/apiInfo";
+import TestimonyCard from "./TestimonyCard";
 
 export default function FooterComp() {
 
@@ -11,6 +12,39 @@ export default function FooterComp() {
     subject: "",
     message: ""
   })
+
+  const [testimonials, setTestimonials] = useState([]);
+  const [selectedTestimonials, setSelectedTestimonials] = useState([]);
+
+
+  const fetchTestimonials = async () => {
+    const url = BASE_URL + "testimonials/all";
+    const res = await axios.get(url);
+    if (res.status === 200) {
+      const data = await res.data;
+      setTestimonials(data);
+    }
+  };
+
+  useEffect(() => {
+    fetchTestimonials()
+  }, [])
+
+  function getRandomElements(numElements) {
+    const remainingArray = testimonials.slice();
+    const selectedElements = [];
+
+    for (let i = 0; i < Math.min(numElements, testimonials.length); i++) {
+      const randomIndex = Math.floor(Math.random() * remainingArray.length);
+      const selectedElement = remainingArray.splice(randomIndex, 1)[0];
+      selectedElements.push(selectedElement);
+    }
+    setSelectedTestimonials(selectedElements)
+  }
+
+  useEffect(() => {
+    getRandomElements(5)
+  }, [testimonials])
 
   const handleContact = async (e) => {
     e.preventDefault();
@@ -41,102 +75,9 @@ export default function FooterComp() {
             </h2>
           </div>
           <div className="testimonial-carousel  owl-theme">
-            <div className="testimonial-block">
-              <div className="inner-box">
-                <div className="upper-box">
-                  <span className="quote-icon flaticon-quote-3"></span>
-                  <div className="rating">
-                    <span className="fa fa-star"></span>
-                    <span className="fa fa-star"></span>
-                    <span className="fa fa-star"></span>
-                    <span className="fa fa-star"></span>
-                    <span className="fa fa-star"></span>
-                  </div>
-                  <div className="text">
-                    "You have been an absolutely incredible coach tho. It has
-                    been an honor working with you and I really did learn alot
-                    and am very happy with progress we have made. I would
-                    literally take you over Hany Rambod or any other Olympia
-                    level coach and it wouldnt even be close. Truly believe you
-                    are one of the if not thee most knowledgeable coachs in
-                    bodybuilding. Its highly unlikely but if i reach my goal and
-                    my plans change and i do decide to compete I would love to
-                    work with you again. Plan to continue on the plan we have
-                    laid out for now."
-                  </div>
-                </div>
-                <div className="lower-box">
-                  <div className="box-inner">
-                    <div className="author-image">
-                      <img src="/img/brazil.png" alt="" />
-                    </div>
-                    <h5>Alaxis D. Dowson</h5>
-                    <div className="designation">During Coaching</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {selectedTestimonials.map((e, i) => <TestimonyCard key={`testimonial-card-${i}`} name={e.name} content={e.content} rating={e.rating} />)}
 
-            <div className="testimonial-block">
-              <div className="inner-box">
-                <div className="upper-box">
-                  <span className="quote-icon flaticon-quote-3"></span>
-                  <div className="rating">
-                    <span className="fa fa-star"></span>
-                    <span className="fa fa-star"></span>
-                    <span className="fa fa-star"></span>
-                    <span className="fa fa-star"></span>
-                    <span className="fa fa-star"></span>
-                  </div>
-                  <div className="text">
-                    "After Coaching, everything has been going great. I dont
-                    even understand how i lost a decently significant amount of
-                    fat AND got stronger while eating what i estimate to be
-                    maintenance calories. Always thought recomping was bullshit
-                    and a waste of time and bulk/cut was more efficient..."
-                  </div>
-                </div>
-                <div className="lower-box">
-                  <div className="box-inner">
-                    <div className="author-image">
-                      <img src="/img/usa.png" alt="" />
-                    </div>
-                    <h5>SmallOnGear</h5>
-                    <div className="designation">During Coaching</div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-            <div className="testimonial-block">
-              <div className="inner-box">
-                <div className="upper-box">
-                  <span className="quote-icon flaticon-quote-3"></span>
-                  <div className="rating">
-                    <span className="fa fa-star"></span>
-                    <span className="fa fa-star"></span>
-                    <span className="fa fa-star"></span>
-                    <span className="fa fa-star"></span>
-                    <span className="fa fa-star"></span>
-                  </div>
-                  <div className="text">
-                    "[Our consult has been] high quality and adapted to [my]
-                    individual requirements. [Your] statements are always
-                    comprehensible, differentiated and backed up by science. I
-                    am very satisfied to work with [you]."
-                  </div>
-                </div>
-                <div className="lower-box">
-                  <div className="box-inner">
-                    <div className="author-image">
-                      <img src="/img/germany.png" alt="" />
-                    </div>
-                    <h5>SonOfThor</h5>
-                    <div className="designation">During Consultancy</div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
