@@ -10,6 +10,7 @@ import { SubmissionController } from "../controllers/Submission.controller";
 import { CheckoutController } from "../controllers/Checkout.controller";
 import { OthersController } from "../controllers/Others.controller";
 import { TestimonialController } from "../controllers/Testimonial.controller";
+import { CaptchaController } from "../controllers/Captcha.controller";
 
 dotenv.config();
 
@@ -29,7 +30,8 @@ app.use("/api/book", BookController)
 app.use("/api/testimonials", TestimonialController)
 app.use("/api", UserController)
 app.use("/api/submissions", SubmissionController)
-app.use("/api/checkout",CheckoutController)
+app.use("/api/checkout", CheckoutController)
+app.use("/api/captcha", CaptchaController)
 
 app.use("/images", express.static("uploads"))
 

@@ -41,6 +41,18 @@ export default function Consultancy() {
     consultancy: ""
   });
   const [forums, setForums] = useState([]);
+  const [showUsername ,setShowUsername] = useState(false);
+  const [captcha,setCaptcha] = useState(null)
+  const captchaRef = useRef();
+  
+
+  const fetchCaptcha = async () => {
+    const resp = await axios.get(BASE_URL + "captcha/generate");
+    if (resp.status === 200){
+      const result = await resp.data;
+      setCaptcha(result);
+    }
+  }
 
   const fetchOthers = async () => {
     const resp = await axios.get(BASE_URL + path_ + "other");
@@ -83,6 +95,7 @@ export default function Consultancy() {
   useEffect(() => {
     fetchForums();
     fetchOthers();
+    fetchCaptcha();
   }, [])
 
   useEffect(() => {
@@ -124,8 +137,9 @@ export default function Consultancy() {
     });
     setSelectedCurrency(Currencies.USD);
     setMonths(1);
-    agreementRef.current.value = "";
+    fetchCaptcha();
     forumRef.current.value = "";
+    captchaRef.current.value = "";
   }
 
   const submitForm = async (e) => {
@@ -145,9 +159,15 @@ export default function Consultancy() {
             duration: months,
             fee_string: `${SYMBOLS[selectedCurrency]} ${prices.total}`
           }
-          console.log(body)
+          const finalBody = {
+            captcha : {
+              id : captcha.capId,
+              answer : captchaRef.current.value
+            },
+            body
+          }
           const url = BASE_URL + "submissions/consultancy/create"
-          const res = await axios.post(url, body);
+          const res = await axios.post(url, finalBody);
           if (res) {
             toast.success("Success");
             clearForm();
@@ -159,12 +179,10 @@ export default function Consultancy() {
         toast.error("Agree to terms");
       }
     } catch (e) {
-      console.log(e);
-      if (e.length && e.length > 0) {
-        if (e[0].code) {
-          console.log(e);
-          console.log(e.message);
-        }
+      const data = await e.response.data;
+      console.log(data);
+      if (data && data.reason){
+        toast.error(data.reason)
       }
     }
   };
@@ -172,7 +190,7 @@ export default function Consultancy() {
   return (
     <>
       <Wrapper>
-        {rates && (
+        {rates && captcha && (
           <>
             <Head>
               <title>Consultancy</title>
@@ -301,28 +319,44 @@ export default function Consultancy() {
 
                           <p className="mb-2">From Forum</p>
                           <div className="form-group">
-                            <select
-                              name="currency"
-                              className="custom-select-box"
-                              ref={forumRef}
-                            >
-                              {
-                                forums.map((e, i) => {
-                                  return <option value={e.name} key={`forum-${i}`}>{e.name}</option>
-                                })
-                              }
-                            </select>
+                          <select
+                                name="currency"
+                                className="custom-select-box"
+                                ref={forumRef}
+                                onChange={(e) => {
+                                  if (e.target.value.length >  0){
+                                    setShowUsername(true)
+                                  }else{
+                                    setShowUsername(false);
+                                    let temp = {...formData}
+                                    temp.username = "";
+                                    setFormData(temp);
+                                  }
+                                }}
+                              >
+                                <option value={""}>No Forum</option>
+                                {
+                                  forums.map((e, i) => {
+                                    return <option value={e.name} key={`forum-${i}`}>{e.name}</option>
+                                  })
+                                }
+
+                              </select>
                           </div>
 
-                          <p className="mb-2">Board Username</p>
-                          <div className="form-group">
-                            <input
-                              type="text"
-                              name="username"
-                              value={formData.username}
-                              onChange={formHandler}
-                            />
-                          </div>
+                          {
+                              showUsername && <>
+                                <p className="mb-2">Board Username</p>
+                            <div className="form-group">
+                              <input
+                                type="text"
+                                name="username"
+                                value={formData.username}
+                                onChange={formHandler}
+                              />
+                            </div>
+                              </>
+                            }
 
                           <p className="mb-2">Referal Code</p>
                           <div className="form-group">
@@ -364,6 +398,17 @@ export default function Consultancy() {
                               </strong>
                             </label>
                           </div>
+
+                          <div className="form-group">
+                            <span  dangerouslySetInnerHTML={{ __html: captcha.image }}>
+
+</span>
+                              <input
+                                type="text"
+                                name="captcha"
+                                ref={captchaRef}
+                              />
+                            </div>
 
                           <div className="form-group col-lg-12 col-md-12 col-sm-12">
                             <button

@@ -13,6 +13,7 @@ function AddTestimonial() {
 	const nameRef = useRef(null);
 	const ratingRef = useRef(null);
 	const contentRef = useRef(null);
+	const imageRef = useRef(null);
 
 	const router = useRouter();
 
@@ -31,11 +32,20 @@ function AddTestimonial() {
 				rating: rt > 0 ? (rt < 5 ? rt : 5) : 0,
 				content: contentRef.current.value
 			}
-			const resp = await axiosInstance.post(BASE_URL + "testimonials/create", body)
-			if (resp.status === 201) {
-				toast.success("Created Testimonial")
-				router.push("/admpanel/testimonials")
+			let form_data = new FormData();
+			const file = imageRef.current.files.length > 0 ? imageRef.current.files[0] : null
+			if (file){
+				form_data.append("image",file,file.name)
+				for (const f of Object.keys(body)){
+					form_data.append(f,body[f]);
+				}
+				const resp = await axiosInstance.post(BASE_URL + "testimonials/create", form_data)
+				if (resp.status === 201) {
+					toast.success("Created Testimonial")
+					router.push("/admpanel/testimonials")
+				}
 			}
+			
 
 
 		} catch {
@@ -87,6 +97,14 @@ function AddTestimonial() {
 											ref={contentRef}
 
 										></textarea>
+									</div>
+									<div className="form-group">
+										<label>Flag Image</label>
+										<input
+										ref={imageRef}
+										type="file"
+										className="form-control"
+										/>
 									</div>
 
 

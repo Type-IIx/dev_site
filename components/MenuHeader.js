@@ -52,9 +52,9 @@ export default function MenuHeader() {
           <div className="auto-container">
             <div className="inner-container clearfix">
               <div className="top-left clearfix">
-                <div className="text">
+                {/* <div className="text">
                   <span>Working time:</span> Monday to Friday 9 AM - 5 PM
-                </div>
+                </div> */}
               </div>
 
               <div className="top-right pull-right clearfix ">
@@ -142,7 +142,7 @@ export default function MenuHeader() {
                       <a href="/consultancy">Consultancy</a>
                     </li>
                     <li>
-                      <a href="/authors">Authors</a>
+                      <a href="/writing">Writing</a>
                     </li>
                     <li>
                       <a href="/books">Books</a>

@@ -17,6 +17,7 @@ function AddTestimonial() {
 		rating: 0,
 		content: ""
 	})
+	const imageRef = useRef(null);
 	const [loading, setLoading] = useState(true);
 	const [testimonialId, setTestimonialId] = useState(-1);
 
@@ -62,10 +63,19 @@ function AddTestimonial() {
 	const submitData = async (e) => {
 		e.preventDefault();
 		try {
+			let form_data = new FormData();
 			const rt = Number(testimonial.rating);
 			let body = { ...testimonial }
 			body.rating = rt > 0 ? (rt < 5 ? rt : 5) : 0
-			const resp = await axiosInstance.post(BASE_URL + `testimonials/edit/${testimonialId}`, body)
+			const image = imageRef.current.files.length > 0 ? imageRef.current.files[0] : null;
+			if (image) {
+				form_data.append("image", image, image.name);
+			  }
+			  const keys = Object.keys(body);
+			  for (let key of keys) {
+				form_data.append(key, body[key]);
+			  }
+			const resp = await axiosInstance.post(BASE_URL + `testimonials/edit/${testimonialId}`, form_data)
 			if (resp.status === 200) {
 				toast.success("Updated Testimonial")
 				router.push("/admpanel/testimonials")
@@ -130,6 +140,15 @@ function AddTestimonial() {
 
 												></textarea>
 											</div>
+
+											<div className="form-group">
+											<label>Flag Image</label>
+											<input
+											ref={imageRef}
+											type="file"
+											className="form-control"
+											/>
+										</div>
 
 
 											<button

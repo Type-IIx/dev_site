@@ -74,8 +74,8 @@ export default function FooterComp() {
               Hear out what my clients <br /> say about me.
             </h2>
           </div>
-          <div className="testimonial-carousel  owl-theme">
-            {selectedTestimonials.map((e, i) => <TestimonyCard key={`testimonial-card-${i}`} name={e.name} content={e.content} rating={e.rating} />)}
+          <div className="row clearfix">
+            {selectedTestimonials.map((e, i) => <TestimonyCard key={`testimonial-card-${i}`} name={e.name} content={e.content}  rating={e.rating} image={e.fileUrl} />)}
 
 
           </div>
@@ -181,7 +181,7 @@ export default function FooterComp() {
             <div className="clearfix">
               <div className="pull-left">
                 <div className="copyright">
-                  &copy; <a>Coaching & Consultancy</a> - 2023 Alright Reserved
+                Ampouletude ©
                 </div>
               </div>
             </div>

@@ -15,7 +15,7 @@ import Wrapper from "../components/Wrapper";
 import axios from "axios";
 import { BASE_URL, path_ } from "../constants/apiInfo";
 
-export default function Authors() {
+export default function Writings() {
   const [rates, setRates] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState(Currencies.USD);
   const [authorships, setAuthorShips] = useState(1);
@@ -45,6 +45,18 @@ export default function Authors() {
     authors: "",
     consultancy: ""
   });
+
+  const [captcha,setCaptcha] = useState(null)
+  const captchaRef = useRef();
+  
+
+  const fetchCaptcha = async () => {
+    const resp = await axios.get(BASE_URL + "captcha/generate");
+    if (resp.status === 200){
+      const result = await resp.data;
+      setCaptcha(result);
+    }
+  }
 
   const fetchOthers = async () => {
     const resp = await axios.get(BASE_URL + path_ + "other");
@@ -78,6 +90,7 @@ export default function Authors() {
 
   useEffect(() => {
     fetchOthers();
+    fetchCaptcha();
   }, [])
 
   useEffect(() => {
@@ -125,8 +138,7 @@ export default function Authors() {
     ResearchRef.current.checked = false;
     OpinionRef.current.checked = false;
     OthersRef.current.checked = false;
-    agreementRef.current.value = "";
-    forumRef.current.value = "";
+    captchaRef.current.value = "";
   }
 
   const submitForm = async (e) => {
@@ -169,8 +181,15 @@ export default function Authors() {
             intent: temp.join(",")
           }
           console.log(body)
+          const finalBody = {
+            captcha : {
+              id : captcha.capId,
+              answer : captchaRef.current.value
+            },
+            body
+          }
           const url = BASE_URL + "submissions/authors/create"
-          const res = await axios.post(url, body);
+          const res = await axios.post(url, finalBody);
           if (res) {
             toast.success("Success");
             clearForm();
@@ -182,12 +201,11 @@ export default function Authors() {
         toast.error("Agree to terms");
       }
     } catch (e) {
-      console.log(e);
-      if (e.length && e.length > 0) {
-        if (e[0].code) {
-          console.log(e);
-          console.log(e.message);
-        }
+      console.log(e)
+      const data = await e.response.data;
+      console.log(data);
+      if (data && data.reason){
+        toast.error(data.reason)
       }
     }
   };
@@ -195,7 +213,7 @@ export default function Authors() {
   return (
     <>
       <Wrapper>
-        {rates && (
+        {rates && captcha && (
           <>
             <Head>
               <title>Hire for writings</title>
@@ -412,6 +430,17 @@ export default function Authors() {
                               of rejection with modifications, or outright
                               rejection, to proposal.
                             </small>
+
+                            <div className="form-group">
+                            <span  dangerouslySetInnerHTML={{ __html: captcha.image }}>
+
+</span>
+                              <input
+                                type="text"
+                                name="captcha"
+                                ref={captchaRef}
+                              />
+                            </div>
                             <div className="form-group col-lg-12 col-md-12 col-sm-12">
                               <button
                                 className="theme-btn btn-style-three"

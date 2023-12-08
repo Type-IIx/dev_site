@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 
 export default function Others() {
 	const [forums, setForums] = useState([]);
+	const [referrals,setReferrals] = useState([]);
 	const [others, setOthers] = useState({
 		call: "",
 		coaching: "",
@@ -17,6 +18,7 @@ export default function Others() {
 	});
 	const [loading, setLoading] = useState(true);
 	const forumRef = useRef();
+	const referralRef = useRef();
 
 	const fetchForums = async () => {
 		const resp = await axiosInstance.get(BASE_URL + path_ + "forum");
@@ -41,6 +43,36 @@ export default function Others() {
 			})
 			if (resp.status === 201) {
 				toast.success("Created Forum")
+				fetchData();
+			}
+		}
+
+	}
+
+
+	const fetchReferrals = async () => {
+		const resp = await axiosInstance.get(BASE_URL + path_ + "referrals");
+		if (resp.status === 200) {
+			const result = await resp.data;
+			setReferrals(result);
+		}
+	};
+
+	const deleteReferrals = async (id) => {
+		const resp = await axiosInstance.delete(BASE_URL + path_ + "referrals/" + id);
+		if (resp.status === 200) {
+			fetchData();
+		}
+	}
+
+	const createReferrals = async (e) => {
+		e.preventDefault();
+		if (referralRef.current.value) {
+			const resp = await axiosInstance.post(BASE_URL + path_ + "referrals", {
+				code: referralRef.current.value
+			})
+			if (resp.status === 201) {
+				toast.success("Created Referral code")
 				fetchData();
 			}
 		}
@@ -76,6 +108,7 @@ export default function Others() {
 	const fetchData = async () => {
 		setLoading(true);
 		await fetchForums();
+		await fetchReferrals();
 		await fetchOthers();
 		setLoading(false);
 
@@ -105,6 +138,55 @@ export default function Others() {
 									</div>
 								</div>
 								<div class="row clearfix">
+									<div class="mentor-block col-lg-8 col-md-8 col-sm-12">
+										<form>
+											<h6>Add Referral Code</h6>
+											<div className="form-group">
+												<div class="input-group">
+													<input type="text" className="form-control"
+														ref={referralRef}
+													/>
+													<div class="input-group-append">
+														<button type="submit" className="btn btn-primary"
+															onClick={createReferrals}
+														>
+															Submit
+														</button>
+													</div>
+												</div>
+											</div>
+										</form>
+										<div class="table-responsive">
+											<table class="table table-bordered">
+												<thead>
+													<tr>
+														<th scope="col">#</th>
+														<th scope="col">Referral Code</th>
+														<th scope="col"></th>
+													</tr>
+												</thead>
+												<tbody>
+													{referrals.map((e, i) => {
+														return <tr>
+															<th scope="row">{i + 1}</th>
+															<td>{e.code}</td>
+															<td>
+																<a className="btn btn-sm btn-danger text-white"
+																	onClick={() => {
+																		deleteReferrals(e.id)
+																	}}
+																>
+																	Delete
+																</a>
+															</td>
+														</tr>
+													})}
+
+
+												</tbody>
+											</table>
+										</div>
+									</div>
 									<div class="mentor-block col-lg-8 col-md-8 col-sm-12">
 										<form>
 											<h6>Add Forum</h6>

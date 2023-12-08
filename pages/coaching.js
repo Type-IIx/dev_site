@@ -43,6 +43,18 @@ export default function Coaching() {
     consultancy: ""
   });
   const [forums, setForums] = useState([]);
+  const [showUsername ,setShowUsername] = useState(false);
+  const [captcha,setCaptcha] = useState(null)
+  const captchaRef = useRef();
+  
+
+  const fetchCaptcha = async () => {
+    const resp = await axios.get(BASE_URL + "captcha/generate");
+    if (resp.status === 200){
+      const result = await resp.data;
+      setCaptcha(result);
+    }
+  }
 
   const fetchOthers = async () => {
     const resp = await axios.get(BASE_URL + path_ + "other");
@@ -80,10 +92,12 @@ export default function Coaching() {
     setRates(d);
   }
 
+
   // effects here
   useEffect(() => {
     fetchForums();
     fetchOthers();
+    fetchCaptcha();
   }, [])
 
   useEffect(() => {
@@ -97,6 +111,8 @@ export default function Coaching() {
       updatePrices();
     }
   }, [selectedCurrency, rates, months]);
+
+  
 
   const updatePrices = () => {
     let temp = { ...prices };
@@ -127,8 +143,9 @@ export default function Coaching() {
     });
     setSelectedCurrency(Currencies.USD);
     setMonths(1);
-    agreementRef.current.value = "";
+    fetchCaptcha();
     forumRef.current.value = "";
+    captchaRef.current.value = "";
   }
 
   const submitForm = async (e) => {
@@ -148,15 +165,26 @@ export default function Coaching() {
             duration: months,
             fee_string: `${SYMBOLS[selectedCurrency]} ${prices.total}`
           }
-          console.log(body)
+          const finalBody = {
+            captcha : {
+              id : captcha.capId,
+              answer : captchaRef.current.value
+            },
+            body
+          }
           const url = BASE_URL + "submissions/coaching/create"
-          const res = await axios.post(url, body);
+          const res = await axios.post(url, finalBody);
           if (res) {
             toast.success("Success");
             clearForm();
 
           } else {
+            const result = await res.data;
+            if (result.reason){
+              toast.error(result.reason)
+            }else{
             toast.error("Failed Saving submission")
+            }
           }
 
         }
@@ -164,12 +192,10 @@ export default function Coaching() {
         toast.error("Agree to terms");
       }
     } catch (e) {
-      console.log(e);
-      if (e.length && e.length > 0) {
-        if (e[0].code) {
-          console.log(e);
-          console.log(e.message);
-        }
+      const data = await e.response.data;
+      console.log(data);
+      if (data && data.reason){
+        toast.error(data.reason)
       }
     }
   };
@@ -180,7 +206,7 @@ export default function Coaching() {
         <title>Coachings</title>
       </Head>
       <Wrapper>
-        {rates && (
+        {rates && captcha && (
           <>
             <section className="banner-section page-title">
               <div className="auto-container">
@@ -343,7 +369,18 @@ export default function Coaching() {
                                 name="currency"
                                 className="custom-select-box"
                                 ref={forumRef}
+                                onChange={(e) => {
+                                  if (e.target.value.length >  0){
+                                    setShowUsername(true)
+                                  }else{
+                                    setShowUsername(false);
+                                    let temp = {...formData}
+                                    temp.username = "";
+                                    setFormData(temp);
+                                  }
+                                }}
                               >
+                                <option value={""}>No Forum</option>
                                 {
                                   forums.map((e, i) => {
                                     return <option value={e.name} key={`forum-${i}`}>{e.name}</option>
@@ -352,8 +389,9 @@ export default function Coaching() {
 
                               </select>
                             </div>
-
-                            <p className="mb-2">Board Username</p>
+                            {
+                              showUsername && <>
+                                <p className="mb-2">Board Username</p>
                             <div className="form-group">
                               <input
                                 type="text"
@@ -362,8 +400,12 @@ export default function Coaching() {
                                 onChange={formHandler}
                               />
                             </div>
+                              </>
+                            }
 
-                            <p className="mb-2">Referal Code</p>
+                            
+
+                            <p className="mb-2">Referral Code</p>
                             <div className="form-group">
                               <input
                                 type="text"
@@ -402,6 +444,18 @@ export default function Coaching() {
                                   {formatMBTC(prices.bitcoinTotal)} mBTC)
                                 </strong>
                               </label>
+                            </div>
+
+
+                            <div className="form-group">
+                            <span  dangerouslySetInnerHTML={{ __html: captcha.image }}>
+
+</span>
+                              <input
+                                type="text"
+                                name="captcha"
+                                ref={captchaRef}
+                              />
                             </div>
 
                             <div className="form-group col-lg-12 col-md-12 col-sm-12">

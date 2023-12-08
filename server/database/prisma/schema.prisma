@@ -113,9 +113,24 @@ model OtherSettings {
 }
 
 model Testimonials {
-  id      Int      @id @default(autoincrement())
-  name    String
-  content String
-  rating  Int
-  date    DateTime @default(now())
+  id           Int      @id @default(autoincrement())
+  name         String
+  content      String
+  rating       Int
+  filename     String   @default("")
+  physicalPath String   @default("")
+  fileUrl      String   @default("")
+  date         DateTime @default(now())
+}
+
+model Captcha {
+  id     String   @id @default(cuid())
+  answer String
+  date   DateTime @default(now())
+}
+
+model Referrals {
+  id   Int      @id @default(autoincrement())
+  code String
+  date DateTime @default(now())
 }
