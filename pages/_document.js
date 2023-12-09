@@ -9,10 +9,10 @@ export default function Document() {
         <link href="/css/responsive.css" rel="stylesheet" />
         <link
           rel="shortcut icon"
-          href="/images/favicon.png"
+          href="/img/favicon.png"
           type="image/x-icon"
         />
-        <link rel="icon" href="/images/favicon.png" type="image/x-icon" />
+        <link rel="icon" href="/img/favicon.png" type="image/x-icon" />
       </Head>
       <body className="hidden-bar-wrapper">
         <div className="page-wrapper">

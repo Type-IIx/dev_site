@@ -60,9 +60,9 @@ export default function Menu() {
                     <li>
                       <Link href="/admpanel/settings">Settings</Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link href="/admpanel/others">Others</Link>
-                    </li>
+                    </li> */}
                     <li>
                       <a
                         onClick={() => {
