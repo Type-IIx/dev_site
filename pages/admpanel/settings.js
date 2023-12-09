@@ -312,13 +312,13 @@ export default function Settings() {
 
             <section class="mentors-page-section">
 							<div class="auto-container">
-								<div className="row clearfix">
+								{/* <div className="row clearfix">
 									<div className="col-md-12">
 										<div className="sec-title-two my-5 text-center">
 											<div className="title color-three">Other Settings</div>
 										</div>
 									</div>
-								</div>
+								</div> */}
 								<div class="row clearfix">
 									<div class="mentor-block col-lg-8 col-md-8 col-sm-12">
 										<form>

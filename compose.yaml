@@ -9,8 +9,10 @@ services:
     links:
       - "postgress:database"
     volumes:
-      - ./data:/var/www/ampouletude.com/html/source/books
-      - ./uploads:/var/www/ampouletude.com/html/source/uploads
+      - books-volume:/usr/src/app/books
+      - uploads-volume:/usr/src/app/uploads
+      #- ./books:/var/www/ampouletude.com/html/source/books
+      #- ./uploads:/var/www/ampouletude.com/html/source/uploads
   frontend:
     image: frontend:alpha
     environment:
@@ -38,5 +40,11 @@ services:
       - "5430:5432"
     volumes:
       - ./data:/var/www/ampouletude.com/html/source/postgressdemo
+
+volumes:
+  books-volume:
+    external: true
+  uploads-volume:
+    external: true
 
 #/var/www/ampouletude.com/html/source/postgressdemo

@@ -21,10 +21,11 @@ function Addbook() {
 
   const handleImport = async () => {
     let form_data = new FormData();
-    const file =
-      bookRef.current.files.length > 0 ? bookRef.current.files[0] : null;
-    if (file) {
-      form_data.append("book", file, file.name);
+    /* const file =
+      bookRef.current.files.length > 0 ? bookRef.current.files[0] : null; */
+    const file = ""
+    if (/* file */ true) {
+      /* form_data.append("book", file, file.name); */
       form_data.append("title", titleRef.current.value);
       form_data.append("price", priceRef.current.value);
       form_data.append("description", editorRef.current.getContent())
@@ -63,13 +64,14 @@ function Addbook() {
 
   const submitData = async (e) => {
     e.preventDefault();
-    const file =
-      bookRef.current.files.length > 0 ? bookRef.current.files[0] : null;
+    /* const file =
+      bookRef.current.files.length > 0 ? bookRef.current.files[0] : null; */
     const image =
       imageRef.current.files.length > 0 ? imageRef.current.files[0] : null;
-    if (!file) {
+    /* if (!file) {
       toast.warning("Please select a file");
-    } else if (!image) {
+    } else */ 
+    if (!image) {
       toast.warning("Please select an image");
     } else {
       const res = await handleImport();
@@ -169,10 +171,10 @@ function Addbook() {
                     />
                   </div>
 
-                  <div className="form-group">
+                  {/* <div className="form-group">
                     <label>Book (PDF)</label>
                     <input ref={bookRef} type="file" className="form-control" />
-                  </div>
+                  </div> */}
                   <button
                     onClick={submitData}
                     className="btn btn-primary float-right"

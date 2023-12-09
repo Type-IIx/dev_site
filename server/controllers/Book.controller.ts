@@ -90,7 +90,12 @@ BookController.post("/create", uploadBook.single("book"), async (req, res, next)
 
             const body: BodyDataT = req.body;
             body.price = Number(body.price)
-            const file = req.file as Express.Multer.File
+            const file = req.file as Express.Multer.File;
+            let temp = {
+                BookFilename: "",
+                BookphysicalPath: "",
+                BookUrl: ""
+            }
             if (file) {
                 const relative_path = "/books/" + file.filename;
                 const url = "/download/" + file.filename;
@@ -99,14 +104,15 @@ BookController.post("/create", uploadBook.single("book"), async (req, res, next)
                     BookphysicalPath: relative_path,
                     BookUrl: url
                 }
-                const dbData = { ...body, ...temp };
-                const p = await prisma.book.create({
-                    data: dbData
-                })
-                res.status(201).json(p)
-            } else {
-                res.status(500).json({ error: true, message: "image not found" })
             }
+            const dbData = { ...body, ...temp };
+            const p = await prisma.book.create({
+                data: dbData
+            })
+            res.status(201).json(p)
+            /* } else {
+                res.status(500).json({ error: true, message: "image not found" })
+            } */
         } else {
             res.status(401).json({ authorized: false })
         }
