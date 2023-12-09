@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import countryList from "react-select-country-list";
 import { useCountries } from "use-react-countries";
 import { CheckoutForm } from "../../parsers/schema";
-import { formatAndShowErrors } from "../../utils/helpers";
+import { convertFromUSD, formatAndShowErrors, formatMBTC, getRates } from "../../utils/helpers";
 
 export default function Bookdetail() {
 	const [bookId, setBookId] = useState(-1);
@@ -24,10 +24,26 @@ export default function Bookdetail() {
 		zip: "",
 		copy: "",
 	});
+	const [rates, setRates] = useState(false);
 	//const options = useMemo(() => countryList.getData(), []);
 	const { countries } = useCountries();
 
 	const router = useRouter();
+
+	async function updateRates() {
+		let d = await getRates();
+		setRates(d);
+	  }
+	
+	
+	  // effects here
+	  
+	
+	  useEffect(() => {
+		updateRates();
+		const interval = setInterval(updateRates, 15000);
+		return () => clearInterval(interval);
+	  }, []);
 
 	const fethBook = async () => {
 		setLoading(true);
@@ -99,7 +115,7 @@ export default function Bookdetail() {
 				<title>Checkout</title>
 			</Head>
 			<Wrapper>
-				{!loading && book && bookId !== -1 && (
+				{!loading && book && rates && bookId !== -1 && (
 					<>
 						<section className="banner-section page-title">
 							<div className="auto-container">
@@ -322,6 +338,11 @@ export default function Bookdetail() {
 													<h5>Total (USD)</h5>
 													<strong>${book.price}</strong>
 												</li>
+												<li className="list-group-item d-flex justify-content-between">
+													<h5>Total (BTC)</h5>
+													<strong> {convertFromUSD(rates, book.price, -1)} BTC <br /> ({formatMBTC(convertFromUSD(rates, book.price, -1))} mBTC)</strong>
+												</li>
+												
 											</ul>
 										</div>
 										<button onClick={submitForm} className="checkout-btn" type="submit">

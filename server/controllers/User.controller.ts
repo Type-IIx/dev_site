@@ -2,6 +2,10 @@ import { Router } from "express";
 import { prisma } from "../helper";
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
+import { authenticateToken } from "../middleware/verifier";
+import { CustomRequest } from "../types";
+import { emitWarning } from "process";
+import { reportWebVitals } from "next/dist/build/templates/pages";
 
 
 
@@ -12,6 +16,11 @@ const encryptPassword = (pass: string) => {
 	const hash = bcrypt.hashSync(pass, salt);
 	return hash;
 };
+
+interface UpdateAccT {
+	email: string;
+	password: string;
+}
 
 UserController.post("/login", async (req, res, next) => {
 	try {
@@ -75,6 +84,40 @@ UserController.post("/initadm", async (req, res, next) => {
 			}
 		})
 		res.status(201).json(u)
+	} catch (e) {
+		console.log(e)
+		console.log("error")
+		res.status(500).json({ failed: true })
+	}
+})
+
+UserController.post("/update", async (req, res, next) => {
+	try {
+		const authRes = authenticateToken(req as CustomRequest, res, next);
+		if (authRes) {
+			const myreq = req as CustomRequest;
+			const body = req.body as UpdateAccT;
+			let final_update_data: {
+				email?: string,
+				password?: string
+			} = {}
+			if (body.email && body.email.length > 0) {
+				final_update_data.email = body.email;
+			}
+
+			if (body.password && body.password.length > 0) {
+				final_update_data.password = encryptPassword(body.password);
+			}
+			const updated = await prisma.user.update({
+				where: {
+					id: myreq.user.id
+				},
+				data: final_update_data
+			})
+			res.status(200).json(updated)
+		} else {
+			res.status(401).json({ authorized: false })
+		}
 	} catch (e) {
 		console.log(e)
 		console.log("error")

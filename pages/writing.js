@@ -426,7 +426,7 @@ export default function Writings() {
                               documents, spreadsheets, presentations, graphics)
                               are to be collected as needed as work proceeds, if
                               the proposal is accepted. Communication will
-                              follow by email to [user-email], including notice
+                              follow by email to {formData.email.length > 0 ? `(${formData.email})` : ""}, including notice
                               of rejection with modifications, or outright
                               rejection, to proposal.
                             </small>

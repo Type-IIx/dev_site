@@ -1,8 +1,9 @@
 import React from "react";
 import { BASE_DOMAIN, BASE_URL } from "../constants/apiInfo";
 import Link from "next/link";
+import { convertFromUSD, formatMBTC } from "../utils/helpers";
 
-function BookCard({ book }) {
+function BookCard({ book,rates }) {
   return (
     <div className="course-block col-lg-3 col-md-6 col-sm-12">
       <div
@@ -30,6 +31,9 @@ function BookCard({ book }) {
             <Link href={`/bookdetails/${book.id}`}>{book.title}</Link>
           </h5>
           <h4 className="price text-blue mb-3">${book.price}</h4>
+          <h4 className="price text-blue mb-3">{convertFromUSD(rates, book.price, -1)} BTC <br /> ({formatMBTC(convertFromUSD(rates, book.price, -1))} mBTC)</h4>
+
+          
           {/* <div className="btn-group post-info">
             <a
               href={BASE_URL + `book/download/${book.id}`}

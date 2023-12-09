@@ -5,14 +5,32 @@ import { useRouter } from "next/router";
 import { BASE_DOMAIN, BASE_URL } from "../../constants/apiInfo";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { convertFromUSD, formatMBTC, getRates } from "../../utils/helpers";
 
 export default function Bookdetail() {
   const [bookId, setBookId] = useState(-1)
   const [loading, setLoading] = useState(true);
   const [book, setBook] = useState();
+  const [rates, setRates] = useState(false);
 
 
   const router = useRouter();
+
+
+  async function updateRates() {
+    let d = await getRates();
+    setRates(d);
+  }
+
+
+  // effects here
+  
+
+  useEffect(() => {
+    updateRates();
+    const interval = setInterval(updateRates, 15000);
+    return () => clearInterval(interval);
+  }, []);
 
 
 
@@ -53,7 +71,7 @@ export default function Bookdetail() {
         <title>{book && book.title ? book.title : ""} </title>
       </Head>
       <Wrapper>
-        {!loading && book && bookId !== -1 && <><section className="banner-section page-title">
+        {!loading && book && rates && bookId !== -1 && <><section className="banner-section page-title">
           <div className="auto-container">
             <div className="content">
               <h1>{book.title}</h1>
@@ -99,6 +117,9 @@ export default function Bookdetail() {
                       <div className="lower-content">
                         <div className="price text-center">
                           ${book.price} {/* <span className="crossed-price">$900</span> */}
+                        </div>
+                        <div className="price text-center">
+                        {convertFromUSD(rates, book.price, -1)} BTC <br /> ({formatMBTC(convertFromUSD(rates, book.price, -1))} mBTC)
                         </div>
                         <div className="buttons-box">
                           {/* <a href={BASE_URL + `book/download/${book.id}`}

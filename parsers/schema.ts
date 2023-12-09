@@ -11,7 +11,7 @@ export const CoachingForm = z.object({
 export const AuthorForm = z.object({
     email: z.string().email({ message: "Invalid Email" }),
     website: z.string().min(3, { message: "Name Must be at least 3 characters long" }),
-    subject: z.string().min(500, { message: "Must be a minimum of 500 characters" })
+    subject: z.string().min(50, { message: "Must be a minimum of 50 characters" }).max(1500, { message: "Must be a maximum of 1500 characters" })
 })
 
 

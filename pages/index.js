@@ -4,7 +4,7 @@ import { use, useEffect, useState } from "react";
 import { BASE_DOMAIN, BASE_URL } from "../constants/apiInfo";
 import axios from "axios";
 import BookCard from "../components/BookCard";
-import { formatDate } from "../utils/helpers";
+import { formatDate, getRates } from "../utils/helpers";
 import Link from "next/link";
 
 export default function Home() {
@@ -12,6 +12,8 @@ export default function Home() {
   const [articles, setArticles] = useState([])
   const [books, setBooks] = useState([])
   const [loading, setLoading] = useState(true)
+  const [rates, setRates] = useState(false);
+
 
   const fetchArticles = async () => {
     const url = BASE_URL + "blog/blogs";
@@ -41,6 +43,22 @@ export default function Home() {
   useEffect(() => {
     fetchData();
   }, [])
+
+
+  async function updateRates() {
+    let d = await getRates();
+    setRates(d);
+  }
+
+
+  // effects here
+  
+
+  useEffect(() => {
+    updateRates();
+    const interval = setInterval(updateRates, 15000);
+    return () => clearInterval(interval);
+  }, []);
 
 
   return (
@@ -273,9 +291,9 @@ export default function Home() {
               <h2>Popular Books</h2>
             </div>
             <div className="row clearfix">
-              {books.map((e, i) => {
+              {rates && books.map((e, i) => {
                 if (i < 4) {
-                  return <BookCard book={e} key={`home-book-${i}`} />
+                  return <BookCard book={e} key={`home-book-${i}`} rates={rates} />
                 }
               })}
               {/* <div className="course-block col-lg-3 col-md-6 col-sm-12">

@@ -44,7 +44,7 @@ export const formatAndShowErrors = (toast, errors) => {
 };
 
 export const formatMBTC = (amount) => {
-  return amount * 1000;
+  return CustomRound(amount * 1000,8);
 };
 
 export const encryptPassword = (pass) => {

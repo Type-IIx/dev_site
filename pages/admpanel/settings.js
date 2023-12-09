@@ -2,6 +2,7 @@ import Head from "next/head";
 import Menu from "../../components/AdminComps/adminmenu";
 import Footer from "../../components/AdminComps/adminfooter";
 import AdminWrapper from "../../components/AdminComps/AdminWrapper";
+import AdminChecker from "../../components/AdminComps/AdminChecker";
 import { useEffect, useState } from "react";
 import { axiosInstance } from "../../utils/apiHandler";
 import { BASE_URL } from "../../constants/apiInfo";
@@ -44,12 +45,31 @@ export default function Settings() {
     }
   };
 
+
+  const updatePassword = async () => {
+    const email = document.getElementById("newemail").value;
+    const passval = document.getElementById("newpass").value;
+    const body = {
+      email,
+      password : passval
+    }
+
+    const r = await axiosInstance.post(BASE_URL + "update",body)
+    if (r.status === 200){
+      toast.success("updated account details")
+    }else{
+      toast.error("Failed")
+    }
+
+  }
+
   return (
     <>
       <Head>
         <title>Settings</title>
       </Head>
       <AdminWrapper>
+        <AdminChecker>
         {socials !== null && !loading && (
           <>
             <section class="mentors-page-section">
@@ -141,11 +161,51 @@ export default function Settings() {
                       </div>
                     </div>
                   </div>
+                  <div class="mentor-block col-lg-4 col-md-6 col-sm-12">
+                    <div class="inner-box">
+                      <div class="lower-content">
+                        <div className="sec-title-two">
+                          <div className="title color-three">New Password</div>
+                        </div>
+                        <div className="form-group">
+                          <label>New Email</label>
+                          <div class="input-group">
+                            <input
+                              id="newemail"
+                              type="email"
+                              
+                              className="form-control"
+                            />
+                            
+                          </div>
+                        </div>
+                        <div className="form-group">
+                          <label>New Password</label>
+                          <div class="input-group">
+                            <input
+                              id="newpass"
+                              type="password"
+                              
+                              className="form-control"
+                            />
+                            <button
+                              class="btn btn-outline-secondary"
+                              onClick={updatePassword}
+                            >
+                              Save
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </section>
           </>
         )}
+        </AdminChecker>
+        
       </AdminWrapper>
     </>
   );

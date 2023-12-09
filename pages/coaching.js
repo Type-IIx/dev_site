@@ -421,8 +421,7 @@ export default function Coaching() {
                             </div>
                             <small className="form-text text-muted">
                               Agreement to Transmit Bitcoin (BTC): Coach will
-                              e-mail, to your provided e-mail address ([user's
-                              email]), the BTC address for payment, after you have
+                              e-mail, to your provided e-mail address {formData.email.length > 0 ? `(${formData.email})` : ""}, the BTC address for payment, after you have
                               read and agreed to the following terms
                             </small>
 

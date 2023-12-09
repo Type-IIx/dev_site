@@ -4,10 +4,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../constants/apiInfo";
 import BookCard from "../components/BookCard";
+import { getRates } from "../utils/helpers";
 
 export default function Books() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [rates, setRates] = useState(false);
+
 
   const fetchBooks = async () => {
     setLoading(true);
@@ -24,6 +27,22 @@ export default function Books() {
     fetchBooks();
   }, []);
 
+  async function updateRates() {
+    let d = await getRates();
+    setRates(d);
+  }
+
+
+  // effects here
+  
+
+  useEffect(() => {
+    updateRates();
+    const interval = setInterval(updateRates, 15000);
+    return () => clearInterval(interval);
+  }, []);
+
+  
   return (
     <>
       <Head>
@@ -50,10 +69,10 @@ export default function Books() {
         <section className="price-page-section">
           <div className="auto-container">
             <div className="row clearfix">
-              {books &&
+              {books && rates &&
                 !loading &&
                 books.map((e, i) => {
-                  return <BookCard key={`book-${i}`} book={e} />;
+                  return <BookCard key={`book-${i}`} book={e} rates={rates} />;
                 })}
             </div>
           </div>
