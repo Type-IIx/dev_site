@@ -216,20 +216,20 @@ export default function Writings() {
         {rates && captcha && (
           <>
             <Head>
-              <title>Hire for writings</title>
+              <title>Hire for Writing</title>
             </Head>
 
             <div>
               <section className="banner-section page-title">
                 <div className="auto-container">
                   <div className="content">
-                    <div className="text">Welcome to our</div>
+                    <div className="text">Welcome to Type-IIx's</div>
                     <h1>Hire for Writing</h1>
                   </div>
                   <div className="breadcrumb-outer">
                     <ul className="page-breadcrumb">
                       <li>
-                        <a href="index.html">Home</a>
+                        <a href="/">Home</a>
                       </li>
                       <li>Hire for Writing</li>
                     </ul>
@@ -249,23 +249,17 @@ export default function Writings() {
                         <div className="date">per work of authorship</div>
                         <ul className="price-options">
                           <li>
-                            Unlimited questions pertaining to body composition,
-                            hypertrophy, and performance
+                            Attentive &amp; crafted solutions
                           </li>
                           <li>
-                            Training programs designed around supplements and
-                            goals
+                            Unlimited projects
                           </li>
                           <li>
-                            Nutrition planning assistance, including tailoring
-                            of nutrient intakes, strategies and tactics
+                            Unlimited revision
                           </li>
-                          <li>Monitoring of body composition variables</li>
+                          <li>Flexible timeline</li>
                           <li>
-                            One biweekly, scheduled as needed, real-time chat
-                            via Matrix federated chat (details on account
-                            creation will be provided as needed) for 90 min each
-                            session
+                            Private consultation
                           </li>
                         </ul>
                       </div>
@@ -416,7 +410,7 @@ export default function Writings() {
                                 ACCEPTS THE PROPOSAL” in the amount of:
                                 <strong>
                                   {`${SYMBOLS[selectedCurrency]} ${prices.total}`}
-                                  or {`${prices.bitcoinTotal}`}BTC (
+                                  or {`${prices.bitcoinTotal}`} BTC (
                                   {formatMBTC(prices.bitcoinTotal)} mBTC)
                                 </strong>
                               </label>
