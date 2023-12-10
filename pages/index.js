@@ -123,7 +123,7 @@ export default function Home() {
 
                     <h3>Coaching</h3>:
                     <ul>
-                        <li><em>Training Planning (Programming)</em>: Planned, nonlinear, progressive overload (periodisation) as a principle is applies, using training methods that include intensification, e.g., DC Rest-Pause Clusters. Mesocycles proceed in blocks of 8 – 16 weeks</li>
+                        <li><em>Training Planning (Programming)</em>: Planned, nonlinear, progressive overload (periodisation) as a principle is applied, using training methods that include intensification, e.g., DC Rest-Pause Clusters. Mesocycles proceed in blocks of 8 – 16 weeks</li>
                         <li><em>Nutrition Planning Strategies &amp; Tactics</em>: A cyclical structure, the complexity of which depends on training status (e.g., intermediate, very advanced) &amp; the training program, is applied to serve either bulking, cutting, or recomp</li>
                         <li><em>Individualized Protocol</em>: Individually tailored physique-enhancement protocols oriented towards bulking, cutting, or recomp</li>
                     </ul>
@@ -165,7 +165,7 @@ export default function Home() {
                     <div className="text">
                       Coaching proceeds through a cyclical workflow. The Client reports scale weight (kg, lb) daily, required training sessions items on a per-session basis,
                       weekly calipers skinfold measures, and the Coach generates reports from these data to manage rolling average changes to scale weight, &amp; to adjust the training load.
-                      Every three weeks, the Client reports poses, including mandatory poses &amp; select photos based on subjective (visual) assessment of weak points.
+                      Every three weeks, the Client reports poses (photos), including mandatory poses &amp; select poses based on subjective (visual) assessment of weak points.
                     </div>
                   </div>
                 </div>
