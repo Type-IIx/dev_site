@@ -198,7 +198,7 @@ export default function Consultancy() {
             <section className="banner-section page-title">
               <div className="auto-container">
                 <div className="content">
-                  <div className="text">Welcome to our</div>
+                  <div className="text">Welcome to Type-IIx's</div>
                   <h1>Consultancy</h1>
                 </div>
                 <div className="breadcrumb-outer">
@@ -228,19 +228,10 @@ export default function Consultancy() {
                           hypertrophy, and performance
                         </li>
                         <li>
-                          Training programs designed around supplements and
-                          goals
+                          Individually tailored protocols oriented to either bulking, cutting, or recomping
                         </li>
                         <li>
-                          Nutrition planning assistance, including tailoring of
-                          nutrient intakes, strategies and tactics
-                        </li>
-                        <li>Monitoring of body composition variables</li>
-                        <li>
-                          One biweekly, scheduled as needed, real-time chat via
-                          Matrix federated chat (details on account creation
-                          will be provided as needed) for 90 min each session
-                        </li>
+                         Bloodwork monitoring to support physique enhancement
                       </ul>
                     </div>
                   </div>
@@ -392,7 +383,7 @@ export default function Consultancy() {
                               of:
                               <strong>
                                 {`${SYMBOLS[selectedCurrency]} ${prices.total}`}
-                                or {`${prices.bitcoinTotal}`}BTC (
+                                or {`${prices.bitcoinTotal}`} BTC (
                                 {formatMBTC(prices.bitcoinTotal)} mBTC)
                               </strong>
                             </label>

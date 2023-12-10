@@ -203,7 +203,7 @@ export default function Coaching() {
   return (
     <>
       <Head>
-        <title>Coachings</title>
+        <title>Coaching</title>
       </Head>
       <Wrapper>
         {rates && captcha && (
@@ -211,7 +211,7 @@ export default function Coaching() {
             <section className="banner-section page-title">
               <div className="auto-container">
                 <div className="content">
-                  <div className="text">Welcome to our</div>
+                  <div className="text">Welcome to Type-IIx's</div>
                   <h1>Coaching</h1>
                 </div>
                 <div className="breadcrumb-outer">
@@ -439,7 +439,7 @@ export default function Coaching() {
                                 of:{" "}
                                 <strong>
                                   {`${SYMBOLS[selectedCurrency]} ${prices.total}`}{" "}
-                                  or {`${prices.bitcoinTotal}`}BTC (
+                                  or {`${prices.bitcoinTotal}`} BTC (
                                   {formatMBTC(prices.bitcoinTotal)} mBTC)
                                 </strong>
                               </label>

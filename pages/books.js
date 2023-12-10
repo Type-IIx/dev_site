@@ -46,19 +46,19 @@ export default function Books() {
   return (
     <>
       <Head>
-        <title>Purchase books</title>
+        <title>Purchase Books</title>
       </Head>
       <Wrapper>
         <section className="banner-section page-title">
           <div className="auto-container">
             <div className="content">
-              <div className="text">Welcome to our</div>
+              <div className="text">Welcome to Type-IIx's</div>
               <h1>Books Section</h1>
             </div>
             <div className="breadcrumb-outer">
               <ul className="page-breadcrumb">
                 <li>
-                  <a href="index.html">Home</a>
+                  <a href="/">Home</a>
                 </li>
                 <li>Books</li>
               </ul>

@@ -64,7 +64,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>Ampouletude: Home of Type-IIx</title>
       </Head>
 
       <Wrapper>
@@ -75,7 +75,7 @@ export default function Home() {
                 <div className="inner-column">
                   <div className="title">Welcome to</div>
                   <h1>
-                    Coaching & <span>Consultancy</span>
+                    Ampouletude: Home of Type-IIx – <span>Coaching &amp; Consultancy</span>
                   </h1>
                 </div>
               </div>
@@ -83,7 +83,7 @@ export default function Home() {
               <div className="image-column col-lg-6 col-md-12 col-sm-12">
                 <div className="inner-column">
                   <div className="image" data-tilt data-tilt-max="3">
-                    <img src="/img/banner.jpg" alt="Banner" />
+                    <img src="/img/logo-full.png" alt="Logo (Full)" />
                   </div>
                 </div>
               </div>
@@ -97,7 +97,7 @@ export default function Home() {
               <div className="image-column col-lg-6 col-md-12 col-sm-12">
                 <div className="inner-column">
                   <div className="image" data-tilt data-tilt-max="3">
-                    <img src="/img/coaching-2.jpg" alt="" />
+                    <img src="/img/services-comparison-chart.png" alt="Services Comparison (Chart)" />
                   </div>
                 </div>
               </div>
@@ -105,13 +105,95 @@ export default function Home() {
               <div className="content-column col-lg-6 col-md-12 col-sm-12">
                 <div className="inner-column">
                   <div className="sec-title-two">
-                    <div className="title">Coaching</div>
-                    <h2>I help individuals to become their best version?</h2>
+                    <div className="title">Services</div>
+                    <h2>Consulting, Writing, &amp; Coaching</h2>
                     <div className="text">
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Reference site about Lorem Ipsum,
-                      giving information on its origins, as well as a random
-                      Lipsum generator.
+                      <h3>Consulting</h3>:
+                      <ul>
+                        <li><em>Individualized Protocol</em>: Individually tailored physique-enhancement protocols oriented towards bulking, cutting, or recomp</li>
+                        <li><em>Bloodwork Monitoring</em>: Review of bloodwork values for the purpose of physique enhancement</li>
+                    </ul>
+                      <em>Note</em>: If routine laboratory bloodwork has not been performed, the Coach may elect to educate &amp; inform the Client about best practices for self-monitoring these values for the purpose of physique enhancement.
+
+                      <h3>Writing</h3>:
+                      <ul>
+                        <li>Attentive &amp; crafted solutions after private consultation, an in-depth analysis, &amp; review of supporting materials</li>
+                    </ul>
+                        <em>Note</em>: Portfolio available upon request. See: <a href="https://thinksteroids.com/author/type-iix/" alt="MesoRx Articles">MesoRx [www]</a> &amp; <a href="/articles/">Articles [www]</a> for some publicly available samples.
+
+                    <h3>Coaching</h3>:
+                    <ul>
+                        <li><em>Training Planning (Programming)</em>: Planned, nonlinear, progressive overload (periodisation) as a principle is applies, using training methods that include intensification, e.g., DC Rest-Pause Clusters. Mesocycles proceed in blocks of 8 – 16 weeks</li>
+                        <li><em>Nutrition Planning Strategies &amp; Tactics</em>: A cyclical structure, the complexity of which depends on training status (e.g., intermediate, very advanced) &amp; the training program, is applied to serve either bulking, cutting, or recomp</li>
+                        <li><em>Individualized Protocol</em>: Individually tailored physique-enhancement protocols oriented towards bulking, cutting, or recomp</li>
+                    </ul>
+
+                    </div>
+                  </div>
+
+                  <div className="btn-box">
+                    <a href="/coaching" className="theme-btn btn-style-eight">
+                      <span className="txt">
+                        Sign Up for Coaching<i className="flaticon-right-arrow-1"></i>
+                      </span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="choose-section">
+          <div className="auto-container">
+            <div className="row clearfix">
+              <div className="image-column col-lg-6 col-md-12 col-sm-12">
+                <div className="inner-column">
+                  <div className="image" data-tilt data-tilt-max="3">
+                    <img src="/img/services-comparison-chart.png" alt="Services Comparison (Chart)" />
+                  </div>
+                </div>
+              </div>
+
+        <section className="course-section">
+          <div className="auto-container">
+            <div className="row clearfix">
+              <div className="title-column col-lg-6 col-md-12 col-sm-12">
+                <div className="inner-column">
+                  <div className="sec-title-two">
+                    <div className="title">Coaching Workflow</div>
+                    <h2>The Life-Cycle of the Coaching Process</h2>
+                    <div className="text">
+                      Coaching proceeds through a cyclical workflow. The Client reports scale weight (kg, lb) daily, required training sessions items on a per-session basis,
+                      weekly calipers skinfold measures, and the Coach generates reports from these data to manage rolling average changes to scale weight, &amp; to adjust the training load.
+                      Every three weeks, the Client reports poses, including mandatory poses &amp; select photos based on subjective (visual) assessment of weak points.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="video-column col-lg-6 col-md-12 col-sm-12">
+                <div
+                  className="inner-column wow fadeInRight"
+                  data-wow-delay="0ms"
+                  data-wow-duration="1500ms"
+                >
+                  <img
+                    src="/img/workflow.png"
+                    alt="Coaching Workflow"
+                    className="img-fluid"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+/*
+        </section>
+              <div className="content-column col-lg-6 col-md-12 col-sm-12">
+                <div className="inner-column">
+                  <div className="sec-title-two">
+                    <div className="title">Consulting</div>
+                    <h2></h2>
+                    <div className="text">
                     </div>
                   </div>
 
@@ -185,41 +267,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section className="course-section">
-          <div className="auto-container">
-            <div className="row clearfix">
-              <div className="title-column col-lg-6 col-md-12 col-sm-12">
-                <div className="inner-column">
-                  <div className="sec-title-two">
-                    <div className="title">Coaching Workflow</div>
-                    <h2>Lorem Ipsum is simply dummy text</h2>
-                    <div className="text">
-                      I am glad that you have made it here to send a distress
-                      signal, and inform the Senate that all on board were killed.
-                      Dantooine. I’m not going to Alderaan. I really got to go.
-                      But that to me.
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="video-column col-lg-6 col-md-12 col-sm-12">
-                <div
-                  className="inner-column wow fadeInRight"
-                  data-wow-delay="0ms"
-                  data-wow-duration="1500ms"
-                >
-                  <img
-                    src="/img/workflow.png"
-                    alt="Coaching Workflow"
-                    className="img-fluid"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
+*/
         <section class="price-page-section">
           <div class="auto-container">
             <div class="sec-title-two centered">
@@ -252,11 +300,11 @@ export default function Home() {
                     <li>Unlimited revision</li>
                     <li>Flexible timeline</li>
                     <li>Private consultation</li>
-                    <li>Attentive & crafted solutions</li>
+                    <li>Attentive &amp; crafted solutions</li>
                   </ul>
                   <div class="button-box text-center">
                     <a href="/authors" class="purchase-btn theme-btn">
-                      $300/Month
+                      $300/Writing
                     </a>
                   </div>
                 </div>
@@ -275,7 +323,7 @@ export default function Home() {
                   </ul>
                   <div class="button-box text-center">
                     <a href="/coaching" class="purchase-btn theme-btn">
-                      $250 1st Month & $350/Month Thereafter
+                      $250 1st Month &amp; $350/Month Thereafter
                     </a>
                   </div>
                 </div>

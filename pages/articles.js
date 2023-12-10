@@ -69,13 +69,13 @@ export default function Articles() {
         <section className="banner-section page-title">
           <div className="auto-container">
             <div className="content">
-              <div className="text">Welcome to our</div>
-              <h1>Some News from us</h1>
+              <div className="text">Welcome to Type-IIx's</div>
+              <h1>Article Aggregator</h1>
             </div>
             <div className="breadcrumb-outer">
               <ul className="page-breadcrumb">
                 <li>
-                  <a href="index.html">Home</a>
+                  <a href="/">Home</a>
                 </li>
                 <li>Articles</li>
               </ul>
