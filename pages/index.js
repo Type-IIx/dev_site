@@ -308,7 +308,7 @@ export default function Home() {
                     <li>Attentive &amp; crafted solutions</li>
                   </ul>
                   <div class="button-box text-center">
-                    <a href="/authors" class="purchase-btn theme-btn">
+                    <a href="/writing" class="purchase-btn theme-btn">
                       $300/Writing
                     </a>
                   </div>

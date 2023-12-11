@@ -292,7 +292,7 @@ export default function Writings() {
                               </select>
                             </div>
                             <p className="mb-2">
-                              To sign up for Hire for Writing, enter your email
+                              To sign up to Hire for Writing, enter your email
                             </p>
                             <div className="form-group">
                               <input
