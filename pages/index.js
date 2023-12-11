@@ -108,20 +108,20 @@ export default function Home() {
                     <div className="title">Services</div>
                     <h2>Consulting, Writing, &amp; Coaching</h2>
                     <div className="text">
-                      <h3>Consulting</h3>:
+                      <h3>Consulting</h3>
                       <ul>
                         <li><em>Individualized Protocol</em>: Individually tailored physique-enhancement protocols oriented towards bulking, cutting, or recomp</li>
                         <li><em>Bloodwork Monitoring</em>: Review of bloodwork values for the purpose of physique enhancement</li>
                     </ul>
                       <em>Note</em>: If routine laboratory bloodwork has not been performed, the Coach may elect to educate &amp; inform the Client about best practices for self-monitoring these values for the purpose of physique enhancement.
 
-                      <h3>Writing</h3>:
+                      <h3>Writing</h3>
                       <ul>
                         <li>Attentive &amp; crafted solutions after private consultation, an in-depth analysis, &amp; review of supporting materials</li>
                     </ul>
                         <em>Note</em>: Portfolio available upon request. See: <a href="https://thinksteroids.com/author/type-iix/" alt="MesoRx Articles">MesoRx [www]</a> &amp; <a href="/articles/">Articles [www]</a> for some publicly available samples.
 
-                    <h3>Coaching</h3>:
+                    <h3>Coaching</h3>
                     <ul>
                         <li><em>Training Planning (Programming)</em>: Planned, nonlinear, progressive overload (periodisation) as a principle is applied, using training methods that include intensification, e.g., DC Rest-Pause Clusters. Mesocycles proceed in blocks of 8 – 16 weeks</li>
                         <li><em>Nutrition Planning Strategies &amp; Tactics</em>: A cyclical structure, the complexity of which depends on training status (e.g., intermediate, very advanced) &amp; the training program, is applied to serve either bulking, cutting, or recomp</li>
@@ -138,21 +138,26 @@ export default function Home() {
                       </span>
                     </a>
                   </div>
+                  <br />
+                  <div className="btn-box">
+                    <a href="/writing" className="theme-btn btn-style-eight">
+                        <span className="txt">
+                            Commission for Writing<i className="flaticon-right-arrow-1"></i>
+                        </span>
+                    </a>
+                </div>
+                <br />
+                <div className="btn-box">
+                    <a href="/consultancy" className="theme-btn btn-style-eight">
+                        <span className="txt">
+                            Sign Up for Consulting<i className="flaticon-right-arrow-1"></i>
+                        </span>
+                    </a>
                 </div>
               </div>
             </div>
           </div>
         </section>
-        <section className="choose-section">
-          <div className="auto-container">
-            <div className="row clearfix">
-              <div className="image-column col-lg-6 col-md-12 col-sm-12">
-                <div className="inner-column">
-                  <div className="image" data-tilt data-tilt-max="3">
-                    <img src="/img/services-comparison-chart.png" alt="Services Comparison (Chart)" />
-                  </div>
-                </div>
-              </div>
 
         <section className="course-section">
           <div className="auto-container">
@@ -161,7 +166,7 @@ export default function Home() {
                 <div className="inner-column">
                   <div className="sec-title-two">
                     <div className="title">Coaching Workflow</div>
-                    <h2>The Life-Cycle of the Coaching Process</h2>
+                    <h2>The Coaching Life-Cycle</h2>
                     <div className="text">
                       Coaching proceeds through a cyclical workflow. The Client reports scale weight (kg, lb) daily, required training sessions items on a per-session basis,
                       weekly calipers skinfold measures, and the Coach generates reports from these data to manage rolling average changes to scale weight, &amp; to adjust the training load.
@@ -186,7 +191,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-/*
+{/*
         </section>
               <div className="content-column col-lg-6 col-md-12 col-sm-12">
                 <div className="inner-column">
@@ -267,7 +272,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-*/
+*/}
         <section class="price-page-section">
           <div class="auto-container">
             <div class="sec-title-two centered">
@@ -303,7 +308,7 @@ export default function Home() {
                     <li>Attentive &amp; crafted solutions</li>
                   </ul>
                   <div class="button-box text-center">
-                    <a href="/authors" class="purchase-btn theme-btn">
+                    <a href="/writing" class="purchase-btn theme-btn">
                       $300/Writing
                     </a>
                   </div>

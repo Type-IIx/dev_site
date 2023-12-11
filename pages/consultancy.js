@@ -382,7 +382,7 @@ export default function Consultancy() {
                               OF EMAIL CONTAINING PAYMENT ADDRESS in the amount
                               of:
                               <strong>
-                                {`${SYMBOLS[selectedCurrency]} ${prices.total}`}
+                                {`${SYMBOLS[selectedCurrency]} ${prices.total}`}{" "}
                                 or {`${prices.bitcoinTotal}`} BTC (
                                 {formatMBTC(prices.bitcoinTotal)} mBTC)
                               </strong>

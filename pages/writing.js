@@ -292,7 +292,7 @@ export default function Writings() {
                               </select>
                             </div>
                             <p className="mb-2">
-                              To sign up for Hire for Writing, enter your email
+                              To sign up to Hire for Writing, enter your email
                             </p>
                             <div className="form-group">
                               <input
@@ -409,7 +409,7 @@ export default function Writings() {
                                 OF EMAIL CONTAINING PAYMENT ADDRESS IF AUTHOR
                                 ACCEPTS THE PROPOSAL” in the amount of:
                                 <strong>
-                                  {`${SYMBOLS[selectedCurrency]} ${prices.total}`}
+                                  {`${SYMBOLS[selectedCurrency]} ${prices.total}`}{" "}
                                   or {`${prices.bitcoinTotal}`} BTC (
                                   {formatMBTC(prices.bitcoinTotal)} mBTC)
                                 </strong>
