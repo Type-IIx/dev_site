@@ -18,7 +18,6 @@ RUN npm install  prisma
 RUN npm install -g typescript
 RUN npm install --save-exact --save-dev typescript @types/react
 
-                                                                                                                                                                                            
 
 #WORKDIR /app/server/database
 #RUN npx prisma generate

@@ -114,14 +114,14 @@ export default function Home() {
                         <li><em>Bloodwork Monitoring</em>: Review of bloodwork values for the purpose of physique enhancement</li>
                     </ul>
                       <em>Note</em>: If routine laboratory bloodwork has not been performed, the Coach may elect to educate &amp; inform the Client about best practices for self-monitoring these values for the purpose of physique enhancement.
-                      <br />
+		      <br />
 
                       <h3>Writing</h3>
                       <ul>
                         <li>Attentive &amp; crafted solutions after private consultation, an in-depth analysis, &amp; review of supporting materials</li>
                     </ul>
                         <em>Note</em>: Portfolio available upon request. See: <a href="https://thinksteroids.com/author/type-iix/" alt="MesoRx Articles">MesoRx [www]</a> &amp; <a href="/articles/">Articles [www]</a> for some publicly available samples.
-                        <br />
+			<br />
 
                     <h3>Coaching</h3>
                     <ul>
@@ -148,13 +148,6 @@ export default function Home() {
         <section className="choose-section">
           <div className="auto-container">
             <div className="row clearfix">
-              <div className="image-column col-lg-6 col-md-12 col-sm-12">
-                <div className="inner-column">
-                  <div className="image" data-tilt data-tilt-max="3">
-                    <img src="/img/services-comparison-chart.png" alt="Services Comparison (Chart)" />
-                  </div>
-                </div>
-              </div>
 
         <section className="course-section">
           <div className="auto-container">
@@ -163,7 +156,7 @@ export default function Home() {
                 <div className="inner-column">
                   <div className="sec-title-two">
                     <div className="title">Coaching Workflow</div>
-                    <h2>The Life-Cycle of the Coaching Process</h2>
+                    <h2>The Coaching Life-Cycle</h2>
                     <div className="text">
                       Coaching proceeds through a cyclical workflow. The Client reports scale weight (kg, lb) daily, required training sessions items on a per-session basis,
                       weekly calipers skinfold measures, and the Coach generates reports from these data to manage rolling average changes to scale weight, &amp; to adjust the training load.
@@ -193,14 +186,15 @@ export default function Home() {
               <div className="content-column col-lg-6 col-md-12 col-sm-12">
                 <div className="inner-column">
                   <div className="sec-title-two">
-                    <div className="title">Consulting</div>
-                    <h2></h2>
+                    <div className="title">Writing</div>
+                    <h2>Hire for Writing</h2>
                     <div className="text">
+		      Works of authorship are crafted for the Client with a keen eye to detail. Continuing private consultation and editorial review guide the Author's hand to producing a scintillating writing product. Marketing, Education, Research Reviews, or Opinion/Editorials are some of the sought after work products that Clients seek. Enroll Now to proceed towards engaging the Author on your project that demands a cogent, technical and science writing style.
                     </div>
                   </div>
 
                   <div className="btn-box">
-                    <a href="/coaching" className="theme-btn btn-style-eight">
+                    <a href="/writing" className="theme-btn btn-style-eight">
                       <span className="txt">
                         Enroll Now <i className="flaticon-right-arrow-1"></i>
                       </span>
@@ -219,12 +213,9 @@ export default function Home() {
                 <div className="inner-column">
                   <div className="sec-title-two">
                     <div className="title">Consultancy</div>
-                    <h2>Lorem Ipsum is simply dummy text</h2>
-                    <div className="text">
-                      I am glad that you have made it here to send a distress
-                      signal, and inform the Senate that all on board were
-                      killed. Dantooine. I’m not going to Alderaan. I really got
-                      to go. But that to me.
+		    	<h2>Individualized Protocols</h2>
+		        <div className="text">
+		             Consults encompass individualized protocol design oriented towards either bulking, cutting, or recomping. The Client's bloodwork is reviewed and monitored for the purpose of physique enhancement. <em>Note:</em> Clients for whom recent comprehensive bloodwork has not been maintained, the Coach may elect to educate the Client on Basic Self-Monitoring of Bloodwork Measures before designing any protocol.
                     </div>
                   </div>
 

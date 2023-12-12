@@ -223,15 +223,9 @@ export default function Consultancy() {
                       </div>
                       <div className="date">Monthly</div>
                       <ul className="price-options">
-                        <li>
-                          Unlimited questions pertaining to body composition,
-                          hypertrophy, and performance
-                        </li>
-                        <li>
-                          Individually tailored protocols oriented to either bulking, cutting, or recomping
-                        </li>
-                        <li>
-                         Bloodwork monitoring to support physique enhancement
+                        <li>Unlimited questions pertaining to body composition, hypertrophy, and performance</li>
+                        <li>Individually tailored protocols oriented to either bulking, cutting, or recomping</li>
+                        <li>Bloodwork monitoring to support physique enhancement</li>
                       </ul>
                     </div>
                   </div>
