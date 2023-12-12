@@ -10,11 +10,15 @@ ENV NEXT_TELEMETRY_DISABLED 1
 
 COPY . .
 
+RUN npm config set legacy-peer-deps=true --location=project
+
 RUN npm install
 RUN npm install -g dotenv
 RUN npm install  prisma
 RUN npm install -g typescript
+RUN npm install --save-exact --save-dev typescript @types/react
 
+                                                                                                                                                                                            
 
 #WORKDIR /app/server/database
 #RUN npx prisma generate
