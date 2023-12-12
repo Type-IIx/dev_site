@@ -108,20 +108,22 @@ export default function Home() {
                     <div className="title">Services</div>
                     <h2>Consulting, Writing, &amp; Coaching</h2>
                     <div className="text">
-                      <h3>Consulting</h3>:
+                      <h3>Consulting</h3>
                       <ul>
                         <li><em>Individualized Protocol</em>: Individually tailored physique-enhancement protocols oriented towards bulking, cutting, or recomp</li>
                         <li><em>Bloodwork Monitoring</em>: Review of bloodwork values for the purpose of physique enhancement</li>
                     </ul>
                       <em>Note</em>: If routine laboratory bloodwork has not been performed, the Coach may elect to educate &amp; inform the Client about best practices for self-monitoring these values for the purpose of physique enhancement.
+                      <br />
 
-                      <h3>Writing</h3>:
+                      <h3>Writing</h3>
                       <ul>
                         <li>Attentive &amp; crafted solutions after private consultation, an in-depth analysis, &amp; review of supporting materials</li>
                     </ul>
                         <em>Note</em>: Portfolio available upon request. See: <a href="https://thinksteroids.com/author/type-iix/" alt="MesoRx Articles">MesoRx [www]</a> &amp; <a href="/articles/">Articles [www]</a> for some publicly available samples.
+                        <br />
 
-                    <h3>Coaching</h3>:
+                    <h3>Coaching</h3>
                     <ul>
                         <li><em>Training Planning (Programming)</em>: Planned, nonlinear, progressive overload (periodisation) as a principle is applies, using training methods that include intensification, e.g., DC Rest-Pause Clusters. Mesocycles proceed in blocks of 8 – 16 weeks</li>
                         <li><em>Nutrition Planning Strategies &amp; Tactics</em>: A cyclical structure, the complexity of which depends on training status (e.g., intermediate, very advanced) &amp; the training program, is applied to serve either bulking, cutting, or recomp</li>
@@ -303,7 +305,7 @@ export default function Home() {
                     <li>Attentive &amp; crafted solutions</li>
                   </ul>
                   <div class="button-box text-center">
-                    <a href="/authors" class="purchase-btn theme-btn">
+                    <a href="/writing" class="purchase-btn theme-btn">
                       $300/Writing
                     </a>
                   </div>
