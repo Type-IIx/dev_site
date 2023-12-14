@@ -60,7 +60,7 @@ export default function Formdatacoaching() {
                                 <th scope="col">From Forum</th>
                                 <th scope="col">Board Username</th>
                                 <th scope="col">Referal Code</th>
-                                <th scope="col">Clickwrap agreement & waiver</th>
+                                {/* <th scope="col">Clickwrap agreement & waiver</th> */}
                               </tr>
                             </thead>
                             <tbody>
@@ -74,9 +74,9 @@ export default function Formdatacoaching() {
                                     <td>{e.forum}</td>
                                     <td>{e.username}</td>
                                     <td>{e.referal}</td>
-                                    <td>
+                                    {/* <td>
                                       {e.agreement}
-                                    </td>
+                                    </td> */}
                                   </tr>
 
                                 })

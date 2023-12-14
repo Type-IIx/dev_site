@@ -1,14 +1,23 @@
 import Head from "next/head";
-import React from "react";
+import React, { useState } from "react";
 import AdminWrapper from "../../components/AdminComps/AdminWrapper";
 import AdminChecker from "../../components/AdminComps/AdminChecker";
 import { useRef } from "react";
 import { BASE_URL } from "../../constants/apiInfo";
 import { axiosInstance } from "../../utils/apiHandler";
 import { toast } from "react-toastify";
-import { Editor } from "@tinymce/tinymce-react";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
+import {convertEditorToHtml} from "../../utils/helpers"
 
+
+
+const EditorComp = dynamic(
+  () => {
+    return import("../../components/AdminComps/EditorComp")
+  },
+  {ssr : false}   
+)
 
 function Addbook() {
   const imageRef = useRef(null);
@@ -17,6 +26,11 @@ function Addbook() {
   const bookRef = useRef(null);
   const editorRef = useRef(null);
   const router = useRouter();
+  
+
+  const [contentState,setContentState] = useState("");
+
+  
 
 
   const handleImport = async () => {
@@ -28,7 +42,7 @@ function Addbook() {
       /* form_data.append("book", file, file.name); */
       form_data.append("title", titleRef.current.value);
       form_data.append("price", priceRef.current.value);
-      form_data.append("description", editorRef.current.getContent())
+      form_data.append("description", convertEditorToHtml(contentState) )
       const url = BASE_URL + "book/create";
       const res = await axiosInstance.post(url, form_data);
       if (res.status === 201) {
@@ -96,7 +110,8 @@ function Addbook() {
       </Head>
       <AdminWrapper>
         <AdminChecker>
-          <section className="price-page-section">
+
+              <section className="price-page-section">
             <div className="auto-container">
               <div className="row clearfix">
                 <div className="col-md-12">
@@ -127,7 +142,9 @@ function Addbook() {
                   </div>
 
                   <div className="form-group">
-                    <Editor
+                    <EditorComp content={contentState} setContent={setContentState} />
+                  
+                    {/* <Editor
                       apiKey="and0waidxlwtdyuu0jigei07tkx7coltmyqldar2ji3i9azr"
                       onInit={(evt, editor) => (editorRef.current = editor)}
                       init={{
@@ -159,7 +176,7 @@ function Addbook() {
                           "alignright alignjustify | bullist numlist outdent indent | " +
                           "removeformat",
                       }}
-                    />
+                    /> */}
                   </div>
 
                   <div className="form-group">
@@ -185,6 +202,8 @@ function Addbook() {
               </div>
             </div>
           </section>
+            
+          
         </AdminChecker>
       </AdminWrapper>
     </>

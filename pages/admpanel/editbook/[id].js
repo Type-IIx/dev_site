@@ -3,14 +3,23 @@ import React, { useEffect, useState } from "react";
 import { useRef } from "react";
 
 import { toast } from "react-toastify";
-import { Editor } from "@tinymce/tinymce-react";
+/* import { Editor } from "@tinymce/tinymce-react"; */
 import { useRouter } from "next/router";
 import AdminWrapper from "../../../components/AdminComps/AdminWrapper";
 import AdminChecker from "../../../components/AdminComps/AdminChecker";
 import { axiosInstance } from "../../../utils/apiHandler";
 import { BASE_URL } from "../../../constants/apiInfo";
 import axios from "axios";
+import { convertEditorToHtml, convertHtmlToEdit } from "../../../utils/helpers";
+import dynamic from "next/dynamic";
 
+
+const EditorComp = dynamic(
+  () => {
+    return import("../../../components/AdminComps/EditorComp")
+  },
+  {ssr : false}   
+)
 
 function Addbook() {
   const imageRef = useRef(null);
@@ -22,7 +31,7 @@ function Addbook() {
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-
+  const [content,setContent] = useState();
 
 
   const fethBook = async () => {
@@ -34,6 +43,7 @@ function Addbook() {
       if (res.status === 200) {
         const data = await res.data;
         setBook(data);
+        setContent( convertHtmlToEdit(data.description));
       }
     }
     setLoading(false);
@@ -58,7 +68,7 @@ function Addbook() {
 
     form_data.append("title", titleRef.current.value);
     form_data.append("price", priceRef.current.value);
-    form_data.append("description", editorRef.current.getContent())
+    form_data.append("description", convertEditorToHtml(content))
     if (image) {
       form_data.append("image", image, image.name);
 
@@ -129,7 +139,8 @@ function Addbook() {
                       </div>
 
                       <div className="form-group">
-                        <Editor
+                        <EditorComp content={content} setContent={setContent} defaultContent={book.description} />
+                        {/* <Editor
                           apiKey="and0waidxlwtdyuu0jigei07tkx7coltmyqldar2ji3i9azr"
                           onInit={(evt, editor) => (editorRef.current = editor)}
                           initialValue={book.description}
@@ -162,7 +173,7 @@ function Addbook() {
                               "alignright alignjustify | bullist numlist outdent indent | " +
                               "removeformat",
                           }}
-                        />
+                        /> */}
                       </div>
 
                       <div className="form-group">

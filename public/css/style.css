@@ -54,6 +54,10 @@ textarea {
 
 ***/
 
+.editorstyle {
+  min-height: 500px;
+}
+
 .place-center {
   display: flex;
   justify-content: center;

@@ -2,34 +2,33 @@ import Head from "next/head";
 import AdminWrapper from "../../components/AdminComps/AdminWrapper";
 import AdminChecker from "../../components/AdminComps/AdminChecker";
 import SubmissionSideBar from "../../components/AdminComps/SubmissionSideBar";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../constants/apiInfo";
-import { useEffect, useState } from "react";
 
-export default function Formdataauthors() {
+export default function FormdataSupport() {
 
-  const [authors, setAuthors] = useState([])
+  const [coachings, setCoachings] = useState([])
   const [loading, setLoading] = useState(true);
 
-  const fetchAuthors = async () => {
+  const fetchCoachings = async () => {
     setLoading(true)
-    const res = await axios.get(BASE_URL + "submissions/authors/all")
+    const res = await axios.get(BASE_URL + "submissions/support/all")
     if (res.status === 200) {
       const data = await res.data;
-      setAuthors(data)
+      setCoachings(data)
     }
     setLoading(false);
   }
 
   useEffect(() => {
-    fetchAuthors();
+    fetchCoachings();
   }, [])
-
 
   return (
     <>
       <Head>
-        <title>Formdata Authors</title>
+        <title>Formdata Coaching</title>
       </Head>
       <AdminWrapper>
         <AdminChecker>
@@ -40,13 +39,13 @@ export default function Formdataauthors() {
                   <div className="row clearfix">
                     <div className="col-md-12">
                       <div className="sec-title-two my-5 text-center">
-                        <div className="title color-three">Form Data Authors</div>
+                        <div className="title color-three">Form Data Support</div>
                       </div>
                     </div>
                   </div>
                   <div className="row clearfix">
                     <div className="sidebar-side col-lg-3 col-md-12 col-sm-12">
-                      <SubmissionSideBar title={"authors"} />
+                      <SubmissionSideBar title={"tickets"} />
                     </div>
                     <div className="content-side col-lg-9 col-md-12 col-sm-12">
                       <div className="">
@@ -55,38 +54,28 @@ export default function Formdataauthors() {
                             <thead>
                               <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Fee</th>
+                                <th scope="col">Name</th>
                                 <th scope="col">Email</th>
-                                <th scope="col">Website or Business name</th>
-                                <th scope="col">Work of Authorship</th>
-                                <th scope="col">Intent of the writing(s)</th>
-                                <th scope="col">Subject matter & scope</th>
-                                {/* <th scope="col">Clickwrap agreement & waiver</th> */}
+                                <th scope="col">Subject</th>
+                                <th scope="col">Message</th>
+                                
                               </tr>
                             </thead>
                             <tbody>
                               {
-                                authors.map((e, i) => {
+                                coachings.map((e, i) => {
                                   return <tr key={`coaching-row-${i}`}>
                                     <th scope="row">{e.id}</th>
-                                    <td>{e.fee_string}</td>
+                                    <td>{e.name}</td>
                                     <td>{e.email}</td>
-                                    <td>{e.website}</td>
-                                    <td>{e.authorships}</td>
-                                    <td>{e.intent}</td>
-                                    <td>
-                                      {e.subject}
-                                    </td>
-                                    {/* <td>
-                                      {e.agreement}
-                                    </td> */}
+                                    <td>{e.subject}</td>
+                                    <td>{e.message}</td>
+                                    
                                   </tr>
 
                                 })
                               }
-                              <tr>
 
-                              </tr>
                             </tbody>
                           </table>
                         </div>
@@ -97,7 +86,6 @@ export default function Formdataauthors() {
               </div>
             </>
           }
-
 
 
         </AdminChecker>
