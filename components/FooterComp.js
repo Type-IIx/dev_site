@@ -71,7 +71,7 @@ export default function FooterComp() {
           <div className="sec-title-two centered">
             <div className="title color-four">Testimonials</div>
             <h2>
-              Hear out what my clients <br /> say about me.
+              See what my clients <br /> say about me.
             </h2>
           </div>
           <div className="row clearfix">
