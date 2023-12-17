@@ -43,7 +43,7 @@
 
 ul,
 li {
-  list-style: auto !important;
+  list-style: initial !important;
   padding-bottom: 10px !important;
   margin-left: 25px !important;
 }
