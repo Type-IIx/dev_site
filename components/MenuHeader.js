@@ -13,7 +13,7 @@ export default function MenuHeader() {
     call: "",
     coaching: "",
     authors: "",
-    consultancy: ""
+    consultancy: "",
   });
 
   const fetchOthers = async () => {
@@ -23,7 +23,7 @@ export default function MenuHeader() {
       const result = await resp.data;
       setOthers(result);
     }
-  }
+  };
 
   const fetchURLs = async () => {
     const resp = await axiosInstance.get(BASE_URL + "settings");
@@ -52,40 +52,38 @@ export default function MenuHeader() {
           <div className="auto-container">
             <div className="inner-container clearfix">
               <div className="top-left clearfix">
-                {/* <div className="text">
-                  <span>Working time:</span> Monday to Friday 9 AM - 5 PM
-                </div> */}
+                <div className="text">
+                  {socials !== null && (
+                    <ul className="social-box py-2">
+                      {socials.telegram && socials.telegram.url.length > 0 && (
+                        <li className="">
+                          <Link href={socials.telegram.url}>
+                            <FaTelegramPlane />
+                          </Link>
+                        </li>
+                      )}
+
+                      {socials.matrix && socials.matrix.url.length > 0 && (
+                        <li className="">
+                          <Link href={socials.matrix.url}>
+                            <TbBrandMatrix />
+                          </Link>
+                        </li>
+                      )}
+
+                      {socials.xmpp && socials.xmpp.url.length > 0 && (
+                        <li className="">
+                          <Link href={socials.xmpp.url}>
+                            <SiXmpp />
+                          </Link>
+                        </li>
+                      )}
+                    </ul>
+                  )}
+                </div>
               </div>
 
               <div className="top-right pull-right clearfix ">
-                {socials !== null && (
-                  <ul className="social-box py-2">
-                    {socials.telegram && socials.telegram.url.length > 0 && (
-                      <li className="">
-                        <Link href={socials.telegram.url}>
-                          <FaTelegramPlane />
-                        </Link>
-                      </li>
-                    )}
-
-                    {socials.matrix && socials.matrix.url.length > 0 && (
-                      <li className="">
-                        <Link href={socials.matrix.url}>
-                          <TbBrandMatrix />
-                        </Link>
-                      </li>
-                    )}
-
-                    {socials.xmpp && socials.xmpp.url.length > 0 && (
-                      <li className="">
-                        <Link href={socials.xmpp.url}>
-                          <SiXmpp />
-                        </Link>
-                      </li>
-                    )}
-                  </ul>
-                )}
-
                 <div className="text">
                   Call for free consultation:{" "}
                   <a href={`tel:${others.call}`}>{others.call}</a>
@@ -169,7 +167,33 @@ export default function MenuHeader() {
                 <img src="/img/logo-small.png" alt="" title="" />
               </a>
             </div>
-            <div className="menu-outer"></div>
+            <div className="menu-outer">
+              <div
+                class="navbar-collapse collapse clearfix"
+                id="navbarSupportedContent"
+              >
+                <ul class="navigation clearfix">
+                  <li>
+                    <a href="/">Home</a>
+                  </li>
+                  <li>
+                    <a href="/coaching">Coaching</a>
+                  </li>
+                  <li>
+                    <a href="/consultancy">Consultancy</a>
+                  </li>
+                  <li>
+                    <a href="/writing">Writing</a>
+                  </li>
+                  <li>
+                    <a href="/books">Books</a>
+                  </li>
+                  <li>
+                    <a href="/articles">Articles</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </nav>
         </div>
       </header>

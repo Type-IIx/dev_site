@@ -5,17 +5,15 @@ import { BASE_URL } from "../constants/apiInfo";
 import TestimonyCard from "./TestimonyCard";
 
 export default function FooterComp() {
-
   const [support, setSupport] = useState({
     name: "",
     email: "",
     subject: "",
-    message: ""
-  })
+    message: "",
+  });
 
   const [testimonials, setTestimonials] = useState([]);
   const [selectedTestimonials, setSelectedTestimonials] = useState([]);
-
 
   const fetchTestimonials = async () => {
     const url = BASE_URL + "testimonials/all";
@@ -27,8 +25,8 @@ export default function FooterComp() {
   };
 
   useEffect(() => {
-    fetchTestimonials()
-  }, [])
+    fetchTestimonials();
+  }, []);
 
   function getRandomElements(numElements) {
     const remainingArray = testimonials.slice();
@@ -39,24 +37,24 @@ export default function FooterComp() {
       const selectedElement = remainingArray.splice(randomIndex, 1)[0];
       selectedElements.push(selectedElement);
     }
-    setSelectedTestimonials(selectedElements)
+    setSelectedTestimonials(selectedElements);
   }
 
   useEffect(() => {
-    getRandomElements(5)
-  }, [testimonials])
+    getRandomElements(5);
+  }, [testimonials]);
 
   const handleContact = async (e) => {
     e.preventDefault();
 
-    const resp = await axios.post(BASE_URL + "submissions/support", support)
+    const resp = await axios.post(BASE_URL + "submissions/support", support);
     if (resp.status === 200) {
       const data = await resp.data;
-      toast.success("Success")
+      toast.success("Success");
     } else {
-      toast.error("Failed saving checkout form")
+      toast.error("Failed saving checkout form");
     }
-  }
+  };
 
   const handleChange = (e) => {
     let temp = { ...support };
@@ -75,9 +73,15 @@ export default function FooterComp() {
             </h2>
           </div>
           <div className="row clearfix">
-            {selectedTestimonials.map((e, i) => <TestimonyCard key={`testimonial-card-${i}`} name={e.name} content={e.content}  rating={e.rating} image={e.fileUrl} />)}
-
-
+            {selectedTestimonials.map((e, i) => (
+              <TestimonyCard
+                key={`testimonial-card-${i}`}
+                name={e.name}
+                content={e.content}
+                rating={e.rating}
+                image={e.fileUrl}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -87,11 +91,11 @@ export default function FooterComp() {
           <div className="row clearfix">
             <div className="image-column col-lg-6 col-md-12 col-sm-12">
               <div className="inner-column">
-                <div className="image">
-                  <img src="/img/contact-1.jpg" alt="" />
-                </div>
                 <div className="image-two">
-                  <img src="/img/contact-2.jpg" alt="" />
+                  <img
+                    src="/img/Ampouletude-Support-footer-900-660-0.png"
+                    alt=""
+                  />
                 </div>
               </div>
             </div>
@@ -132,7 +136,8 @@ export default function FooterComp() {
 
                       <div className="form-group col-lg-12 col-md-12 col-sm-12">
                         <span className="icon flaticon-notebook"></span>
-                        <select className="custom-select-box"
+                        <select
+                          className="custom-select-box"
                           name="subject"
                           value={support.subject}
                           onChange={handleChange}
@@ -180,9 +185,7 @@ export default function FooterComp() {
           <div className="auto-container">
             <div className="clearfix">
               <div className="pull-left">
-                <div className="copyright">
-                Ampouletude ©
-                </div>
+                <div className="copyright">Ampouletude ©</div>
               </div>
             </div>
           </div>
