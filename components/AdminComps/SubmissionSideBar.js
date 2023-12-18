@@ -27,6 +27,9 @@ export default function SubmissionSideBar({ title }) {
             <li>
               <Link href="/admpanel/authors" className={title === "authors" ? "active" : ""}>Authors</Link>
             </li>
+            <li>
+              <Link href="/admpanel/contacts" className={title === "tickets" ? "active" : ""}>Support Tickets</Link>
+            </li>
             {/* <li>
               <Link href="/admpanel/orders" className={title === "orders" ? "active" : ""}>Orders</Link>
             </li> */}

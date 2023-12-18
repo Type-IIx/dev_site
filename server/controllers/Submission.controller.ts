@@ -56,7 +56,11 @@ const validateReferral = async (code: string) => {
 
 SubmissionController.get("/coaching/all", async (req, res, next) => {
     try {
-        const coachings = await prisma.formDataCoaching.findMany();
+        const coachings = await prisma.formDataCoaching.findMany({
+            orderBy: {
+                created: "desc"
+            }
+        });
         res.status(200).json(coachings)
     } catch (e) {
         console.log(e)
@@ -112,7 +116,11 @@ SubmissionController.post("/coaching/create", async (req, res, next) => {
 
 SubmissionController.get("/consultancy/all", async (req, res, next) => {
     try {
-        const consultancys = await prisma.formDataConsultancy.findMany();
+        const consultancys = await prisma.formDataConsultancy.findMany({
+            orderBy: {
+                created: "desc"
+            }
+        });
         res.status(200).json(consultancys)
     } catch (e) {
         console.log(e)
@@ -170,7 +178,11 @@ SubmissionController.post("/consultancy/create", async (req, res, next) => {
 
 SubmissionController.get("/authors/all", async (req, res, next) => {
     try {
-        const authors = await prisma.formDataAuthors.findMany();
+        const authors = await prisma.formDataAuthors.findMany({
+            orderBy: {
+                created: "desc"
+            }
+        });
         res.status(200).json(authors)
     } catch (e) {
         console.log(e)
@@ -214,6 +226,21 @@ SubmissionController.post("/authors/create", async (req, res, next) => {
     }
 })
 
+SubmissionController.get("/support/all", async (req, res, next) => {
+    try {
+        const tickets = await prisma.formDataSupport.findMany({
+            orderBy: {
+                created: "desc"
+            }
+        });
+        res.status(200).json(tickets)
+    } catch (e) {
+        console.log(e)
+        res.status(500).json({ success: false })
+    }
+})
+
+
 SubmissionController.post("/support", async (req, res, next) => {
     try {
         const body = req.body as SupportBodyT;
@@ -227,6 +254,9 @@ SubmissionController.post("/support", async (req, res, next) => {
                 failed : true
             })
         } */
+        const r = await prisma.formDataSupport.create({
+            data: body
+        })
         res.status(200).json(body)
     } catch (e) {
         console.log(e)

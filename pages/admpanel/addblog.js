@@ -1,8 +1,8 @@
 import Head from "next/head";
 import Menu from "../../components/AdminComps/adminmenu";
 import Footer from "../../components/AdminComps/adminfooter";
-import React, { useRef } from "react";
-import { Editor } from "@tinymce/tinymce-react";
+import React, { useRef, useState } from "react";
+/* import { Editor } from "@tinymce/tinymce-react"; */
 import AdminWrapper from "../../components/AdminComps/AdminWrapper";
 import axios from "axios";
 import { BASE_URL } from "../../constants/apiInfo";
@@ -11,12 +11,24 @@ import AdminChecker from "../../components/AdminComps/AdminChecker";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { convertEditorToHtml } from "../../utils/helpers";
+import dynamic from "next/dynamic";
+
+
+const EditorComp = dynamic(
+  () => {
+    return import("../../components/AdminComps/EditorComp")
+  },
+  {ssr : false}   
+)
 
 export default function Addblog() {
   const editorRef = useRef(null);
   const imageRef = useRef(null);
   const titleRef = useRef(null);
   const router = useRouter();
+
+  const [contentState,setContentState] = useState("");
 
   const uploadHandler = async (body, image) => {
     let form_data = new FormData();
@@ -43,7 +55,7 @@ export default function Addblog() {
     e.preventDefault();
     const body = {
       title: titleRef.current.value,
-      content: editorRef.current.getContent(),
+      content: convertEditorToHtml(contentState),
     };
     const image =
       imageRef.current.files.length > 0 ? imageRef.current.files[0] : null;
@@ -86,7 +98,9 @@ export default function Addblog() {
                     />
                   </div>
                   <div className="form-group">
-                    <Editor
+                  <EditorComp content={contentState} setContent={setContentState} />
+
+                    {/* <Editor
                       apiKey="and0waidxlwtdyuu0jigei07tkx7coltmyqldar2ji3i9azr"
                       onInit={(evt, editor) => (editorRef.current = editor)}
                       init={{
@@ -118,7 +132,7 @@ export default function Addblog() {
                           "alignright alignjustify | bullist numlist outdent indent | " +
                           "removeformat",
                       }}
-                    />
+                    /> */}
                   </div>
                   <div className="form-group">
                     <label>Featured Image</label>

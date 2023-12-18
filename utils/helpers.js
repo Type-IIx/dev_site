@@ -1,7 +1,17 @@
 import axios from "axios";
 import bcrypt from "bcryptjs";
-
+import { convertToRaw,EditorState,ContentState,convertFromHTML } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
+import dynamic from "next/dynamic";
+/* import htmlToDraft from 'html-to-draftjs'; */
 const LOCAL_API = "/api/";
+
+/* const htmlToDraft = dynamic(
+  () => {
+    return import("html-to-draftjs")
+  },
+  {ssr : false}   
+) */
 
 export const getRates = async () => {
   let resp = await axios.get(LOCAL_API + "rates");
@@ -96,3 +106,16 @@ function getNumberSuffix(day) {
       return "th";
   }
 }
+
+
+export const convertEditorToHtml = (data) => {
+  return draftToHtml(convertToRaw(data.getCurrentContent()))
+}
+
+export const convertHtmlToEdit = (data) => {
+  return EditorState.createWithContent(
+    ContentState.createFromBlockArray(
+      convertFromHTML(data)
+    )
+  )
+} 

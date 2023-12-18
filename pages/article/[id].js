@@ -55,12 +55,13 @@ function ArticleDetails() {
 
   return (
     <>
-      <Head>
-        <title>Article Name</title>
-      </Head>
+      
 
       {articleId !== -1 && article && !loading && (
         <>
+        <Head>
+        <title>{article.title}</title>
+      </Head>
           <Wrapper>
             <section className="banner-section page-title">
               <div className="auto-container">

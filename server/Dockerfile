@@ -23,6 +23,7 @@ WORKDIR /usr/src/app/database
 #RUN npx prisma db push
 RUN npm install
 RUN npm install nodemon 
+RUN npm install zod 
 RUN npm install -g typescript
 RUN npx prisma generate
 

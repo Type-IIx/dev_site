@@ -41,6 +41,20 @@
   cursor: pointer !important;
 }
 
+ul,
+li {
+  list-style: initial !important;
+  padding-bottom: 10px !important;
+  margin-left: 10px !important;
+}
+
+.price-page-section li {
+  list-style: none !important;
+}
+
+.main-header li {
+  list-style: none !important;
+}
 
 textarea {
   overflow: auto !important;
@@ -53,6 +67,10 @@ textarea {
 ====================================================================
 
 ***/
+
+.editorstyle {
+  min-height: 500px;
+}
 
 .place-center {
   display: flex;
@@ -1597,7 +1615,10 @@ textarea {
   position: relative;
 }
 
-.experiance-section .blocks-column .column:nth-child(2) .feature-block:nth-child(1) {
+.experiance-section
+  .blocks-column
+  .column:nth-child(2)
+  .feature-block:nth-child(1) {
   margin-top: 90px;
 }
 
@@ -2621,7 +2642,8 @@ textarea {
 }
 
 .course-tabs .tab-btns .tab-btn:hover,
-.course-tabs .tab-btns .tab-btn.active-btn {}
+.course-tabs .tab-btns .tab-btn.active-btn {
+}
 
 .course-tabs .tabs-content {
   position: relative;
@@ -3353,7 +3375,8 @@ textarea {
 }
 
 .faq-page-section .filters .filter.active,
-.faq-page-section .filters .filter:hover {}
+.faq-page-section .filters .filter:hover {
+}
 
 /*** 
 
@@ -3866,7 +3889,8 @@ textarea {
   border: 1px solid #efefef;
 }
 
-.portfolio-detail-section h3 {}
+.portfolio-detail-section h3 {
+}
 
 .portfolio-detail-section p {
   position: relative;
@@ -4214,7 +4238,7 @@ textarea {
   margin-top: var(--margin-top-40);
 }
 
-.price-block .inner-box .button-box .purchase-btn {
+.purchase-btn {
   position: relative;
   font-weight: 700;
   padding: 19px 42px;

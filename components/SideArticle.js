@@ -9,12 +9,12 @@ function SideArticle({ article }) {
       <article className="post">
         <figure className="post-thumb">
           <img src={BASE_DOMAIN + article.fileUrl} alt="" />
-          <a href="article-details.html" className="overlay-box">
+          <a href={`/article/${article.id}`} className="overlay-box">
             <span className="icon fa fa-link"></span>
           </a>
         </figure>
         <div className="text">
-          <a href="article-details.html">{article.title}</a>
+          <a href={`/article/${article.id}`}>{article.title}</a>
         </div>
         <div className="post-info">{formatDate(article.created)}</div>
       </article>
