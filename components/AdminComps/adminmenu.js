@@ -10,7 +10,7 @@ export default function Menu() {
             <div className="pull-left logo-box">
               <div className="logo">
                 <a href="/">
-                  <img src="img/logo.png" alt="" title="" />
+                  <img src="/img/logo.png" alt="" title="" />
                 </a>
               </div>
             </div>
@@ -43,17 +43,26 @@ export default function Menu() {
                 >
                   <ul className="navigation clearfix">
                     <li>
-                      <Link href="/articles">Blog</Link>
+                      <Link href="/admpanel/orders">Orders</Link>
                     </li>
                     <li>
-                      <Link href="/admpanel/addblog">Add Blog</Link>
+                      <Link href="/admpanel/coachings">Formdata</Link>
                     </li>
                     <li>
-                      <Link href="/admpanel/addbook">Add Book</Link>
+                      <Link href="/admpanel/bloglist">Articles</Link>
+                    </li>
+                    <li>
+                      <Link href="/admpanel/booklist">Books</Link>
+                    </li>
+                    <li>
+                      <Link href="/admpanel/testimonials">Testimonials</Link>
                     </li>
                     <li>
                       <Link href="/admpanel/settings">Settings</Link>
                     </li>
+                    {/* <li>
+                      <Link href="/admpanel/others">Others</Link>
+                    </li> */}
                     <li>
                       <a
                         onClick={() => {
@@ -79,7 +88,7 @@ export default function Menu() {
           <nav className="menu-box">
             <div className="nav-logo">
               <a href="/">
-                <img src="img/logo-small.png" alt="" title="" />
+                <img src="/img/logo-small.png" alt="" title="" />
               </a>
             </div>
             <div className="menu-outer"></div>

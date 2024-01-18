@@ -5,6 +5,9 @@ import path from "path";
 export const prisma = new PrismaClient()
 
 
+export const EMAIL_URL = "https://ampouletude.com/emailapi/"
+//export const EMAIL_URL = "http://localhost:7070/"
+
 export const deleteFile = (path_ : string) => {
     try {
         // Use fs.unlinkSync to delete the file synchronously

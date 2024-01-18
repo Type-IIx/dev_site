@@ -1,26 +1,48 @@
 import Head from "next/head";
-import React from "react";
+import React, { useState } from "react";
 import AdminWrapper from "../../components/AdminComps/AdminWrapper";
 import AdminChecker from "../../components/AdminComps/AdminChecker";
 import { useRef } from "react";
 import { BASE_URL } from "../../constants/apiInfo";
 import { axiosInstance } from "../../utils/apiHandler";
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
+import {convertEditorToHtml} from "../../utils/helpers"
+
+
+
+const EditorComp = dynamic(
+  () => {
+    return import("../../components/AdminComps/EditorComp")
+  },
+  {ssr : false}   
+)
 
 function Addbook() {
   const imageRef = useRef(null);
   const titleRef = useRef(null);
   const priceRef = useRef(null);
   const bookRef = useRef(null);
+  const editorRef = useRef(null);
+  const router = useRouter();
+  
+
+  const [contentState,setContentState] = useState("");
+
+  
+
 
   const handleImport = async () => {
     let form_data = new FormData();
-    const file =
-      bookRef.current.files.length > 0 ? bookRef.current.files[0] : null;
-    if (file) {
-      form_data.append("book", file, file.name);
+    /* const file =
+      bookRef.current.files.length > 0 ? bookRef.current.files[0] : null; */
+    const file = ""
+    if (/* file */ true) {
+      /* form_data.append("book", file, file.name); */
       form_data.append("title", titleRef.current.value);
       form_data.append("price", priceRef.current.value);
+      form_data.append("description", convertEditorToHtml(contentState) )
       const url = BASE_URL + "book/create";
       const res = await axiosInstance.post(url, form_data);
       if (res.status === 201) {
@@ -56,13 +78,14 @@ function Addbook() {
 
   const submitData = async (e) => {
     e.preventDefault();
-    const file =
-      bookRef.current.files.length > 0 ? bookRef.current.files[0] : null;
+    /* const file =
+      bookRef.current.files.length > 0 ? bookRef.current.files[0] : null; */
     const image =
       imageRef.current.files.length > 0 ? imageRef.current.files[0] : null;
-    if (!file) {
+    /* if (!file) {
       toast.warning("Please select a file");
-    } else if (!image) {
+    } else */ 
+    if (!image) {
       toast.warning("Please select an image");
     } else {
       const res = await handleImport();
@@ -70,6 +93,7 @@ function Addbook() {
         const res2 = await handleEdit(res.id);
         if (res2) {
           toast.success("Success");
+          router.push("/admpanel/booklist")
         } else {
           toast.error("Failed Import");
         }
@@ -82,11 +106,12 @@ function Addbook() {
   return (
     <>
       <Head>
-        <title>Add New Blog</title>
+        <title>Add New Book</title>
       </Head>
       <AdminWrapper>
         <AdminChecker>
-          <section className="price-page-section">
+
+              <section className="price-page-section">
             <div className="auto-container">
               <div className="row clearfix">
                 <div className="col-md-12">
@@ -117,7 +142,45 @@ function Addbook() {
                   </div>
 
                   <div className="form-group">
-                    <label>Featured Image</label>
+                    <EditorComp content={contentState} setContent={setContentState} />
+                  
+                    {/* <Editor
+                      apiKey="and0waidxlwtdyuu0jigei07tkx7coltmyqldar2ji3i9azr"
+                      onInit={(evt, editor) => (editorRef.current = editor)}
+                      init={{
+                        height: 500,
+                        menubar: true,
+                        plugins: [
+                          "advlist",
+                          "autolink",
+                          "lists",
+                          "link",
+                          "image",
+                          "charmap",
+                          "preview",
+                          "anchor",
+                          "searchreplace",
+                          "visualblocks",
+                          "code",
+                          "fullscreen",
+                          "insertdatetime",
+                          "media",
+                          "table",
+                          "code",
+                          "help",
+                          "wordcount",
+                        ],
+                        toolbar:
+                          "undo redo | blocks | " +
+                          "bold italic forecolor | alignleft aligncenter " +
+                          "alignright alignjustify | bullist numlist outdent indent | " +
+                          "removeformat",
+                      }}
+                    /> */}
+                  </div>
+
+                  <div className="form-group">
+                    <label>Book Image</label>
                     <input
                       ref={imageRef}
                       type="file"
@@ -125,10 +188,10 @@ function Addbook() {
                     />
                   </div>
 
-                  <div className="form-group">
+                  {/* <div className="form-group">
                     <label>Book (PDF)</label>
                     <input ref={bookRef} type="file" className="form-control" />
-                  </div>
+                  </div> */}
                   <button
                     onClick={submitData}
                     className="btn btn-primary float-right"
@@ -139,6 +202,8 @@ function Addbook() {
               </div>
             </div>
           </section>
+            
+          
         </AdminChecker>
       </AdminWrapper>
     </>

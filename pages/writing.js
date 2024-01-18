@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   convertFromUSD,
   formatAndShowErrors,
@@ -12,8 +12,10 @@ import { AUTHORSHIP, SYMBOLS } from "../constants/prices";
 import { AuthorForm } from "../parsers/schema";
 import { toast } from "react-toastify";
 import Wrapper from "../components/Wrapper";
+import axios from "axios";
+import { BASE_URL, path_ } from "../constants/apiInfo";
 
-export default function Authors() {
+export default function Writings() {
   const [rates, setRates] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState(Currencies.USD);
   const [authorships, setAuthorShips] = useState(1);
@@ -30,6 +32,41 @@ export default function Authors() {
     subject: "",
   });
 
+  const MarketingRef = useRef();
+  const EducationRef = useRef();
+  const ResearchRef = useRef();
+  const OpinionRef = useRef();
+  const OthersRef = useRef();
+  const agreementRef = useRef();
+
+  const [others, setOthers] = useState({
+    call: "",
+    coaching: "",
+    authors: "",
+    consultancy: ""
+  });
+
+  const [captcha,setCaptcha] = useState(null)
+  const captchaRef = useRef();
+  
+
+  const fetchCaptcha = async () => {
+    const resp = await axios.get(BASE_URL + "captcha/generate");
+    if (resp.status === 200){
+      const result = await resp.data;
+      setCaptcha(result);
+    }
+  }
+
+  const fetchOthers = async () => {
+    const resp = await axios.get(BASE_URL + path_ + "other");
+
+    if (resp.status === 200) {
+      const result = await resp.data;
+      setOthers(result);
+    }
+  }
+
   // handlers here
 
   const handleCurrencyChange = (e) => {
@@ -41,7 +78,7 @@ export default function Authors() {
       if (Number(e.target.value) >= 1 && Number(e.target.value) <= 5) {
         setAuthorShips(Number(e.target.value));
       }
-    } catch {}
+    } catch { }
   };
 
   async function updateRates() {
@@ -50,6 +87,11 @@ export default function Authors() {
   }
 
   // effects here
+
+  useEffect(() => {
+    fetchOthers();
+    fetchCaptcha();
+  }, [])
 
   useEffect(() => {
     updateRates();
@@ -83,7 +125,23 @@ export default function Authors() {
     setFormData(temp);
   };
 
-  const submitForm = (e) => {
+  const clearForm = () => {
+    setFormData({
+      email: "",
+      website: "",
+      subject: "",
+    });
+    setSelectedCurrency(Currencies.USD);
+    setAuthorShips(1);
+    MarketingRef.current.checked = false;
+    EducationRef.current.checked = false;
+    ResearchRef.current.checked = false;
+    OpinionRef.current.checked = false;
+    OthersRef.current.checked = false;
+    captchaRef.current.value = "";
+  }
+
+  const submitForm = async (e) => {
     try {
       e.preventDefault();
       if (checked) {
@@ -93,18 +151,61 @@ export default function Authors() {
           console.log(errors);
           formatAndShowErrors(toast, errors);
         } else {
-          toast.success("Sending Email now");
+          let temp = []
+          console.log(MarketingRef.current)
+          console.log(EducationRef.current)
+          console.log(ResearchRef.current)
+          console.log(OpinionRef.current)
+          console.log(OthersRef.current)
+          if (MarketingRef.current.checked) {
+            temp.push("Marketing")
+          }
+          if (EducationRef.current.checked) {
+            temp.push("Education")
+          }
+          if (ResearchRef.current.checked) {
+            temp.push("Research")
+          }
+          if (OpinionRef.current.checked) {
+            temp.push("Opinion")
+          }
+          if (OthersRef.current.checked) {
+            temp.push("Others")
+          }
+
+          const body = {
+            ...formData,
+            agreement: agreementRef.current.value,
+            authorships,
+            fee_string: `${SYMBOLS[selectedCurrency]} ${prices.total}`,
+            intent: temp.join(",")
+          }
+          console.log(body)
+          const finalBody = {
+            captcha : {
+              id : captcha.capId,
+              answer : captchaRef.current.value
+            },
+            body
+          }
+          const url = BASE_URL + "submissions/authors/create"
+          const res = await axios.post(url, finalBody);
+          if (res) {
+            toast.success("Success");
+            clearForm();
+          } else {
+            toast.error("Failed Saving submission")
+          }
         }
       } else {
         toast.error("Agree to terms");
       }
     } catch (e) {
-      console.log(e);
-      if (e.length && e.length > 0) {
-        if (e[0].code) {
-          console.log(e);
-          console.log(e.message);
-        }
+      console.log(e)
+      const data = await e.response.data;
+      console.log(data);
+      if (data && data.reason){
+        toast.error(data.reason)
       }
     }
   };
@@ -112,23 +213,23 @@ export default function Authors() {
   return (
     <>
       <Wrapper>
-        {rates && (
+        {rates && captcha && (
           <>
             <Head>
-              <title>Hire for writings</title>
+              <title>Hire for Writing</title>
             </Head>
 
             <div>
               <section className="banner-section page-title">
                 <div className="auto-container">
                   <div className="content">
-                    <div className="text">Welcome to our</div>
+                    <div className="text">Welcome to Type-IIx's</div>
                     <h1>Hire for Writing</h1>
                   </div>
                   <div className="breadcrumb-outer">
                     <ul className="page-breadcrumb">
                       <li>
-                        <a href="index.html">Home</a>
+                        <a href="/">Home</a>
                       </li>
                       <li>Hire for Writing</li>
                     </ul>
@@ -148,23 +249,17 @@ export default function Authors() {
                         <div className="date">per work of authorship</div>
                         <ul className="price-options">
                           <li>
-                            Unlimited questions pertaining to body composition,
-                            hypertrophy, and performance
+                            Attentive &amp; crafted solutions
                           </li>
                           <li>
-                            Training programs designed around supplements and
-                            goals
+                            Unlimited projects
                           </li>
                           <li>
-                            Nutrition planning assistance, including tailoring
-                            of nutrient intakes, strategies and tactics
+                            Unlimited revision
                           </li>
-                          <li>Monitoring of body composition variables</li>
+                          <li>Flexible timeline</li>
                           <li>
-                            One biweekly, scheduled as needed, real-time chat
-                            via Matrix federated chat (details on account
-                            creation will be provided as needed) for 90 min each
-                            session
+                            Private consultation
                           </li>
                         </ul>
                       </div>
@@ -197,7 +292,7 @@ export default function Authors() {
                               </select>
                             </div>
                             <p className="mb-2">
-                              To sign up for Hire for Writing, enter your email
+                              To sign up to Hire for Writing, enter your email
                             </p>
                             <div className="form-group">
                               <input
@@ -239,6 +334,7 @@ export default function Authors() {
                               <input
                                 type="checkbox"
                                 className="form-check-input"
+                                ref={MarketingRef}
                               />
                               <label className="form-check-label">
                                 Marketing
@@ -248,6 +344,7 @@ export default function Authors() {
                               <input
                                 type="checkbox"
                                 className="form-check-input"
+                                ref={EducationRef}
                               />
                               <label className="form-check-label">
                                 Education
@@ -257,6 +354,7 @@ export default function Authors() {
                               <input
                                 type="checkbox"
                                 className="form-check-input"
+                                ref={ResearchRef}
                               />
                               <label className="form-check-label">
                                 Research
@@ -266,6 +364,7 @@ export default function Authors() {
                               <input
                                 type="checkbox"
                                 className="form-check-input"
+                                ref={OpinionRef}
                               />
                               <label className="form-check-label">
                                 Opinon/Editorial
@@ -275,6 +374,7 @@ export default function Authors() {
                               <input
                                 type="checkbox"
                                 className="form-check-input"
+                                ref={OthersRef}
                               />
                               <label className="form-check-label">Others</label>
                             </div>
@@ -286,13 +386,15 @@ export default function Authors() {
                                 name="subject"
                                 value={formData.subject}
                                 onChange={formHandler}
+
                               />
                             </div>
                             <p className="mb-2">
                               Clickwrap agreement &amp; waiver
                             </p>
                             <div className="form-group">
-                              <textarea name="message" defaultValue={""} />
+                              <textarea name="message" defaultValue={others.authors} ref={agreementRef} />
+
                             </div>
                             <div className="form-group form-check mt-3">
                               <input
@@ -307,8 +409,8 @@ export default function Authors() {
                                 OF EMAIL CONTAINING PAYMENT ADDRESS IF AUTHOR
                                 ACCEPTS THE PROPOSAL” in the amount of:
                                 <strong>
-                                  {`${SYMBOLS[selectedCurrency]} ${prices.total}`}
-                                  or {`${prices.bitcoinTotal}`}BTC (
+                                  {`${SYMBOLS[selectedCurrency]} ${prices.total}`}{" "}
+                                  or {`${prices.bitcoinTotal}`} BTC (
                                   {formatMBTC(prices.bitcoinTotal)} mBTC)
                                 </strong>
                               </label>
@@ -318,10 +420,21 @@ export default function Authors() {
                               documents, spreadsheets, presentations, graphics)
                               are to be collected as needed as work proceeds, if
                               the proposal is accepted. Communication will
-                              follow by email to [user-email], including notice
+                              follow by email to {formData.email.length > 0 ? `(${formData.email})` : ""}, including notice
                               of rejection with modifications, or outright
                               rejection, to proposal.
                             </small>
+
+                            <div className="form-group">
+                            <span  dangerouslySetInnerHTML={{ __html: captcha.image }}>
+
+</span>
+                              <input
+                                type="text"
+                                name="captcha"
+                                ref={captchaRef}
+                              />
+                            </div>
                             <div className="form-group col-lg-12 col-md-12 col-sm-12">
                               <button
                                 className="theme-btn btn-style-three"

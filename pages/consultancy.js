@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   convertFromUSD,
   formatAndShowErrors,
@@ -11,6 +11,8 @@ import { CONSULTANCY, SYMBOLS } from "../constants/prices";
 import { CoachingForm } from "../parsers/schema";
 import { toast } from "react-toastify";
 import Wrapper from "../components/Wrapper";
+import { BASE_URL, path_ } from "../constants/apiInfo";
+import axios from "axios";
 
 export default function Consultancy() {
   const [rates, setRates] = useState(false);
@@ -29,6 +31,46 @@ export default function Consultancy() {
     referal: "",
   });
 
+  const agreementRef = useRef();
+  const forumRef = useRef();
+
+  const [others, setOthers] = useState({
+    call: "",
+    coaching: "",
+    authors: "",
+    consultancy: ""
+  });
+  const [forums, setForums] = useState([]);
+  const [showUsername ,setShowUsername] = useState(false);
+  const [captcha,setCaptcha] = useState(null)
+  const captchaRef = useRef();
+  
+
+  const fetchCaptcha = async () => {
+    const resp = await axios.get(BASE_URL + "captcha/generate");
+    if (resp.status === 200){
+      const result = await resp.data;
+      setCaptcha(result);
+    }
+  }
+
+  const fetchOthers = async () => {
+    const resp = await axios.get(BASE_URL + path_ + "other");
+
+    if (resp.status === 200) {
+      const result = await resp.data;
+      setOthers(result);
+    }
+  }
+
+  const fetchForums = async () => {
+    const resp = await axios.get(BASE_URL + path_ + "forum");
+    if (resp.status === 200) {
+      const result = await resp.data;
+      setForums(result);
+    }
+  };
+
   // handlers here
 
   const handleCurrencyChange = (e) => {
@@ -40,7 +82,7 @@ export default function Consultancy() {
       if (Number(e.target.value) >= 1 && Number(e.target.value) <= 12) {
         setMonths(Number(e.target.value));
       }
-    } catch {}
+    } catch { }
   };
 
   async function updateRates() {
@@ -49,6 +91,12 @@ export default function Consultancy() {
   }
 
   // effects here
+
+  useEffect(() => {
+    fetchForums();
+    fetchOthers();
+    fetchCaptcha();
+  }, [])
 
   useEffect(() => {
     updateRates();
@@ -81,8 +129,20 @@ export default function Consultancy() {
     temp[k] = v;
     setFormData(temp);
   };
+  const clearForm = () => {
+    setFormData({
+      email: "",
+      username: "",
+      referal: "",
+    });
+    setSelectedCurrency(Currencies.USD);
+    setMonths(1);
+    fetchCaptcha();
+    forumRef.current.value = "";
+    captchaRef.current.value = "";
+  }
 
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     try {
       e.preventDefault();
       if (checked) {
@@ -92,18 +152,37 @@ export default function Consultancy() {
           console.log(errors);
           formatAndShowErrors(toast, errors);
         } else {
-          toast.success("Sending Email now");
+          const body = {
+            ...formData,
+            agreement: agreementRef.current.value,
+            forum: forumRef.current.value,
+            duration: months,
+            fee_string: `${SYMBOLS[selectedCurrency]} ${prices.total}`
+          }
+          const finalBody = {
+            captcha : {
+              id : captcha.capId,
+              answer : captchaRef.current.value
+            },
+            body
+          }
+          const url = BASE_URL + "submissions/consultancy/create"
+          const res = await axios.post(url, finalBody);
+          if (res) {
+            toast.success("Success");
+            clearForm();
+          } else {
+            toast.error("Failed Saving submission")
+          }
         }
       } else {
         toast.error("Agree to terms");
       }
     } catch (e) {
-      console.log(e);
-      if (e.length && e.length > 0) {
-        if (e[0].code) {
-          console.log(e);
-          console.log(e.message);
-        }
+      const data = await e.response.data;
+      console.log(data);
+      if (data && data.reason){
+        toast.error(data.reason)
       }
     }
   };
@@ -111,7 +190,7 @@ export default function Consultancy() {
   return (
     <>
       <Wrapper>
-        {rates && (
+        {rates && captcha && (
           <>
             <Head>
               <title>Consultancy</title>
@@ -119,7 +198,7 @@ export default function Consultancy() {
             <section className="banner-section page-title">
               <div className="auto-container">
                 <div className="content">
-                  <div className="text">Welcome to our</div>
+                  <div className="text">Welcome to Type-IIx's</div>
                   <h1>Consultancy</h1>
                 </div>
                 <div className="breadcrumb-outer">
@@ -144,24 +223,9 @@ export default function Consultancy() {
                       </div>
                       <div className="date">Monthly</div>
                       <ul className="price-options">
-                        <li>
-                          Unlimited questions pertaining to body composition,
-                          hypertrophy, and performance
-                        </li>
-                        <li>
-                          Training programs designed around supplements and
-                          goals
-                        </li>
-                        <li>
-                          Nutrition planning assistance, including tailoring of
-                          nutrient intakes, strategies and tactics
-                        </li>
-                        <li>Monitoring of body composition variables</li>
-                        <li>
-                          One biweekly, scheduled as needed, real-time chat via
-                          Matrix federated chat (details on account creation
-                          will be provided as needed) for 90 min each session
-                        </li>
+                        <li>Unlimited questions pertaining to body composition, hypertrophy, and performance</li>
+                        <li>Individually tailored protocols oriented to either bulking, cutting, or recomping</li>
+                        <li>Bloodwork monitoring to support physique enhancement</li>
                       </ul>
                     </div>
                   </div>
@@ -240,24 +304,44 @@ export default function Consultancy() {
 
                           <p className="mb-2">From Forum</p>
                           <div className="form-group">
-                            <select
-                              name="currency"
-                              className="custom-select-box"
-                            >
-                              <option>Bodybuilding.com</option>
-                              <option>T-Nation.com</option>
-                            </select>
+                          <select
+                                name="currency"
+                                className="custom-select-box"
+                                ref={forumRef}
+                                onChange={(e) => {
+                                  if (e.target.value.length >  0){
+                                    setShowUsername(true)
+                                  }else{
+                                    setShowUsername(false);
+                                    let temp = {...formData}
+                                    temp.username = "";
+                                    setFormData(temp);
+                                  }
+                                }}
+                              >
+                                <option value={""}>No Forum</option>
+                                {
+                                  forums.map((e, i) => {
+                                    return <option value={e.name} key={`forum-${i}`}>{e.name}</option>
+                                  })
+                                }
+
+                              </select>
                           </div>
 
-                          <p className="mb-2">Board Username</p>
-                          <div className="form-group">
-                            <input
-                              type="text"
-                              name="username"
-                              value={formData.username}
-                              onChange={formHandler}
-                            />
-                          </div>
+                          {
+                              showUsername && <>
+                                <p className="mb-2">Board Username</p>
+                            <div className="form-group">
+                              <input
+                                type="text"
+                                name="username"
+                                value={formData.username}
+                                onChange={formHandler}
+                              />
+                            </div>
+                              </>
+                            }
 
                           <p className="mb-2">Referal Code</p>
                           <div className="form-group">
@@ -271,12 +355,11 @@ export default function Consultancy() {
 
                           <p className="mb-2">Clickwrap agreement & waiver</p>
                           <div className="form-group">
-                            <textarea name="message"></textarea>
+                            <textarea name="message" defaultValue={others.consultancy} ref={agreementRef}></textarea>
                           </div>
                           <small className="form-text text-muted">
                             Agreement to Transmit Bitcoin (BTC): Coach will
-                            e-mail, to your provided e-mail address ([user's
-                            email]), the BTC address for payment, after you have
+                            e-mail, to your provided e-mail address {formData.email.length > 0 ? `(${formData.email})` : ""}, the BTC address for payment, after you have
                             read and agreed to the following terms
                           </small>
 
@@ -293,12 +376,23 @@ export default function Consultancy() {
                               OF EMAIL CONTAINING PAYMENT ADDRESS in the amount
                               of:
                               <strong>
-                                {`${SYMBOLS[selectedCurrency]} ${prices.total}`}
-                                or {`${prices.bitcoinTotal}`}BTC (
+                                {`${SYMBOLS[selectedCurrency]} ${prices.total}`}{" "}
+                                or {`${prices.bitcoinTotal}`} BTC (
                                 {formatMBTC(prices.bitcoinTotal)} mBTC)
                               </strong>
                             </label>
                           </div>
+
+                          <div className="form-group">
+                            <span  dangerouslySetInnerHTML={{ __html: captcha.image }}>
+
+</span>
+                              <input
+                                type="text"
+                                name="captcha"
+                                ref={captchaRef}
+                              />
+                            </div>
 
                           <div className="form-group col-lg-12 col-md-12 col-sm-12">
                             <button

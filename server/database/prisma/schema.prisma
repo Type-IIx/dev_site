@@ -1,0 +1,149 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://testuser:testpassword@database:5432/Custom"
+}
+
+//datasource db {
+//  provider = "sqlite"
+//  url      = "file:./dev.db"
+//}
+
+model User {
+  id       String   @id @default(cuid())
+  email    String   @unique
+  password String
+  joined   DateTime @default(now())
+}
+
+model Post {
+  id           Int      @id @default(autoincrement())
+  title        String   @default("")
+  content      String   @default("")
+  filename     String   @default("")
+  physicalPath String   @default("")
+  fileUrl      String   @default("")
+  created      DateTime @default(now())
+}
+
+model Socials {
+  id   Int    @id @default(autoincrement())
+  name String
+  url  String
+}
+
+model Book {
+  id                Int      @id @default(autoincrement())
+  title             String   @default("")
+  price             Float    @default(0)
+  description       String   @default("")
+  ImageFilename     String   @default("")
+  ImagephysicalPath String   @default("")
+  ImageUrl          String   @default("")
+  BookFilename      String   @default("")
+  BookphysicalPath  String   @default("")
+  BookUrl           String   @default("")
+  created           DateTime @default(now())
+}
+
+model FormDataCoaching {
+  id         String   @id @default(cuid())
+  fee_string String
+  email      String
+  duration   Int
+  forum      String
+  username   String
+  referal    String?
+  agreement  String?
+  created    DateTime @default(now())
+}
+
+model FormDataConsultancy {
+  id         String   @id @default(cuid())
+  fee_string String
+  email      String
+  duration   Int
+  forum      String
+  username   String
+  referal    String?
+  agreement  String?
+  created    DateTime @default(now())
+}
+
+model FormDataAuthors {
+  id          String   @id @default(cuid())
+  fee_string  String
+  email       String
+  authorships Int
+  website     String
+  intent      String
+  subject     String?
+  agreement   String?
+  created     DateTime @default(now())
+}
+
+model FormDataSupport {
+  id      String   @id @default(cuid())
+  name    String
+  email   String
+  subject String
+  message String
+  created DateTime @default(now())
+}
+
+model FormDataCheckout {
+  id      String   @id @default(cuid())
+  title   String
+  price   Float    @default(0)
+  name    String
+  surname String
+  email   String
+  address String
+  country String
+  state   String
+  zip     String
+  copy    String   @default("physical")
+  created DateTime @default(now())
+}
+
+model Forum {
+  id   Int    @id @default(autoincrement())
+  name String
+}
+
+model OtherSettings {
+  id          Int    @id @default(autoincrement())
+  call        String
+  coaching    String @default("")
+  authors     String @default("")
+  consultancy String @default("")
+}
+
+model Testimonials {
+  id           Int      @id @default(autoincrement())
+  name         String
+  content      String
+  rating       Int
+  filename     String   @default("")
+  physicalPath String   @default("")
+  fileUrl      String   @default("")
+  date         DateTime @default(now())
+}
+
+model Captcha {
+  id     String   @id @default(cuid())
+  answer String
+  date   DateTime @default(now())
+}
+
+model Referrals {
+  id   Int      @id @default(autoincrement())
+  code String
+  date DateTime @default(now())
+}

@@ -1,33 +1,50 @@
-
-
 services:
- 
-    backend:
-      image : backend:alpha
-      ports:
-       - "3030:3030"
-      links:
-       - "postgress:database"
-    frontend:
-      image : frontend:alpha
-      ports:
-       - "3000:3000"
-    
-    relayer:
-     image : relayer:alpha
-     ports :
-      - "80:80"
-     links:
+
+  backend:
+    image: backend:alpha
+    ports:
+      - "3030:3030"
+    environment:
+      TOKEN_SECRET: tokensecret
+    links:
+      - "postgress:database"
+    volumes:
+      - books-volume:/usr/src/app/books
+      - uploads-volume:/usr/src/app/uploads
+      #- ./books:/var/www/ampouletude.com/html/source/books
+      #- ./uploads:/var/www/ampouletude.com/html/source/uploads
+  frontend:
+    image: frontend:alpha
+    environment:
+      NEXTAUTH_SECRET: tokensecret
+    ports:
+      - "3000:3000"
+    links:
+      - "backend:backend"
+
+  relayer:
+    image: relayer:alpha
+    ports:
+      - "8080:80"
+    links:
       - "frontend:frontend"
       - "backend:backend"
-    postgress:
-      image: postgres
-      restart: always
-      environment:
-        POSTGRES_USER: testuser
-        POSTGRES_PASSWORD: testpassword
-        POSTGRES_DB: Custom
-      ports:
-        - "5432:5432"
-      volumes:
-        - ./data:/postgresstempdata/
+  postgress:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpassword
+      POSTGRES_DB: Custom
+    ports:
+      - "5430:5432"
+    volumes:
+      - ./data:/var/www/ampouletude.com/html/source/postgressdemo
+
+volumes:
+  books-volume:
+    external: true
+  uploads-volume:
+    external: true
+
+#/var/www/ampouletude.com/html/source/postgressdemo

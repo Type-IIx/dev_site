@@ -2,7 +2,7 @@
 
 ## Build backend
 
-```docker build -t backend:alpha -f server/Dockerfile  .```
+```docker build -t backend:alpha -f ./Dockerfile  .```
 
 ## Run Backend
 
@@ -22,3 +22,9 @@
 ## Build relayer
 
 ```docker build -t relayer:alpha -f ./Dockerfile  .```
+
+
+
+## run compose
+
+```docker compose --project-name webapp up -d```
