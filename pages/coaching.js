@@ -40,21 +40,20 @@ export default function Coaching() {
     call: "",
     coaching: "",
     authors: "",
-    consultancy: ""
+    consultancy: "",
   });
   const [forums, setForums] = useState([]);
-  const [showUsername ,setShowUsername] = useState(false);
-  const [captcha,setCaptcha] = useState(null)
+  const [showUsername, setShowUsername] = useState(false);
+  const [captcha, setCaptcha] = useState(null);
   const captchaRef = useRef();
-  
 
   const fetchCaptcha = async () => {
     const resp = await axios.get(BASE_URL + "captcha/generate");
-    if (resp.status === 200){
+    if (resp.status === 200) {
       const result = await resp.data;
       setCaptcha(result);
     }
-  }
+  };
 
   const fetchOthers = async () => {
     const resp = await axios.get(BASE_URL + path_ + "other");
@@ -63,7 +62,7 @@ export default function Coaching() {
       const result = await resp.data;
       setOthers(result);
     }
-  }
+  };
 
   const fetchForums = async () => {
     const resp = await axios.get(BASE_URL + path_ + "forum");
@@ -84,7 +83,7 @@ export default function Coaching() {
       if (Number(e.target.value) >= 1 && Number(e.target.value) <= 12) {
         setMonths(Number(e.target.value));
       }
-    } catch { }
+    } catch {}
   };
 
   async function updateRates() {
@@ -92,13 +91,12 @@ export default function Coaching() {
     setRates(d);
   }
 
-
   // effects here
   useEffect(() => {
     fetchForums();
     fetchOthers();
     fetchCaptcha();
-  }, [])
+  }, []);
 
   useEffect(() => {
     updateRates();
@@ -111,8 +109,6 @@ export default function Coaching() {
       updatePrices();
     }
   }, [selectedCurrency, rates, months]);
-
-  
 
   const updatePrices = () => {
     let temp = { ...prices };
@@ -146,7 +142,7 @@ export default function Coaching() {
     fetchCaptcha();
     forumRef.current.value = "";
     captchaRef.current.value = "";
-  }
+  };
 
   const submitForm = async (e) => {
     try {
@@ -163,30 +159,28 @@ export default function Coaching() {
             agreement: agreementRef.current.value,
             forum: forumRef.current.value,
             duration: months,
-            fee_string: `${SYMBOLS[selectedCurrency]} ${prices.total}`
-          }
+            fee_string: `${SYMBOLS[selectedCurrency]} ${prices.total}`,
+          };
           const finalBody = {
-            captcha : {
-              id : captcha.capId,
-              answer : captchaRef.current.value
+            captcha: {
+              id: captcha.capId,
+              answer: captchaRef.current.value,
             },
-            body
-          }
-          const url = BASE_URL + "submissions/coaching/create"
+            body,
+          };
+          const url = BASE_URL + "submissions/coaching/create";
           const res = await axios.post(url, finalBody);
           if (res) {
             toast.success("Success");
             clearForm();
-
           } else {
             const result = await res.data;
-            if (result.reason){
-              toast.error(result.reason)
-            }else{
-            toast.error("Failed Saving submission")
+            if (result.reason) {
+              toast.error(result.reason);
+            } else {
+              toast.error("Failed Saving submission");
             }
           }
-
         }
       } else {
         toast.error("Agree to terms");
@@ -194,8 +188,8 @@ export default function Coaching() {
     } catch (e) {
       const data = await e.response.data;
       console.log(data);
-      if (data && data.reason){
-        toast.error(data.reason)
+      if (data && data.reason) {
+        toast.error(data.reason);
       }
     }
   };
@@ -242,14 +236,18 @@ export default function Coaching() {
                           hypertrophy, and performance
                         </li>
                         <li>
-                          Training programs designed around supplements and
-                          goals
+                          Training programs designed around PEDs, supplements,
+                          and goals
                         </li>
                         <li>
                           Nutrition planning assistance, including tailoring of
                           nutrient intakes, strategies and tactics
                         </li>
                         <li>Monitoring of body composition variables</li>
+                        <li>
+                          Bloodwork management for the purpose of physique
+                          enhancement
+                        </li>
                         <li>
                           One biweekly, scheduled as needed, real-time chat via
                           Matrix federated chat (details on account creation
@@ -273,14 +271,18 @@ export default function Coaching() {
                           hypertrophy, and performance
                         </li>
                         <li>
-                          Training programs designed around supplements and
-                          goals
+                          Training programs designed around PEDs, supplements,
+                          and goals
                         </li>
                         <li>
                           Nutrition planning assistance, including tailoring of
                           nutrient intakes, strategies and tactics
                         </li>
                         <li>Monitoring of body composition variables</li>
+                        <li>
+                          Bloodwork management for the purpose of physique
+                          enhancement
+                        </li>
                         <li>
                           One biweekly, scheduled as needed, real-time chat via
                           Matrix federated chat (details on account creation
@@ -293,8 +295,8 @@ export default function Coaching() {
                   <div className="price-block col-lg-6 col-md-6 col-sm-12">
                     <div className="inner-box">
                       <div className="contact-form">
-                        {
-                          show && <form method="post" action="#">
+                        {show && (
+                          <form method="post" action="#">
                             <p className="mb-2">
                               Fee Structure (in various currencies)
                             </p>
@@ -357,8 +359,8 @@ export default function Coaching() {
                             </div>
 
                             <small className="form-text text-muted">
-                              Planning proceeds in blocks ('mesocycles') of 3 or 4
-                              months, so it is suggested that you commit to no
+                              Planning proceeds in blocks ('mesocycles') of 3 or
+                              4 months, so it is suggested that you commit to no
                               less than 3 months at a time to achieve your
                               objective (e.g., bulking, cutting, recomping)
                             </small>
@@ -370,40 +372,39 @@ export default function Coaching() {
                                 className="custom-select-box"
                                 ref={forumRef}
                                 onChange={(e) => {
-                                  if (e.target.value.length >  0){
-                                    setShowUsername(true)
-                                  }else{
+                                  if (e.target.value.length > 0) {
+                                    setShowUsername(true);
+                                  } else {
                                     setShowUsername(false);
-                                    let temp = {...formData}
+                                    let temp = { ...formData };
                                     temp.username = "";
                                     setFormData(temp);
                                   }
                                 }}
                               >
                                 <option value={""}>No Forum</option>
-                                {
-                                  forums.map((e, i) => {
-                                    return <option value={e.name} key={`forum-${i}`}>{e.name}</option>
-                                  })
-                                }
-
+                                {forums.map((e, i) => {
+                                  return (
+                                    <option value={e.name} key={`forum-${i}`}>
+                                      {e.name}
+                                    </option>
+                                  );
+                                })}
                               </select>
                             </div>
-                            {
-                              showUsername && <>
+                            {showUsername && (
+                              <>
                                 <p className="mb-2">Board Username</p>
-                            <div className="form-group">
-                              <input
-                                type="text"
-                                name="username"
-                                value={formData.username}
-                                onChange={formHandler}
-                              />
-                            </div>
+                                <div className="form-group">
+                                  <input
+                                    type="text"
+                                    name="username"
+                                    value={formData.username}
+                                    onChange={formHandler}
+                                  />
+                                </div>
                               </>
-                            }
-
-                            
+                            )}
 
                             <p className="mb-2">Referral Code</p>
                             <div className="form-group">
@@ -417,12 +418,20 @@ export default function Coaching() {
 
                             <p className="mb-2">Clickwrap agreement & waiver</p>
                             <div className="form-group">
-                              <textarea name="message" defaultValue={others.coaching} ref={agreementRef}></textarea>
+                              <textarea
+                                name="message"
+                                defaultValue={others.coaching}
+                                ref={agreementRef}
+                              ></textarea>
                             </div>
                             <small className="form-text text-muted">
                               Agreement to Transmit Bitcoin (BTC): Coach will
-                              e-mail, to your provided e-mail address {formData.email.length > 0 ? `(${formData.email})` : ""}, the BTC address for payment, after you have
-                              read and agreed to the following terms
+                              e-mail, to your provided e-mail address{" "}
+                              {formData.email.length > 0
+                                ? `(${formData.email})`
+                                : ""}
+                              , the BTC address for payment, after you have read
+                              and agreed to the terms
                             </small>
 
                             <div className="form-group form-check mt-3">
@@ -435,21 +444,22 @@ export default function Coaching() {
                               <label className="form-check-label">
                                 BY CLICKING THIS BUTTON, I AGREE TO TERMS &amp;
                                 WILL TRANSMIT PAYMENT WITHIN 12 HOURS OF RECEIPT
-                                OF EMAIL CONTAINING PAYMENT ADDRESS in the amount
-                                of:{" "}
-                                <strong>
+                                OF EMAIL CONTAINING PAYMENT ADDRESS in the
+                                amount of:
+                                {/* <strong>
                                   {`${SYMBOLS[selectedCurrency]} ${prices.total}`}{" "}
                                   or {`${prices.bitcoinTotal}`} BTC (
                                   {formatMBTC(prices.bitcoinTotal)} mBTC)
-                                </strong>
+                                </strong> */}
                               </label>
                             </div>
 
-
                             <div className="form-group">
-                            <span  dangerouslySetInnerHTML={{ __html: captcha.image }}>
-
-</span>
+                              <span
+                                dangerouslySetInnerHTML={{
+                                  __html: captcha.image,
+                                }}
+                              ></span>
                               <input
                                 type="text"
                                 name="captcha"
@@ -467,8 +477,7 @@ export default function Coaching() {
                               </button>
                             </div>
                           </form>
-                        }
-
+                        )}
                       </div>
                     </div>
                   </div>
