@@ -43,20 +43,19 @@ export default function Writings() {
     call: "",
     coaching: "",
     authors: "",
-    consultancy: ""
+    consultancy: "",
   });
 
-  const [captcha,setCaptcha] = useState(null)
+  const [captcha, setCaptcha] = useState(null);
   const captchaRef = useRef();
-  
 
   const fetchCaptcha = async () => {
     const resp = await axios.get(BASE_URL + "captcha/generate");
-    if (resp.status === 200){
+    if (resp.status === 200) {
       const result = await resp.data;
       setCaptcha(result);
     }
-  }
+  };
 
   const fetchOthers = async () => {
     const resp = await axios.get(BASE_URL + path_ + "other");
@@ -65,7 +64,7 @@ export default function Writings() {
       const result = await resp.data;
       setOthers(result);
     }
-  }
+  };
 
   // handlers here
 
@@ -78,7 +77,7 @@ export default function Writings() {
       if (Number(e.target.value) >= 1 && Number(e.target.value) <= 5) {
         setAuthorShips(Number(e.target.value));
       }
-    } catch { }
+    } catch {}
   };
 
   async function updateRates() {
@@ -91,7 +90,7 @@ export default function Writings() {
   useEffect(() => {
     fetchOthers();
     fetchCaptcha();
-  }, [])
+  }, []);
 
   useEffect(() => {
     updateRates();
@@ -139,7 +138,7 @@ export default function Writings() {
     OpinionRef.current.checked = false;
     OthersRef.current.checked = false;
     captchaRef.current.value = "";
-  }
+  };
 
   const submitForm = async (e) => {
     try {
@@ -151,26 +150,26 @@ export default function Writings() {
           console.log(errors);
           formatAndShowErrors(toast, errors);
         } else {
-          let temp = []
-          console.log(MarketingRef.current)
-          console.log(EducationRef.current)
-          console.log(ResearchRef.current)
-          console.log(OpinionRef.current)
-          console.log(OthersRef.current)
+          let temp = [];
+          console.log(MarketingRef.current);
+          console.log(EducationRef.current);
+          console.log(ResearchRef.current);
+          console.log(OpinionRef.current);
+          console.log(OthersRef.current);
           if (MarketingRef.current.checked) {
-            temp.push("Marketing")
+            temp.push("Marketing");
           }
           if (EducationRef.current.checked) {
-            temp.push("Education")
+            temp.push("Education");
           }
           if (ResearchRef.current.checked) {
-            temp.push("Research")
+            temp.push("Research");
           }
           if (OpinionRef.current.checked) {
-            temp.push("Opinion")
+            temp.push("Opinion");
           }
           if (OthersRef.current.checked) {
-            temp.push("Others")
+            temp.push("Others");
           }
 
           const body = {
@@ -178,34 +177,34 @@ export default function Writings() {
             agreement: agreementRef.current.value,
             authorships,
             fee_string: `${SYMBOLS[selectedCurrency]} ${prices.total}`,
-            intent: temp.join(",")
-          }
-          console.log(body)
+            intent: temp.join(","),
+          };
+          console.log(body);
           const finalBody = {
-            captcha : {
-              id : captcha.capId,
-              answer : captchaRef.current.value
+            captcha: {
+              id: captcha.capId,
+              answer: captchaRef.current.value,
             },
-            body
-          }
-          const url = BASE_URL + "submissions/authors/create"
+            body,
+          };
+          const url = BASE_URL + "submissions/authors/create";
           const res = await axios.post(url, finalBody);
           if (res) {
             toast.success("Success");
             clearForm();
           } else {
-            toast.error("Failed Saving submission")
+            toast.error("Failed Saving submission");
           }
         }
       } else {
         toast.error("Agree to terms");
       }
     } catch (e) {
-      console.log(e)
+      console.log(e);
       const data = await e.response.data;
       console.log(data);
-      if (data && data.reason){
-        toast.error(data.reason)
+      if (data && data.reason) {
+        toast.error(data.reason);
       }
     }
   };
@@ -248,19 +247,11 @@ export default function Writings() {
                         </div>
                         <div className="date">per work of authorship</div>
                         <ul className="price-options">
-                          <li>
-                            Attentive &amp; crafted solutions
-                          </li>
-                          <li>
-                            Unlimited projects
-                          </li>
-                          <li>
-                            Unlimited revision
-                          </li>
+                          <li>Attentive &amp; crafted solutions</li>
+                          <li>Unlimited projects</li>
+                          <li>Unlimited revision</li>
                           <li>Flexible timeline</li>
-                          <li>
-                            Private consultation
-                          </li>
+                          <li>Private consultation</li>
                         </ul>
                       </div>
                     </div>
@@ -386,15 +377,17 @@ export default function Writings() {
                                 name="subject"
                                 value={formData.subject}
                                 onChange={formHandler}
-
                               />
                             </div>
                             <p className="mb-2">
                               Clickwrap agreement &amp; waiver
                             </p>
                             <div className="form-group">
-                              <textarea name="message" defaultValue={others.authors} ref={agreementRef} />
-
+                              <textarea
+                                name="message"
+                                defaultValue={others.authors}
+                                ref={agreementRef}
+                              />
                             </div>
                             <div className="form-group form-check mt-3">
                               <input
@@ -409,7 +402,7 @@ export default function Writings() {
                                 OF EMAIL CONTAINING PAYMENT ADDRESS IF AUTHOR
                                 ACCEPTS THE PROPOSAL” in the amount of:
                                 <strong>
-                                  {`${SYMBOLS[selectedCurrency]} ${prices.total}`}{" "}
+                                  {` ${SYMBOLS[selectedCurrency]}${prices.total}`}{" "}
                                   or {`${prices.bitcoinTotal}`} BTC (
                                   {formatMBTC(prices.bitcoinTotal)} mBTC)
                                 </strong>
@@ -420,15 +413,20 @@ export default function Writings() {
                               documents, spreadsheets, presentations, graphics)
                               are to be collected as needed as work proceeds, if
                               the proposal is accepted. Communication will
-                              follow by email to {formData.email.length > 0 ? `(${formData.email})` : ""}, including notice
-                              of rejection with modifications, or outright
-                              rejection, to proposal.
+                              follow by email to{" "}
+                              {formData.email.length > 0
+                                ? `(${formData.email})`
+                                : ""}
+                              , including notice of rejection with
+                              modifications, or outright rejection, to proposal.
                             </small>
 
                             <div className="form-group">
-                            <span  dangerouslySetInnerHTML={{ __html: captcha.image }}>
-
-</span>
+                              <span
+                                dangerouslySetInnerHTML={{
+                                  __html: captcha.image,
+                                }}
+                              ></span>
                               <input
                                 type="text"
                                 name="captcha"
