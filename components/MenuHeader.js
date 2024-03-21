@@ -148,6 +148,9 @@ export default function MenuHeader() {
                     <li>
                       <a href="/articles">Articles</a>
                     </li>
+                    <li>
+                      <a href="/client-success">Clients success</a>
+                    </li>
                   </ul>
                 </div>
               </nav>

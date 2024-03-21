@@ -271,14 +271,18 @@ export default function Coaching() {
                           hypertrophy, and performance
                         </li>
                         <li>
-                          Training programs designed around supplements and
-                          goals
+                          Training programs designed around PEDs, supplements,
+                          and goals
                         </li>
                         <li>
                           Nutrition planning assistance, including tailoring of
                           nutrient intakes, strategies and tactics
                         </li>
                         <li>Monitoring of body composition variables</li>
+                        <li>
+                          Bloodwork management for the purpose of physique
+                          enhancement
+                        </li>
                         <li>
                           One biweekly, scheduled as needed, real-time chat via
                           Matrix federated chat (details on account creation
