@@ -400,12 +400,13 @@ export default function Writings() {
                                 BY CLICKING THIS BUTTON, I AGREE TO TERMS &amp;
                                 WILL TRANSMIT PAYMENT WITHIN 12 HOURS OF RECEIPT
                                 OF EMAIL CONTAINING PAYMENT ADDRESS IF AUTHOR
-                                ACCEPTS THE PROPOSAL” in the amount of:
+                                ACCEPTS THE PROPOSAL”
+                                {/* in the amount of:
                                 <strong>
                                   {` ${SYMBOLS[selectedCurrency]}${prices.total}`}{" "}
                                   or {`${prices.bitcoinTotal}`} BTC (
                                   {formatMBTC(prices.bitcoinTotal)} mBTC)
-                                </strong>
+                                </strong> */}
                               </label>
                             </div>
                             <small className="mb-2">
