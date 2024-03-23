@@ -403,7 +403,7 @@ export default function Writings() {
                                 ACCEPTS THE PROPOSAL”
                                 {/* in the amount of:
                                 <strong>
-                                  {`${SYMBOLS[selectedCurrency]} ${prices.total}`}{" "}
+                                  {` ${SYMBOLS[selectedCurrency]}${prices.total}`}{" "}
                                   or {`${prices.bitcoinTotal}`} BTC (
                                   {formatMBTC(prices.bitcoinTotal)} mBTC)
                                 </strong> */}

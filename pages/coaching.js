@@ -445,12 +445,12 @@ export default function Coaching() {
                                 BY CLICKING THIS BUTTON, I AGREE TO TERMS &amp;
                                 WILL TRANSMIT PAYMENT WITHIN 12 HOURS OF RECEIPT
                                 OF EMAIL CONTAINING PAYMENT ADDRESS in the
-                                amount of:
-                                {/* <strong>
-                                  {`${SYMBOLS[selectedCurrency]} ${prices.total}`}{" "}
+                                amount of:{" "}
+                                <strong>
+                                  {`${SYMBOLS[selectedCurrency]}${prices.total}`}{" "}
                                   or {`${prices.bitcoinTotal}`} BTC (
                                   {formatMBTC(prices.bitcoinTotal)} mBTC)
-                                </strong> */}
+                                </strong>
                               </label>
                             </div>
 

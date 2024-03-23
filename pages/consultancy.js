@@ -374,7 +374,7 @@ export default function Consultancy() {
                             e-mail, to your provided e-mail address{" "}
                             {formData.email.length > 0
                               ? `(${formData.email})`
-                              : ""}
+                              : ""}{" "}
                             , the BTC address for payment, after you have read
                             and agreed to the terms
                           </small>
@@ -391,11 +391,11 @@ export default function Consultancy() {
                               WILL TRANSMIT PAYMENT WITHIN 12 HOURS OF RECEIPT
                               OF EMAIL CONTAINING PAYMENT ADDRESS in the amount
                               of:
-                              {/* <strong>
-                                {`${SYMBOLS[selectedCurrency]} ${prices.total}`}{" "}
+                              <strong>
+                                {` ${SYMBOLS[selectedCurrency]}${prices.total}`}{" "}
                                 or {`${prices.bitcoinTotal}`} BTC (
                                 {formatMBTC(prices.bitcoinTotal)} mBTC)
-                              </strong> */}
+                              </strong>
                             </label>
                           </div>
 
