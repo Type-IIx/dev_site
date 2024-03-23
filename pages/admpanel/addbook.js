@@ -8,16 +8,14 @@ import { axiosInstance } from "../../utils/apiHandler";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
-import {convertEditorToHtml} from "../../utils/helpers"
-
-
+import { convertEditorToHtml } from "../../utils/helpers";
 
 const EditorComp = dynamic(
   () => {
-    return import("../../components/AdminComps/EditorComp")
+    return import("../../components/AdminComps/EditorComp");
   },
-  {ssr : false}   
-)
+  { ssr: false }
+);
 
 function Addbook() {
   const imageRef = useRef(null);
@@ -25,24 +23,22 @@ function Addbook() {
   const priceRef = useRef(null);
   const bookRef = useRef(null);
   const editorRef = useRef(null);
+  const vatRef = useRef(null);
   const router = useRouter();
-  
 
-  const [contentState,setContentState] = useState("");
-
-  
-
+  const [contentState, setContentState] = useState("");
 
   const handleImport = async () => {
     let form_data = new FormData();
     /* const file =
       bookRef.current.files.length > 0 ? bookRef.current.files[0] : null; */
-    const file = ""
+    const file = "";
     if (/* file */ true) {
       /* form_data.append("book", file, file.name); */
       form_data.append("title", titleRef.current.value);
       form_data.append("price", priceRef.current.value);
-      form_data.append("description", convertEditorToHtml(contentState) )
+      form_data.append("Vat", vatRef.current.value);
+      form_data.append("description", convertEditorToHtml(contentState));
       const url = BASE_URL + "book/create";
       const res = await axiosInstance.post(url, form_data);
       if (res.status === 201) {
@@ -84,7 +80,7 @@ function Addbook() {
       imageRef.current.files.length > 0 ? imageRef.current.files[0] : null;
     /* if (!file) {
       toast.warning("Please select a file");
-    } else */ 
+    } else */
     if (!image) {
       toast.warning("Please select an image");
     } else {
@@ -93,7 +89,7 @@ function Addbook() {
         const res2 = await handleEdit(res.id);
         if (res2) {
           toast.success("Success");
-          router.push("/admpanel/booklist")
+          router.push("/admpanel/booklist");
         } else {
           toast.error("Failed Import");
         }
@@ -110,8 +106,7 @@ function Addbook() {
       </Head>
       <AdminWrapper>
         <AdminChecker>
-
-              <section className="price-page-section">
+          <section className="price-page-section">
             <div className="auto-container">
               <div className="row clearfix">
                 <div className="col-md-12">
@@ -140,10 +135,21 @@ function Addbook() {
                       placeholder="Price"
                     />
                   </div>
+                  <div className="form-group">
+                    <input
+                      ref={vatRef}
+                      type="text"
+                      className="form-control"
+                      placeholder="VAT"
+                    />
+                  </div>
 
                   <div className="form-group">
-                    <EditorComp content={contentState} setContent={setContentState} />
-                  
+                    <EditorComp
+                      content={contentState}
+                      setContent={setContentState}
+                    />
+
                     {/* <Editor
                       apiKey="and0waidxlwtdyuu0jigei07tkx7coltmyqldar2ji3i9azr"
                       onInit={(evt, editor) => (editorRef.current = editor)}
@@ -202,8 +208,6 @@ function Addbook() {
               </div>
             </div>
           </section>
-            
-          
         </AdminChecker>
       </AdminWrapper>
     </>

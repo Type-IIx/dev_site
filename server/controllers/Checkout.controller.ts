@@ -17,6 +17,8 @@ interface CheckoutDataT {
 	zip: string;
 	title: string;
 	price: number;
+	vat: number;
+	total: number;
 	copy: string;
 }
 CheckoutController.post("/confirm", async (req, res, next) => {
@@ -42,6 +44,33 @@ CheckoutController.post("/confirm", async (req, res, next) => {
 			})
 		} */
 		res.status(200).json(newBody);
+	} catch (e) {
+		console.log("error")
+		console.log(e)
+		res.status(500)
+	}
+})
+
+CheckoutController.get("/:id", async (req, res, next) => {
+	try {
+		console.log("here in id fetching")
+		const orderId = req.params.id;
+		if (orderId){
+			const order = await prisma.formDataCheckout.findFirst({
+				where: {
+					id: orderId
+				}
+			});
+			if (order){
+				res.status(200).json(order)
+			}else{
+			res.status(500).json({ success: false, message: "Order not found" })
+			}
+			
+		}else{
+			res.status(500).json({ success: false, message: "Id not provided" })
+		}
+		
 	} catch (e) {
 		console.log("error")
 		console.log(e)

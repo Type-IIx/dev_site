@@ -9,6 +9,7 @@ import countryList from "react-select-country-list";
 import { useCountries } from "use-react-countries";
 import { CheckoutForm } from "../../parsers/schema";
 import {
+  calculateVat,
   convertFromUSD,
   formatAndShowErrors,
   formatMBTC,
@@ -90,6 +91,8 @@ export default function Bookdetail() {
         const body = {
           title: book.title,
           price: book.price,
+          vat: calculateVat(book.price, book.Vat),
+          total: book.price + calculateVat(book.price, book.Vat),
           ...formData,
         };
         const resp = await axios.post(BASE_URL + "checkout/confirm", body);
@@ -335,20 +338,35 @@ export default function Bookdetail() {
                         </li>
                         <li className="list-group-item d-flex justify-content-between lh-condensed">
                           <div>
-                            <p className="my-0">Shipping</p>
+                            <p className="my-0">VAT</p>
                           </div>
-                          <span className="text-muted">$0</span>
+                          <span className="text-muted">
+                            ${calculateVat(book.price, book.Vat)}
+                          </span>
                         </li>
                         <li className="list-group-item d-flex justify-content-between">
                           <h5>Total (USD)</h5>
-                          <strong>${book.price}</strong>
+                          <strong>
+                            ${book.price + calculateVat(book.price, book.Vat)}
+                          </strong>
                         </li>
                         <li className="list-group-item d-flex justify-content-between">
                           <h5>Total (BTC)</h5>
                           <strong>
                             {" "}
-                            {convertFromUSD(rates, book.price, -1)} BTC <br /> (
-                            {formatMBTC(convertFromUSD(rates, book.price, -1))}{" "}
+                            {convertFromUSD(
+                              rates,
+                              book.price + calculateVat(book.price, book.Vat),
+                              -1
+                            )}{" "}
+                            BTC <br /> (
+                            {formatMBTC(
+                              convertFromUSD(
+                                rates,
+                                book.price + calculateVat(book.price, book.Vat),
+                                -1
+                              )
+                            )}{" "}
                             mBTC)
                           </strong>
                         </li>

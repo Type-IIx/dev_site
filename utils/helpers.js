@@ -1,7 +1,12 @@
 import axios from "axios";
 import bcrypt from "bcryptjs";
-import { convertToRaw,EditorState,ContentState,convertFromHTML } from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
+import {
+  convertToRaw,
+  EditorState,
+  ContentState,
+  convertFromHTML,
+} from "draft-js";
+import draftToHtml from "draftjs-to-html";
 import dynamic from "next/dynamic";
 /* import htmlToDraft from 'html-to-draftjs'; */
 const LOCAL_API = "/api/";
@@ -47,6 +52,11 @@ export const convertFromUSD = (rates, amount, to) => {
   return CustomRound(amount * rate, decimals);
 };
 
+export const calculateVat = (amount, vat) => {
+  console.log(amount, vat);
+  return CustomRound((amount * vat) / 100, 2);
+};
+
 export const formatAndShowErrors = (toast, errors) => {
   for (let err of errors) {
     toast.error(`${err.path[0]} : ${err.message}`);
@@ -54,7 +64,7 @@ export const formatAndShowErrors = (toast, errors) => {
 };
 
 export const formatMBTC = (amount) => {
-  return CustomRound(amount * 1000,8);
+  return CustomRound(amount * 1000, 8);
 };
 
 export const encryptPassword = (pass) => {
@@ -107,15 +117,12 @@ function getNumberSuffix(day) {
   }
 }
 
-
 export const convertEditorToHtml = (data) => {
-  return draftToHtml(convertToRaw(data.getCurrentContent()))
-}
+  return draftToHtml(convertToRaw(data.getCurrentContent()));
+};
 
 export const convertHtmlToEdit = (data) => {
   return EditorState.createWithContent(
-    ContentState.createFromBlockArray(
-      convertFromHTML(data)
-    )
-  )
-} 
+    ContentState.createFromBlockArray(convertFromHTML(data))
+  );
+};
