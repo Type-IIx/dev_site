@@ -20,7 +20,7 @@
 	}
 	
 	.main-header .header-lower .nav-outer{
-		float:right;
+		/* float:right; */
 	}
 	
 	.main-header .outer-box{
@@ -212,7 +212,7 @@
 	}
 	
 	.main-header .header-lower .nav-outer{
-		width:100%;
+		/* width:100%; */
 	}
 	
 	.main-header .main-menu .navigation > li > a{
@@ -513,8 +513,8 @@
 	}
 	
 	.main-header .header-lower .logo-box{
-		width:100%;
-		text-align:center;
+		/* width:100%;
+		text-align:center; */
 	}
 	
 	.page-title{
