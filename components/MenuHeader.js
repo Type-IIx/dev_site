@@ -176,24 +176,27 @@ export default function MenuHeader() {
                 id="navbarSupportedContent"
               >
                 <ul class="navigation clearfix">
-                  <li>
-                    <a href="/">Home</a>
-                  </li>
-                  <li>
-                    <a href="/coaching">Coaching</a>
-                  </li>
-                  <li>
-                    <a href="/consultancy">Consultancy</a>
-                  </li>
-                  <li>
-                    <a href="/writing">Writing</a>
-                  </li>
-                  <li>
-                    <a href="/books">Books</a>
-                  </li>
-                  <li>
-                    <a href="/articles">Articles</a>
-                  </li>
+                    <li>
+                      <a href="/">Home</a>
+                    </li>
+                    <li>
+                      <a href="/coaching">Coaching</a>
+                    </li>
+                    <li>
+                      <a href="/consultancy">Consultancy</a>
+                    </li>
+                    <li>
+                      <a href="/writing">Writing</a>
+                    </li>
+                    <li>
+                      <a href="/books">Books</a>
+                    </li>
+                    <li>
+                      <a href="/articles">Articles</a>
+                    </li>
+                    <li>
+                      <a href="/client-success">Clients success</a>
+                    </li>
                 </ul>
               </div>
             </div>
