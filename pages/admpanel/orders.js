@@ -78,9 +78,9 @@ export default function Formdataorders() {
                                   <td>{e.country}</td>
                                   <td>{e.state}</td>
                                   <td>{e.zip}</td>
-                                  <td>{e.price}</td>
-                                  <td>{e.vat}</td>
-                                  <td>{e.total}</td>
+                                  <td>${e.price}</td>
+                                  <td>${e.vat}</td>
+                                  <td>${e.total}</td>
                                   <td>{formatDate(e.created)}</td>
                                 </tr>
                               );
