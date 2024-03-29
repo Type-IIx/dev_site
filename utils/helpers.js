@@ -8,6 +8,7 @@ import {
 } from "draft-js";
 import draftToHtml from "draftjs-to-html";
 import dynamic from "next/dynamic";
+import { BASE_URL } from "../constants/apiInfo";
 /* import htmlToDraft from 'html-to-draftjs'; */
 const LOCAL_API = "/api/";
 
@@ -143,9 +144,7 @@ export const convertHtmlToEdit = (data) => {
 };
 
 export const getLocation = async () => {
-  const resp = await axios.get(
-    "http://ip-api.com/json?fields=status,message,country,currency"
-  );
+  const resp = await axios.get(BASE_URL + "settings/location");
   if (resp.status === 200) {
     const d = await resp.data;
     return d;
