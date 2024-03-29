@@ -144,14 +144,18 @@ export const convertHtmlToEdit = (data) => {
 };
 
 export const getLocation = async () => {
-  const resp = await axios.get(BASE_URL + "settings/location");
-  if (resp.status === 200) {
-    const d = await resp.data;
-    return d;
-  } else {
-    return {
-      country: "",
-      currency: "",
-    };
+  const resp1 = await axios.get("https://api.ipify.org?format=json");
+  if (resp1.status === 200) {
+    const d1 = await resp1.data;
+    const resp = await axios.get(BASE_URL + "settings/location/" + d1.ip);
+    if (resp.status === 200) {
+      const d = await resp.data;
+      return d;
+    } else {
+      return {
+        country: "",
+        currency: "",
+      };
+    }
   }
 };

@@ -76,11 +76,12 @@ SettingController.get("",async (req,res,next) => {
 
 })
 
-SettingController.get('/location', async (req, res, next) => {
+SettingController.get('/location/:ip', async (req, res, next) => {
     try {
       // Extract the user's IP address considering different scenarios
-      const userIp = req.headers['x-real-ip'];
-      const userIP = req.ip ;
+      //const userIp = req.headers['x-real-ip'];
+      //const userIP = req.ip ;
+      const userIP = req.params.ip;
       console.log(`User IP ${userIP}`)
       const resp = await axios.get(
         `http://ip-api.com/json/${userIP}?fields=status,message,country,currency`
