@@ -78,7 +78,7 @@ export default function Home() {
               <div className="image-column col-lg-6 col-md-12 col-sm-12">
                 <div className="inner-column">
                   <div className="image" data-tilt data-tilt-max="3">
-                    <img src="/img/logo-full.png" alt="Logo (Full)" />
+                    <img src="/img/logo-full-old.png" alt="Logo (Full)" />
                   </div>
                 </div>
               </div>
