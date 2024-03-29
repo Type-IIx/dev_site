@@ -10,16 +10,20 @@ import { useCountries } from "use-react-countries";
 import { CheckoutForm } from "../../parsers/schema";
 import {
   convertFromUSD,
+  currencyToIndex,
   formatAndShowErrors,
   formatMBTC,
+  getLocation,
   getRates,
 } from "../../utils/helpers";
+import { SYMBOLS } from "../../constants/prices";
 
 export default function Bookdetail() {
   const [bookId, setBookId] = useState(-1);
   const [loading, setLoading] = useState(true);
   const [order, setOrder] = useState(null);
   const [rates, setRates] = useState(false);
+  const [location, setLocation] = useState(null);
 
   const router = useRouter();
 
@@ -37,6 +41,16 @@ export default function Bookdetail() {
     let d = await getRates();
     setRates(d);
   }
+  const locationFetcher = async () => {
+    const l = await getLocation();
+    setLocation(l);
+  };
+
+  // effects here
+
+  useEffect(() => {
+    locationFetcher().then(() => console.log("Fetched location"));
+  }, []);
 
   useEffect(() => {
     updateRates();
@@ -117,8 +131,15 @@ export default function Bookdetail() {
 
                             <ul className="list-group my-2">
                               <li className="list-group-item d-flex justify-content-between">
-                                <h5>Total (USD)</h5>
-                                <strong>${order.total}</strong>
+                                <h5>Total</h5>
+                                <strong>
+                                  {SYMBOLS[currencyToIndex(location.currency)]}
+                                  {convertFromUSD(
+                                    rates,
+                                    order.total,
+                                    currencyToIndex(location.currency)
+                                  )}
+                                </strong>
                               </li>
                               <li className="list-group-item d-flex justify-content-between">
                                 <h5>Total (BTC)</h5>

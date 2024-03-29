@@ -11,10 +11,13 @@ import { CheckoutForm } from "../../parsers/schema";
 import {
   calculateVat,
   convertFromUSD,
+  currencyToIndex,
   formatAndShowErrors,
   formatMBTC,
+  getLocation,
   getRates,
 } from "../../utils/helpers";
+import { SYMBOLS } from "../../constants/prices";
 
 export default function Bookdetail() {
   const [bookId, setBookId] = useState(-1);
@@ -31,6 +34,7 @@ export default function Bookdetail() {
     copy: "",
   });
   const [rates, setRates] = useState(false);
+  const [location, setLocation] = useState(null);
   //const options = useMemo(() => countryList.getData(), []);
   const { countries } = useCountries();
 
@@ -41,7 +45,16 @@ export default function Bookdetail() {
     setRates(d);
   }
 
+  const locationFetcher = async () => {
+    const l = await getLocation();
+    setLocation(l);
+  };
+
   // effects here
+
+  useEffect(() => {
+    locationFetcher().then(() => console.log("Fetched location"));
+  }, []);
 
   useEffect(() => {
     updateRates();
@@ -121,7 +134,7 @@ export default function Bookdetail() {
         <title>Checkout</title>
       </Head>
       <Wrapper>
-        {!loading && book && rates && bookId !== -1 && (
+        {!loading && book && rates && bookId !== -1 && location && (
           <>
             <section className="banner-section page-title">
               <div className="auto-container">
@@ -341,13 +354,23 @@ export default function Bookdetail() {
                             <p className="my-0">VAT</p>
                           </div>
                           <span className="text-muted">
-                            ${calculateVat(book.price, book.Vat)}
+                            {SYMBOLS[currencyToIndex(location.currency)]}
+                            {convertFromUSD(
+                              rates,
+                              calculateVat(book.price, book.Vat),
+                              currencyToIndex(location.currency)
+                            )}
                           </span>
                         </li>
                         <li className="list-group-item d-flex justify-content-between">
-                          <h5>Total (USD)</h5>
+                          <h5>Total {/* (USD) */}</h5>
                           <strong>
-                            ${book.price + calculateVat(book.price, book.Vat)}
+                            {SYMBOLS[currencyToIndex(location.currency)]}
+                            {convertFromUSD(
+                              rates,
+                              book.price + calculateVat(book.price, book.Vat),
+                              currencyToIndex(location.currency)
+                            )}
                           </strong>
                         </li>
                         <li className="list-group-item d-flex justify-content-between">

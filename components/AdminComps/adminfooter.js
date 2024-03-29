@@ -12,7 +12,7 @@ export default function Footer() {
             <div className="clearfix">
               <div className="pull-left">
                 <div className="copyright">
-                  &copy; <a>Coaching & Consultancy</a> - 2023 Alright Reserved
+                  &copy; <a>Coaching & Consultancy</a> - 2024 Alright Reserved
                 </div>
               </div>
             </div>

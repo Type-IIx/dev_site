@@ -15,6 +15,7 @@ export default function MenuHeader() {
     authors: "",
     consultancy: "",
   });
+  const [openMenu, setOpenMenu] = useState(false);
 
   const fetchOthers = async () => {
     const resp = await axios.get(BASE_URL + path_ + "other");
@@ -103,7 +104,12 @@ export default function MenuHeader() {
               </div>
             </div>
 
-            <div className="nav-outer clearfix">
+            <div
+              className="nav-outer clearfix"
+              onClick={() => {
+                setOpenMenu(!openMenu);
+              }}
+            >
               <div className="mobile-nav-toggler">
                 <span className="icon flaticon-menu-1"></span>
               </div>
@@ -158,9 +164,12 @@ export default function MenuHeader() {
           </div>
         </div>
 
-        <div className="mobile-menu">
-          <div className="menu-backdrop"></div>
-          <div className="close-btn">
+        <div className={`mobile-menu ${openMenu ? "" : "hidden-menu"}`}>
+          <div
+            className="menu-backdrop"
+            onClick={() => setOpenMenu(false)}
+          ></div>
+          <div className="close-btn" onClick={() => setOpenMenu(false)}>
             <span className="icon flaticon-multiply"></span>
           </div>
 
@@ -176,27 +185,27 @@ export default function MenuHeader() {
                 id="navbarSupportedContent"
               >
                 <ul class="navigation clearfix">
-                    <li>
-                      <a href="/">Home</a>
-                    </li>
-                    <li>
-                      <a href="/coaching">Coaching</a>
-                    </li>
-                    <li>
-                      <a href="/consultancy">Consultancy</a>
-                    </li>
-                    <li>
-                      <a href="/writing">Writing</a>
-                    </li>
-                    <li>
-                      <a href="/books">Books</a>
-                    </li>
-                    <li>
-                      <a href="/articles">Articles</a>
-                    </li>
-                    <li>
-                      <a href="/client-success">Clients success</a>
-                    </li>
+                  <li>
+                    <a href="/">Home</a>
+                  </li>
+                  <li>
+                    <a href="/coaching">Coaching</a>
+                  </li>
+                  <li>
+                    <a href="/consultancy">Consultancy</a>
+                  </li>
+                  <li>
+                    <a href="/writing">Writing</a>
+                  </li>
+                  <li>
+                    <a href="/books">Books</a>
+                  </li>
+                  <li>
+                    <a href="/articles">Articles</a>
+                  </li>
+                  <li>
+                    <a href="/client-success">Clients success</a>
+                  </li>
                 </ul>
               </div>
             </div>

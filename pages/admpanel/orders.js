@@ -5,6 +5,7 @@ import SubmissionSideBar from "../../components/AdminComps/SubmissionSideBar";
 import axios from "axios";
 import { BASE_URL } from "../../constants/apiInfo";
 import { useEffect, useState } from "react";
+import { formatDate } from "../../utils/helpers";
 
 export default function Formdataorders() {
   const [authors, setAuthors] = useState([]);
@@ -60,6 +61,7 @@ export default function Formdataorders() {
                               <th scope="col">Price</th>
                               <th scope="col">VAT</th>
                               <th scope="col">Total</th>
+                              <th scope="col">date</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -79,6 +81,7 @@ export default function Formdataorders() {
                                   <td>{e.price}</td>
                                   <td>{e.vat}</td>
                                   <td>{e.total}</td>
+                                  <td>{formatDate(e.created)}</td>
                                 </tr>
                               );
                             })}
