@@ -79,7 +79,7 @@ export default function Bookdetail() {
         <title>Scan QR code for Payment</title>
       </Head>
       <Wrapper>
-        {bookId !== -1 && order && rates && (
+        {bookId !== -1 && order && rates && location && (
           <>
             <>
               <section className="banner-section page-title">
