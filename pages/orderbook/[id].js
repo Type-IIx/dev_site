@@ -10,6 +10,7 @@ import { useCountries } from "use-react-countries";
 import { CheckoutForm } from "../../parsers/schema";
 import {
   calculateVat,
+  calculateVat2,
   convertFromUSD,
   currencyToIndex,
   formatAndShowErrors,
@@ -18,6 +19,7 @@ import {
   getRates,
 } from "../../utils/helpers";
 import { SYMBOLS } from "../../constants/prices";
+import countryVat from "country-vat";
 
 export default function Bookdetail() {
   const [bookId, setBookId] = useState(-1);
@@ -105,7 +107,9 @@ export default function Bookdetail() {
           title: book.title,
           price: book.price,
           vat: calculateVat(book.price, book.Vat),
-          total: book.price + calculateVat(book.price, book.Vat),
+          total:
+            book.price +
+            calculateVat2(book.price, countryVat(location.country)),
           ...formData,
         };
         const resp = await axios.post(BASE_URL + "checkout/confirm", body);
@@ -357,7 +361,10 @@ export default function Bookdetail() {
                             {SYMBOLS[currencyToIndex(location.currency)]}
                             {convertFromUSD(
                               rates,
-                              calculateVat(book.price, book.Vat),
+                              calculateVat2(
+                                book.price,
+                                countryVat(location.country)
+                              ),
                               currencyToIndex(location.currency)
                             )}
                           </span>
@@ -368,7 +375,11 @@ export default function Bookdetail() {
                             {SYMBOLS[currencyToIndex(location.currency)]}
                             {convertFromUSD(
                               rates,
-                              book.price + calculateVat(book.price, book.Vat),
+                              book.price +
+                                calculateVat2(
+                                  book.price,
+                                  countryVat(location.country)
+                                ),
                               currencyToIndex(location.currency)
                             )}
                           </strong>
@@ -379,14 +390,22 @@ export default function Bookdetail() {
                             {" "}
                             {convertFromUSD(
                               rates,
-                              book.price + calculateVat(book.price, book.Vat),
+                              book.price +
+                                calculateVat2(
+                                  book.price,
+                                  countryVat(location.country)
+                                ),
                               -1
                             )}{" "}
                             BTC <br /> (
                             {formatMBTC(
                               convertFromUSD(
                                 rates,
-                                book.price + calculateVat(book.price, book.Vat),
+                                book.price +
+                                  calculateVat2(
+                                    book.price,
+                                    countryVat(location.country)
+                                  ),
                                 -1
                               )
                             )}{" "}

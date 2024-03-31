@@ -73,6 +73,11 @@ export const calculateVat = (amount, vat) => {
   return CustomRound((amount * vat) / 100, 2);
 };
 
+export const calculateVat2 = (amount, vat) => {
+  console.log(amount, vat);
+  return CustomRound(amount * vat, 2);
+};
+
 export const formatAndShowErrors = (toast, errors) => {
   for (let err of errors) {
     toast.error(`${err.path[0]} : ${err.message}`);
