@@ -928,11 +928,11 @@
 		font-size:var(--font-12);
 	}
 	
-	.news-block-two .inner-box .author-box,
+	/* .news-block-two .inner-box .author-box,
 	.news-block-four .inner-box .image:before,
 	.main-header .header-top .top-left .text{
-		display:none;
-	}
+		display:block;
+	} */
 	
 	.main-header .header-top .top-right .text{
 		font-size:var(--font-14);
