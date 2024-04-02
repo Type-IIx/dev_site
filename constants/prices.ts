@@ -10,8 +10,8 @@ export const AUTHORSHIP = 300;
 
 export const SYMBOLS = {
     0 : "$",
-    1 : "CA$",
-    2 : "€",
-    3 : "£",
+    3 : "CA$",
+    1 : "€",
+    2 : "£",
 }
 

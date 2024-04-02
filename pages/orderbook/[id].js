@@ -17,6 +17,7 @@ import {
   formatMBTC,
   getLocation,
   getRates,
+  getVat,
 } from "../../utils/helpers";
 import { SYMBOLS } from "../../constants/prices";
 import countryVat from "country-vat";
@@ -37,6 +38,7 @@ export default function Bookdetail() {
   });
   const [rates, setRates] = useState(false);
   const [location, setLocation] = useState(null);
+  const [rate, setRate] = useState(null);
   //const options = useMemo(() => countryList.getData(), []);
   const { countries } = useCountries();
 
@@ -50,6 +52,12 @@ export default function Bookdetail() {
   const locationFetcher = async () => {
     const l = await getLocation();
     setLocation(l);
+    const temp = { ...formData, country: l.country };
+    setFormData(temp);
+    console.log(l);
+    const r = await getVat(l.countryCode);
+    console.log(`The vat is ${r}`);
+    setRate(r);
   };
 
   // effects here
@@ -106,10 +114,8 @@ export default function Bookdetail() {
         const body = {
           title: book.title,
           price: book.price,
-          vat: calculateVat(book.price, book.Vat),
-          total:
-            book.price +
-            calculateVat2(book.price, countryVat(location.country)),
+          vat: calculateVat2(book.price, rate),
+          total: book.price + calculateVat2(book.price, rate),
           ...formData,
         };
         const resp = await axios.post(BASE_URL + "checkout/confirm", body);
@@ -138,7 +144,7 @@ export default function Bookdetail() {
         <title>Checkout</title>
       </Head>
       <Wrapper>
-        {!loading && book && rates && bookId !== -1 && location && (
+        {!loading && book && rates && bookId !== -1 && location && rate && (
           <>
             <section className="banner-section page-title">
               <div className="auto-container">
@@ -351,7 +357,14 @@ export default function Bookdetail() {
                           <div>
                             <p className="my-0">{book.title}</p>
                           </div>
-                          <span className="text-muted">${book.price}</span>
+                          <span className="text-muted">
+                            {SYMBOLS[currencyToIndex(location.currency)]}
+                            {convertFromUSD(
+                              rates,
+                              book.price,
+                              currencyToIndex(location.currency)
+                            )}
+                          </span>
                         </li>
                         <li className="list-group-item d-flex justify-content-between lh-condensed">
                           <div>
@@ -361,10 +374,7 @@ export default function Bookdetail() {
                             {SYMBOLS[currencyToIndex(location.currency)]}
                             {convertFromUSD(
                               rates,
-                              calculateVat2(
-                                book.price,
-                                countryVat(location.country)
-                              ),
+                              calculateVat2(book.price, rate),
                               currencyToIndex(location.currency)
                             )}
                           </span>
@@ -375,11 +385,7 @@ export default function Bookdetail() {
                             {SYMBOLS[currencyToIndex(location.currency)]}
                             {convertFromUSD(
                               rates,
-                              book.price +
-                                calculateVat2(
-                                  book.price,
-                                  countryVat(location.country)
-                                ),
+                              book.price + calculateVat2(book.price, rate),
                               currencyToIndex(location.currency)
                             )}
                           </strong>
@@ -390,22 +396,14 @@ export default function Bookdetail() {
                             {" "}
                             {convertFromUSD(
                               rates,
-                              book.price +
-                                calculateVat2(
-                                  book.price,
-                                  countryVat(location.country)
-                                ),
+                              book.price + calculateVat2(book.price, rate),
                               -1
                             )}{" "}
                             BTC <br /> (
                             {formatMBTC(
                               convertFromUSD(
                                 rates,
-                                book.price +
-                                  calculateVat2(
-                                    book.price,
-                                    countryVat(location.country)
-                                  ),
+                                book.price + calculateVat2(book.price, rate),
                                 -1
                               )
                             )}{" "}

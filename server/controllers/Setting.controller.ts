@@ -84,7 +84,7 @@ SettingController.get('/location/:ip', async (req, res, next) => {
       const userIP = req.params.ip;
       console.log(`User IP ${userIP}`)
       const resp = await axios.get(
-        `http://ip-api.com/json/${userIP}?fields=status,message,country,currency`
+        `http://ip-api.com/json/${userIP}?fields=status,message,country,currency,countryCode`
       );
       if (resp.status === 200) {
         const d = await resp.data;

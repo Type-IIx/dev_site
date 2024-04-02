@@ -9,6 +9,8 @@ import {
 import draftToHtml from "draftjs-to-html";
 import dynamic from "next/dynamic";
 import { BASE_URL } from "../constants/apiInfo";
+import lookup from "country-code-lookup";
+import salesTax from "sales-tax";
 /* import htmlToDraft from 'html-to-draftjs'; */
 const LOCAL_API = "/api/";
 
@@ -163,4 +165,13 @@ export const getLocation = async () => {
       };
     }
   }
+};
+
+export const getVat = async (country) => {
+  console.log(`country is ${country}`);
+
+  salesTax.setTaxOriginCountry("US");
+
+  const sTax = await salesTax.getSalesTax(country);
+  return sTax.rate;
 };
