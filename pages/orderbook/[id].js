@@ -269,7 +269,7 @@ export default function Bookdetail() {
                                   name={"address"}
                                   value={formData.address}
                                   onChange={handleChange}
-                                  placeholder="1234 Main St"
+                                  placeholder="State"
                                   required
                                 />
                                 <div className="invalid-feedback">
