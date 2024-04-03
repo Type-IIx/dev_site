@@ -202,7 +202,7 @@ export default function Bookdetail() {
           book &&
           rates &&
           bookId !== -1 &&
-          location &&
+          /* location && */
           rate !== null &&
           countryInfo && (
             <>
