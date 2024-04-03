@@ -39,13 +39,13 @@ export const convertFromUSD = (rates, amount, to) => {
       rate = 1;
       break;
     case 2: // GBP
-      rate = 1 / rates[1].price;
+      rate = 1 / rates[0].price;
       break;
     case 1: // EUR
-      rate = 1 / rates[2].price;
+      rate = 1 / rates[1].price;
       break;
     case 3: // CAD
-      rate = 1 / rates[0].price;
+      rate = 1 / rates[2].price;
       break;
     case -1:
       rate = 1 / rates[3].price;
