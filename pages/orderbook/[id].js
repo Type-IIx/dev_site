@@ -31,7 +31,7 @@ export default function Bookdetail() {
     surname: "",
     email: "",
     address: "",
-    country: "",
+    country: "United States",
     state: "",
     zip: "",
     copy: "",
@@ -116,9 +116,9 @@ export default function Bookdetail() {
     updateCountryInfo(formData.country);
   }, [formData.country]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     locationFetcher().then(() => console.log("Fetched location"));
-  }, []);
+  }, []); */
 
   useEffect(() => {
     updateRates();
