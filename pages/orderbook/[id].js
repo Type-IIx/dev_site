@@ -87,7 +87,10 @@ export default function Bookdetail() {
         );
         const matchedCurr =
           matchedCurrArr.length > 0 ? matchedCurrArr[0] : "usd";
-        const inf = { ...data[0], curr: matchedCurr };
+        const inf = {
+          ...data[0],
+          curr: countryName.toLowerCase() !== "ireland" ? matchedCurr : "eur",
+        };
         console.log(`country info here `);
         console.log(inf);
         setCountryInfo(inf); // cca2 is the property for the country code
