@@ -109,7 +109,11 @@ export default function Bookdetail() {
   // effects here
   useEffect(() => {
     if (countryInfo) {
+      if (formData.country === "Ireland"){
+        setRate(0.23)
+      }else{
       updateRate(countryInfo.cca2);
+      }
     }
   }, [countryInfo]);
   useEffect(() => {
