@@ -24,6 +24,10 @@ interface OtherData {
 	consultancy: string;
 }
 
+interface AddressData {
+	address : string;
+}
+
 OthersController.get("/forum", async (req, res, next) => {
 	try {
 		const setts = await prisma.forum.findMany();
@@ -182,6 +186,59 @@ OthersController.post("/other", async (req, res, next) => {
 		res.status(500).json({ failed: true })
 	}
 
+})
+
+
+OthersController.post("/address", async (req,res,next) => {
+	try {
+		const myreq = req as unknown as CustomRequest;
+		const authRes = authenticateToken(myreq, res, next);
+		const body: AddressData = req.body;
+		if (authRes) {
+			const adderssSett = await prisma.address.findFirst();
+			let resp;
+			if (adderssSett) {
+				resp = await prisma.address.update({
+					where: {
+						id: adderssSett.id
+					},
+					data: body
+				})
+			} else {
+				resp = await prisma.address.create({
+					data: body
+				})
+			}
+			res.status(200).json(resp)
+		} else {
+			res.status(401).json({ authorized: false })
+		}
+	} catch (e) {
+		console.log(e)
+		res.status(500).json({failed : true})
+	}
+} )
+
+OthersController.get("/address", async (req,res,next) => {
+	try {
+		const myreq = req as unknown as CustomRequest;
+			const adderssSett = await prisma.address.findFirst();
+			let resp;
+			if (!adderssSett) {
+				resp = await prisma.address.create({
+					data: {
+						address : ""
+					}
+				})
+			} else {
+				resp = adderssSett
+			}
+			res.status(200).json(resp)
+		
+	} catch (e) {
+		console.log(e)
+		res.status(500).json({failed : true})
+	}
 })
 
 

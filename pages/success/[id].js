@@ -2,7 +2,7 @@ import Head from "next/head";
 import Wrapper from "../../components/Wrapper";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
-import { BASE_DOMAIN, BASE_URL } from "../../constants/apiInfo";
+import { BASE_DOMAIN, BASE_URL, path_ } from "../../constants/apiInfo";
 import axios from "axios";
 import { toast } from "react-toastify";
 import countryList from "react-select-country-list";
@@ -17,6 +17,7 @@ import {
   getRates,
 } from "../../utils/helpers";
 import { SYMBOLS } from "../../constants/prices";
+import QRCode from "react-qr-code";
 
 export default function Bookdetail() {
   const [bookId, setBookId] = useState(-1);
@@ -24,6 +25,7 @@ export default function Bookdetail() {
   const [order, setOrder] = useState(null);
   const [rates, setRates] = useState(false);
   const [location, setLocation] = useState(null);
+  const [address, setAddress] = useState(null);
 
   const router = useRouter();
 
@@ -44,6 +46,14 @@ export default function Bookdetail() {
   const locationFetcher = async () => {
     const l = await getLocation();
     setLocation(l);
+  };
+  const fetchAddress = async () => {
+    const resp = await axios.get(BASE_URL + path_ + "address");
+
+    if (resp.status === 200) {
+      const result = await resp.data;
+      setAddress(result);
+    }
   };
 
   // effects here
@@ -67,6 +77,7 @@ export default function Bookdetail() {
   useEffect(() => {
     if (bookId !== -1) {
       fetchOrder();
+      fetchAddress();
     }
   }, [bookId]);
 
@@ -79,7 +90,7 @@ export default function Bookdetail() {
         <title>Scan QR code for Payment</title>
       </Head>
       <Wrapper>
-        {bookId !== -1 && order && rates && location && (
+        {bookId !== -1 && order && rates && location && address && (
           <>
             <>
               <section className="banner-section page-title">
@@ -121,10 +132,11 @@ export default function Bookdetail() {
                             <div className="qr">
                               <div className="row">
                                 <div className="col-md-6 mx-auto">
-                                  <img
+                                  <QRCode value={address.address} />
+                                  {/*  <img
                                     src="/img/qr.png"
                                     className="img-fluid"
-                                  />
+                                  /> */}
                                 </div>
                               </div>
                             </div>

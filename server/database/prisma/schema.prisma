@@ -150,3 +150,8 @@ model Referrals {
   code String
   date DateTime @default(now())
 }
+
+model Address {
+  id      Int    @id @default(autoincrement())
+  address String
+}

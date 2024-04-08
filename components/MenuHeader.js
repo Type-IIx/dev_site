@@ -181,10 +181,10 @@ export default function MenuHeader() {
             </div>
             <div className="menu-outer">
               <div
-                class="navbar-collapse collapse clearfix"
+                className="navbar-collapse collapse clearfix"
                 id="navbarSupportedContent"
               >
-                <ul class="navigation clearfix">
+                <ul className="navigation clearfix">
                   <li>
                     <a href="/">Home</a>
                   </li>
