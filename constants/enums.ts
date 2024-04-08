@@ -1,6 +1,6 @@
 export enum Currencies {
 	USD,
-	CAD,
 	EUR,
-	GBP
+	GBP,
+	CAD
 }
