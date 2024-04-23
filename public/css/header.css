@@ -33,7 +33,7 @@
 }
 
 .main-header .header-top .top-left .text {
-  padding: 12px 0px;
+  padding: 0px 0px;
   color: var(--white-color);
 }
 
@@ -609,11 +609,21 @@
   right: 0;
   top: 0;
   width: 300px;
-  padding-right: 30px;
+  /* padding-right: 30px; */
   max-width: 100%;
   height: 100%;
-  visibility: hidden;
+  display: none;
   z-index: 999999;
+}
+
+@media only screen and (max-width: 767px){
+  .mobile-menu {
+    display : block;
+  }
+}
+
+.hidden-menu {
+  visibility: hidden;
 }
 
 .mobile-menu .nav-logo {
@@ -673,7 +683,7 @@
 }
 
 .mobile-menu .menu-box {
-  position: absolute;
+  /* position: absolute; */
   right: -400px;
   top: 0px;
   width: 100%;
@@ -717,9 +727,9 @@
   -ms-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
-  -webkit-transform: translateY(-50px);
+  /* -webkit-transform: translateY(-50px);
   -ms-transform: translateY(-50px);
-  transform: translateY(-50px);
+  transform: translateY(-50px); */
   font-family: "flaticon";
 }
 

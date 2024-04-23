@@ -87,15 +87,15 @@ export default function Home() {
         </section>
         <section className="price-page-section">
           <div className="auto-container">
-            <div class="row clearfix">
-              <div class="col-lg-12 col-md-12 col-sm-12">
+            <div className="row clearfix">
+              <div className="col-lg-12 col-md-12 col-sm-12">
                 <div className="sec-title-two text-center">
                   <div className="title">Services</div>
                 </div>
               </div>
             </div>
             <div className="row clearfix text-center">
-              <div className="price-block col-lg-4 col-md-12 col-sm-12">
+              <div className="price-block col-lg-4 col-md-12 col-sm-12 d-flex align-items-stretch">
                 <div className="inner-box">
                   <h3 className="py-3">Consulting</h3>
                   <ul>
@@ -126,8 +126,8 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="content-column col-lg-4 col-md-12 col-sm-12">
-                <div className="inner-column">
+              <div className="price-block col-lg-4 col-md-12 col-sm-12 d-flex align-items-stretch">
+                <div className="inner-box">
                   <h3 className="py-3">Writing</h3>
                   <ul>
                     <li>
@@ -155,7 +155,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="price-block col-lg-4 col-md-12 col-sm-12">
+              <div className="price-block col-lg-4 col-md-12 col-sm-12 d-flex align-items-stretch">
                 <div className="inner-box">
                   <h3 className="py-3">Coaching</h3>
                   <ul>

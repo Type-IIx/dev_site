@@ -79,7 +79,7 @@ export default function Menu() {
           </div>
         </div>
 
-        <div className="mobile-menu">
+        <div className="mobile-menu hidden-menu">
           <div className="menu-backdrop"></div>
           <div className="close-btn">
             <span className="icon flaticon-multiply"></span>

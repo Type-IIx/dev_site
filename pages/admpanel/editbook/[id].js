@@ -13,26 +13,25 @@ import axios from "axios";
 import { convertEditorToHtml, convertHtmlToEdit } from "../../../utils/helpers";
 import dynamic from "next/dynamic";
 
-
 const EditorComp = dynamic(
   () => {
-    return import("../../../components/AdminComps/EditorComp")
+    return import("../../../components/AdminComps/EditorComp");
   },
-  {ssr : false}   
-)
+  { ssr: false }
+);
 
 function Addbook() {
   const imageRef = useRef(null);
   const titleRef = useRef(null);
   const priceRef = useRef(null);
+  const vatRef = useRef(null);
   const bookRef = useRef(null);
   const editorRef = useRef(null);
   const [bookId, setBookId] = useState(-1);
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const [content,setContent] = useState();
-
+  const [content, setContent] = useState();
 
   const fethBook = async () => {
     setLoading(true);
@@ -43,7 +42,7 @@ function Addbook() {
       if (res.status === 200) {
         const data = await res.data;
         setBook(data);
-        setContent( convertHtmlToEdit(data.description));
+        setContent(convertHtmlToEdit(data.description));
       }
     }
     setLoading(false);
@@ -59,8 +58,6 @@ function Addbook() {
     fethBook();
   }, [bookId]);
 
-
-
   const handleEdit = async (id_) => {
     let form_data = new FormData();
     const image =
@@ -68,11 +65,10 @@ function Addbook() {
 
     form_data.append("title", titleRef.current.value);
     form_data.append("price", priceRef.current.value);
-    form_data.append("description", convertEditorToHtml(content))
+    form_data.append("Vat", vatRef.current.value);
+    form_data.append("description", convertEditorToHtml(content));
     if (image) {
       form_data.append("image", image, image.name);
-
-
     }
     const url = BASE_URL + `book/edit/${id_}`;
     const res = await axiosInstance.post(url, form_data);
@@ -89,13 +85,11 @@ function Addbook() {
     const res2 = await handleEdit(bookId);
     if (res2) {
       toast.success("Success");
-      router.push("/admpanel/booklist")
+      router.push("/admpanel/booklist");
     } else {
       toast.error("Failed Edit");
     }
-
-  }
-
+  };
 
   return (
     <>
@@ -139,7 +133,21 @@ function Addbook() {
                       </div>
 
                       <div className="form-group">
-                        <EditorComp content={content} setContent={setContent} defaultContent={book.description} />
+                        <input
+                          ref={vatRef}
+                          type="text"
+                          className="form-control"
+                          defaultValue={book.Vat}
+                          placeholder="Vat"
+                        />
+                      </div>
+
+                      <div className="form-group">
+                        <EditorComp
+                          content={content}
+                          setContent={setContent}
+                          defaultContent={book.description}
+                        />
                         {/* <Editor
                           apiKey="and0waidxlwtdyuu0jigei07tkx7coltmyqldar2ji3i9azr"
                           onInit={(evt, editor) => (editorRef.current = editor)}
@@ -199,10 +207,8 @@ function Addbook() {
                   </div>
                 </div>
               </section>
-
             </>
           )}
-
         </AdminChecker>
       </AdminWrapper>
     </>

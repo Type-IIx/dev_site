@@ -15,6 +15,7 @@ interface BodyDataT {
     title: string;
     price: number;
     description: string;
+    Vat : number;
 }
 
 
@@ -90,6 +91,7 @@ BookController.post("/create", uploadBook.single("book"), async (req, res, next)
 
             const body: BodyDataT = req.body;
             body.price = Number(body.price)
+            body.Vat = Number(body.Vat)
             const file = req.file as Express.Multer.File;
             let temp = {
                 BookFilename: "",
@@ -181,6 +183,12 @@ BookController.post("/edit/:id", upload.single("image"), async (req, res, next) 
                     body.price = book.price;
                 } else {
                     body.price = Number(body.price)
+                }
+
+                if (!body.Vat) {
+                    body.Vat = book.Vat;
+                } else {
+                    body.Vat = Number(body.Vat)
                 }
 
                 if (!body.description || body.description.length === 0) {

@@ -2,6 +2,7 @@ import { Router } from "express";
 import { CustomRequest } from "../types";
 import { authenticateToken } from "../middleware/verifier";
 import { prisma } from "../helper";
+import axios from "axios";
 
 
 
@@ -74,6 +75,33 @@ SettingController.get("",async (req,res,next) => {
 
 
 })
+
+SettingController.get('/location/:ip', async (req, res, next) => {
+    try {
+      // Extract the user's IP address considering different scenarios
+      //const userIp = req.headers['x-real-ip'];
+      //const userIP = req.ip ;
+      const userIP = req.params.ip;
+      console.log(`User IP ${userIP}`)
+      const resp = await axios.get(
+        `http://ip-api.com/json/${userIP}?fields=status,message,country,currency,countryCode`
+      );
+      if (resp.status === 200) {
+        const d = await resp.data;
+        res.status(200).json(d)
+      } else {
+        res.status(500).json({
+            country: "",
+            currency: "",
+          });
+      }
+      
+      ; // Include IP in response
+    } catch (error) {
+      console.error(error); // Log the error for debugging
+      res.status(500).json({failed : true})
+    }
+  });
 
 
 export {SettingController}

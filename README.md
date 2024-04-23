@@ -2,7 +2,8 @@
 
 ## Build backend
 
-```docker build -t backend:alpha -f ./Dockerfile  .```
+```
+```
 
 ## Run Backend
 

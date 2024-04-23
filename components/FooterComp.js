@@ -89,12 +89,15 @@ export default function FooterComp() {
       <section className="contact-form-section">
         <div className="auto-container">
           <div className="row clearfix">
-            <div className="image-column col-lg-6 col-md-12 col-sm-12">
-              <div className="inner-column">
-                <div className="image-two">
+            <div class="image-column col-lg-6 col-md-12 col-sm-12">
+              <div class="inner-column">
+                <div class="image">
+                  <img src="/img/Type-IIx.qrcode.png" alt="Type-IIx.qrcode" />
+                </div>
+                <div class="image-two">
                   <img
                     src="/img/Ampouletude-Support-footer-900-660-0.png"
-                    alt=""
+                    alt="Ampouletude-Support"
                   />
                 </div>
               </div>

@@ -15,6 +15,7 @@ export default function MenuHeader() {
     authors: "",
     consultancy: "",
   });
+  const [openMenu, setOpenMenu] = useState(false);
 
   const fetchOthers = async () => {
     const resp = await axios.get(BASE_URL + path_ + "other");
@@ -103,7 +104,12 @@ export default function MenuHeader() {
               </div>
             </div>
 
-            <div className="nav-outer clearfix">
+            <div
+              className="nav-outer clearfix"
+              onClick={() => {
+                setOpenMenu(!openMenu);
+              }}
+            >
               <div className="mobile-nav-toggler">
                 <span className="icon flaticon-menu-1"></span>
               </div>
@@ -148,6 +154,9 @@ export default function MenuHeader() {
                     <li>
                       <a href="/articles">Articles</a>
                     </li>
+                    <li>
+                      <a href="/client-success">Clients success</a>
+                    </li>
                   </ul>
                 </div>
               </nav>
@@ -155,9 +164,12 @@ export default function MenuHeader() {
           </div>
         </div>
 
-        <div className="mobile-menu">
-          <div className="menu-backdrop"></div>
-          <div className="close-btn">
+        <div className={`mobile-menu ${openMenu ? "" : "hidden-menu"}`}>
+          <div
+            className="menu-backdrop"
+            onClick={() => setOpenMenu(false)}
+          ></div>
+          <div className="close-btn" onClick={() => setOpenMenu(false)}>
             <span className="icon flaticon-multiply"></span>
           </div>
 
@@ -169,10 +181,10 @@ export default function MenuHeader() {
             </div>
             <div className="menu-outer">
               <div
-                class="navbar-collapse collapse clearfix"
+                className="navbar-collapse collapse clearfix"
                 id="navbarSupportedContent"
               >
-                <ul class="navigation clearfix">
+                <ul className="navigation clearfix">
                   <li>
                     <a href="/">Home</a>
                   </li>
@@ -190,6 +202,9 @@ export default function MenuHeader() {
                   </li>
                   <li>
                     <a href="/articles">Articles</a>
+                  </li>
+                  <li>
+                    <a href="/client-success">Clients success</a>
                   </li>
                 </ul>
               </div>

@@ -1,8 +1,16 @@
 import axios from "axios";
 import bcrypt from "bcryptjs";
-import { convertToRaw,EditorState,ContentState,convertFromHTML } from 'draft-js';
-import draftToHtml from 'draftjs-to-html';
+import {
+  convertToRaw,
+  EditorState,
+  ContentState,
+  convertFromHTML,
+} from "draft-js";
+import draftToHtml from "draftjs-to-html";
 import dynamic from "next/dynamic";
+import { BASE_URL } from "../constants/apiInfo";
+import lookup from "country-code-lookup";
+import salesTax from "sales-tax";
 /* import htmlToDraft from 'html-to-draftjs'; */
 const LOCAL_API = "/api/";
 
@@ -27,17 +35,17 @@ export const convertFromUSD = (rates, amount, to) => {
   let rate = 0;
   let decimals = 2;
   switch (Number(to)) {
-    case 0:
+    case 0: // usd
       rate = 1;
       break;
-    case 2:
+    case 2: // GBP
+      rate = 1 / rates[0].price;
+      break;
+    case 1: // EUR
       rate = 1 / rates[1].price;
       break;
-    case 1:
+    case 3: // CAD
       rate = 1 / rates[2].price;
-      break;
-    case 3:
-      rate = 1 / rates[0].price;
       break;
     case -1:
       rate = 1 / rates[3].price;
@@ -47,6 +55,31 @@ export const convertFromUSD = (rates, amount, to) => {
   return CustomRound(amount * rate, decimals);
 };
 
+export const currencyToIndex = (curr) => {
+  switch (curr.toLowerCase()) {
+    case "usd":
+      return 0;
+    case "gbp":
+      return 2;
+    case "eur":
+      return 1;
+    case "cad":
+      return 3;
+    default:
+      return 0;
+  }
+};
+
+export const calculateVat = (amount, vat) => {
+  console.log(amount, vat);
+  return CustomRound((amount * vat) / 100, 2);
+};
+
+export const calculateVat2 = (amount, vat) => {
+  console.log(amount, vat);
+  return CustomRound(amount * vat, 2);
+};
+
 export const formatAndShowErrors = (toast, errors) => {
   for (let err of errors) {
     toast.error(`${err.path[0]} : ${err.message}`);
@@ -54,7 +87,7 @@ export const formatAndShowErrors = (toast, errors) => {
 };
 
 export const formatMBTC = (amount) => {
-  return CustomRound(amount * 1000,8);
+  return CustomRound(amount * 1000, 8);
 };
 
 export const encryptPassword = (pass) => {
@@ -107,15 +140,38 @@ function getNumberSuffix(day) {
   }
 }
 
-
 export const convertEditorToHtml = (data) => {
-  return draftToHtml(convertToRaw(data.getCurrentContent()))
-}
+  return draftToHtml(convertToRaw(data.getCurrentContent()));
+};
 
 export const convertHtmlToEdit = (data) => {
   return EditorState.createWithContent(
-    ContentState.createFromBlockArray(
-      convertFromHTML(data)
-    )
-  )
-} 
+    ContentState.createFromBlockArray(convertFromHTML(data))
+  );
+};
+
+export const getLocation = async () => {
+  const resp1 = await axios.get("https://api.ipify.org?format=json");
+  if (resp1.status === 200) {
+    const d1 = await resp1.data;
+    const resp = await axios.get(BASE_URL + "settings/location/" + d1.ip);
+    if (resp.status === 200) {
+      const d = await resp.data;
+      return d;
+    } else {
+      return {
+        country: "",
+        currency: "",
+      };
+    }
+  }
+};
+
+export const getVat = async (country) => {
+  console.log(`country is ${country}`);
+
+  salesTax.setTaxOriginCountry("US");
+
+  const sTax = await salesTax.getSalesTax(country);
+  return sTax.rate;
+};

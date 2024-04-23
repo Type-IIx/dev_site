@@ -49,6 +49,7 @@ model Book {
   BookFilename      String   @default("")
   BookphysicalPath  String   @default("")
   BookUrl           String   @default("")
+  Vat               Float    @default(0)
   created           DateTime @default(now())
 }
 
@@ -101,6 +102,8 @@ model FormDataCheckout {
   id      String   @id @default(cuid())
   title   String
   price   Float    @default(0)
+  vat     Float    @default(0)
+  total   Float    @default(0)
   name    String
   surname String
   email   String
@@ -146,4 +149,9 @@ model Referrals {
   id   Int      @id @default(autoincrement())
   code String
   date DateTime @default(now())
+}
+
+model Address {
+  id      Int    @id @default(autoincrement())
+  address String
 }
